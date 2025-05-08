@@ -35,7 +35,7 @@ export default function SignIn() {
             </div>
 
             <div className="mt-8 text-center">
-              <p className="text-gray-600">&apos;Caring for your health, every step of the way&apos;</p>
+              <p className="text-gray-700">&apos;Caring for your health, every step of the way&apos;</p>
             </div>
           </div>
         </div>
