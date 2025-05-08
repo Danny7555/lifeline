@@ -21,10 +21,7 @@ export default function SignIn() {
             <div className="absolute top-1/2 -right-8 w-16 h-16 bg-red-200 rounded-full opacity-60" />
             <div className="absolute -bottom-8 left-1/3 w-24 h-24 bg-red-100 rounded-full opacity-60" />
 
-            <div className="relative z-10 text-center mb-8 md:mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-red-600 mb-3">LIFELINER</h2>
-              <p className="text-gray-600 text-lg">Your health companion</p>
-            </div>
+          
 
             <div className="relative transform transition-all duration-500 hover:scale-105">
               <div className="absolute inset-0 bg-gradient-to-br from-red-200 to-red-100 rounded-full blur-xl opacity-70" />
@@ -38,7 +35,7 @@ export default function SignIn() {
             </div>
 
             <div className="mt-8 text-center">
-              <p className="text-gray-600 italic">&apos;Caring for your health, every step of the way&apos;</p>
+              <p className="text-gray-600">&apos;Caring for your health, every step of the way&apos;</p>
             </div>
           </div>
         </div>
@@ -48,7 +45,7 @@ export default function SignIn() {
           <div className="p-4 flex justify-end">
             <div className="text-sm text-gray-600">
               Don&apos;t have an account yet?{" "}
-              <Link href="/signup" className="font-bold text-red-600 hover:text-red-700 transition-colors">
+              <Link href="/signup" className="font-extrabold text-red-600 hover:text-red-700 transition-colors">
                 Sign up
               </Link>
             </div>
@@ -58,10 +55,10 @@ export default function SignIn() {
             <div className="w-full max-w-md">
               <div className="bg-white p-12 rounded-xl border border-gray-800 shadow-lg">
                 <div className="mb-8">
-                  <p className="text-gray-600 text-lg">
+                  <p className="text-gray-600 text-lg font-extralight">
                     Welcome back <span className="uppercase font-extrabold text-gray-500">Lifeliner!</span>
                   </p>
-                  <h1 className="text-2xl md:text-3xl font-bold mt-2 text-gray-800">Login to your account</h1>
+                  <h1 className="text-2xl md:text-3xl font-poppins mt-2 text-gray-800">Login to your account</h1>
                 </div>
 
                 <form className="space-y-6">
@@ -130,8 +127,8 @@ export default function SignIn() {
         </div>
       </main>
 
-      <footer className="bg-white py-4 border-t relative z-10">
-        <div className="container mx-auto flex justify-center space-x-4 text-md font-extrabold text-gray-400">
+      <footer className="py-4 border-t relative z-10">
+        <div className="container mx-auto flex justify-center space-x-4 text-sm font-extrabold text-gray-400">
           <Link href="/contact" className="hover:text-red-600 transition-colors">
             Contact Support
           </Link>
@@ -141,6 +138,10 @@ export default function SignIn() {
           <Link href="/terms" className="hover:text-red-600 transition-colors">
             Terms & Conditions
           </Link>
+        </div>
+
+        <div className="text-center text-gray-500 text-xs mt-2">
+          &copy; {new Date().getFullYear()} Lifeliner. All rights reserved. Daniella Asiedu
         </div>
       </footer>
     </div>
