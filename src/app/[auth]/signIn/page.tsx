@@ -56,7 +56,7 @@ export default function SignIn() {
 
           <div className="flex-1 flex items-center justify-center p-6">
             <div className="w-full max-w-md">
-              <div className="bg-white p-8 rounded-xl border border-gray-100 shadow-lg">
+              <div className="bg-white p-12 rounded-xl border border-gray-800 shadow-lg">
                 <div className="mb-8">
                   <p className="text-gray-600 text-lg">
                     Welcome back <span className="uppercase font-extrabold text-gray-500">Lifeliner!</span>
@@ -131,7 +131,7 @@ export default function SignIn() {
       </main>
 
       <footer className="bg-white py-4 border-t relative z-10">
-        <div className="container mx-auto flex justify-center space-x-6 text-sm text-gray-500">
+        <div className="container mx-auto flex justify-center space-x-4 text-md font-extrabold text-gray-400">
           <Link href="/contact" className="hover:text-red-600 transition-colors">
             Contact Support
           </Link>
