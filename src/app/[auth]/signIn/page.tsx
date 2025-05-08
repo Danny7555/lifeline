@@ -73,7 +73,7 @@ export default function SignIn() {
                       id="email"
                       type="email"
                       placeholder="username@example.com"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-red-300 transition-all"
+                      className="w-full px-4 py-3 border-0 border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-gray-500 transition-all "
                     />
                   </div>
 
@@ -94,7 +94,7 @@ export default function SignIn() {
                         id="password"
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-gray-300 transition-all"
+                        className="w-full px-4 py-3 border-0 border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-gray-500 transition-all"
                       />
                       <button
                         type="button"
