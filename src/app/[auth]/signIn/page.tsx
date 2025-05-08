@@ -84,7 +84,7 @@ export default function SignIn() {
                       </label>
                       <Link
                         href="/forgot-password"
-                        className="text-sm text-red-600 hover:text-red-700 hover:underline transition-colors"
+                        className="text-sm text-gray-600 hover:text-gray-700 hover:underline transition-colors"
                       >
                         Forgot Password ?
                       </Link>
@@ -94,7 +94,7 @@ export default function SignIn() {
                         id="password"
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-red-300 transition-all"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-gray-300 transition-all"
                       />
                       <button
                         type="button"
@@ -119,7 +119,7 @@ export default function SignIn() {
                   Don&apos;t have an account?{" "}
                   <Link
                     href="/register"
-                    className="font-medium text-red-600 hover:text-red-700 hover:underline transition-colors"
+                    className="font-medium text-gray-600 hover:text-gray-700 hover:underline transition-colors"
                   >
                     Register
                   </Link>
