@@ -46,7 +46,7 @@ export default function SignIn() {
         {/* Right side with login form */}
         <div className="w-full md:w-1/2 flex flex-col">
           <div className="p-4 flex justify-end">
-            <div className="text-sm">
+            <div className="text-sm text-gray-600">
               Don&apos;t have an account yet?{" "}
               <Link href="/signup" className="font-bold text-red-600 hover:text-red-700 transition-colors">
                 Sign up
@@ -59,7 +59,7 @@ export default function SignIn() {
               <div className="bg-white p-8 rounded-xl border border-gray-100 shadow-lg">
                 <div className="mb-8">
                   <p className="text-gray-600 text-lg">
-                    Welcome back <span className="uppercase font-bold text-red-600">Lifeliner</span>!
+                    Welcome back <span className="uppercase font-extrabold text-gray-500">Lifeliner!</span>
                   </p>
                   <h1 className="text-2xl md:text-3xl font-bold mt-2 text-gray-800">Login to your account</h1>
                 </div>
