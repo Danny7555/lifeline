@@ -208,7 +208,7 @@ export default function Home() {
 
               {/* About Us - Updated to match the image */}
               <div className="bg-[#F8D7D7] p-6 md:p-8 flex flex-col justify-center border-b-2 md:border-b-0 md:border-r-2 border-black">
-                <h2 className="text-2xl font-bold mb-4">About Us</h2>
+                <h2 className="text-3xl font-bold mb-4">About Us</h2>
                 <p className="text-md font-inter">
                   Lifeline was created by a team of dedicated healthcare professionals and technology experts who recognized the critical need for accessible and reliable first aid information during emergencies. Our mission is to empower individuals with the knowledge and tools to take swift and effective action, potentially saving lives and minimizing the impact of medical crises. We are committed to providing up-to-date, evidence-based guidance through a user-friendly platform, ensuring that help is always within reach.
                 </p>
@@ -219,7 +219,7 @@ export default function Home() {
 
               {/* Why Choose Us - Updated to match the image layout */}
               <div className="p-6 md:p-8">
-                <h2 className="text-2xl font-bold mb-6">Why Choose Us</h2>
+                <h2 className="text-3xl font-bold mb-6">Why Choose Us</h2>
 
                 <div className="space-y-6">
                   {/* Expert-Backed Information */}
