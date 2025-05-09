@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Counter from "@/app/components/counter"
 import { CheckCircle, User, Globe } from "lucide-react"
-import Link from "next/link"
+
 
 export default function Home() {
   return (
@@ -231,7 +231,7 @@ export default function Home() {
                   <p className="text-md font-inter mt-4 font-medium">
                     The exciting thing also is that it can be accessed{" "}
                     <span className="text-red-600 font-extrabold underline">
-                      <Link href="/offline">OFFLINE</Link>
+                      OFFLINE
                     </span>
                   </p>
                 </div>
