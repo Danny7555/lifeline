@@ -3,6 +3,7 @@
 import Image from "next/image"
 import Counter from "@/app/components/counter"
 import { CheckCircle, User, Globe } from "lucide-react"
+import Link from "next/link"
 
 export default function Home() {
   return (
@@ -189,36 +190,34 @@ export default function Home() {
         <div className="mt-16 sm:mt-24">
           <div className="relative bg-white rounded-3xl overflow-hidden border-2 border-black">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
-              {/* First Aid Kit Illustration */}
+              {/* First Aid Kit Illustration - Updated to match the image */}
               <div className="p-6 flex items-center justify-center border-b-2 md:border-b-0 md:border-r-2 border-black">
-                <div className="relative w-full h-64 md:h-full">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl -z-10"></div>
+                <div className="relative w-full h-72 md:h-full">
+                  <div className="absolute inset-0 bg-white rounded-xl -z-10"></div>
                   <div className="relative h-full w-full">
                     <Image
                       src="/images/bucket.png"
                       alt="First aid kit with medical supplies"
-                      width={300}
-                      height={300}
-                      className="object-contain mx-auto"
+                      fill
+                      className="object-contain"
+                      priority
                     />
                   </div>
                 </div>
               </div>
 
-              {/* About Us */}
-              <div className="bg-[#F5D7D7] p-6 md:p-8 flex flex-col justify-center border-b-2 md:border-b-0 md:border-r-2 border-black">
+              {/* About Us - Updated to match the image */}
+              <div className="bg-[#F8D7D7] p-6 md:p-8 flex flex-col justify-center border-b-2 md:border-b-0 md:border-r-2 border-black">
                 <h2 className="text-2xl font-bold mb-4">About Us</h2>
-                <p className="text-sm">
-                  Lifeline was created by a team of dedicated healthcare professionals and technology experts who
-                  recognized the critical need for accessible and reliable first aid information during emergencies. Our
-                  mission is to empower individuals with the knowledge and tools to take swift and effective action,
-                  potentially saving lives and minimizing the impact of medical crises. We are committed to providing
-                  up-to-date, evidence-based guidance through a user-friendly platform, ensuring that help is always
-                  within reach.
+                <p className="text-md font-inter">
+                  Lifeline was created by a team of dedicated healthcare professionals and technology experts who recognized the critical need for accessible and reliable first aid information during emergencies. Our mission is to empower individuals with the knowledge and tools to take swift and effective action, potentially saving lives and minimizing the impact of medical crises. We are committed to providing up-to-date, evidence-based guidance through a user-friendly platform, ensuring that help is always within reach.
+                </p>
+                <p className="text-md font-inter mt-4 font-medium">
+                  The exciting thing also is that it can be accessed <span className="text-red-600 font-extrabold underline"><Link href="/offline">OFFLINE</Link></span>
                 </p>
               </div>
 
-              {/* Why Choose Us */}
+              {/* Why Choose Us - Updated to match the image layout */}
               <div className="p-6 md:p-8">
                 <h2 className="text-2xl font-bold mb-6">Why Choose Us</h2>
 
@@ -226,14 +225,14 @@ export default function Home() {
                   {/* Expert-Backed Information */}
                   <div className="flex gap-4">
                     <div className="flex-shrink-0 mt-1">
-                      <CheckCircle className="h-5 w-5" />
+                      <div className="bg-gray-100 rounded-full p-1">
+                        <CheckCircle className="h-5 w-5" />
+                      </div>
                     </div>
                     <div>
                       <h3 className="font-bold text-base mb-1">Expert-Backed Information</h3>
-                      <p className="text-sm text-gray-700">
-                        Lifeline&apos;s content is developed, reviewed, validated by certified medical professionals,
-                        adhering to the latest guidelines from reputable organizations like the American Heart
-                        Association and the American Red Cross and other reputable medical sources.
+                      <p className="text-sm font-inter text-gray-700">
+                        Lifeline&apos;s content is developed, reviewed, validated by certified medical professionals, adhering to the latest guidelines from reputable organizations like the American Heart Association and the American Red Cross and other reputable medical sources.
                       </p>
                     </div>
                   </div>
@@ -241,13 +240,14 @@ export default function Home() {
                   {/* Accessible and User-Friendly */}
                   <div className="flex gap-4">
                     <div className="flex-shrink-0 mt-1">
-                      <User className="h-5 w-5" />
+                      <div className="bg-gray-100 rounded-full p-1">
+                        <User className="h-5 w-5" />
+                      </div>
                     </div>
                     <div>
                       <h3 className="font-bold text-base mb-1">Accessible and User-Friendly</h3>
-                      <p className="text-sm text-gray-700">
-                        We prioritize a clean, intuitive design, ensuring that our app is easy to navigate and
-                        understand, even in high-stress situations.
+                      <p className="text-sm font-inter text-gray-700">
+                        We prioritize a clean, intuitive design, ensuring that our app is easy to navigate and understand, even in high-stress situations.
                       </p>
                     </div>
                   </div>
@@ -255,14 +255,14 @@ export default function Home() {
                   {/* Comprehensive Coverage */}
                   <div className="flex gap-4">
                     <div className="flex-shrink-0 mt-1">
-                      <Globe className="h-5 w-5" />
+                      <div className="bg-gray-100 rounded-full p-1">
+                        <Globe className="h-5 w-5" />
+                      </div>
                     </div>
                     <div>
                       <h3 className="font-bold text-base mb-1">Comprehensive Coverage</h3>
-                      <p className="text-sm text-gray-700">
-                        From common injuries to critical medical events, Lifeline offers a wide range of first aid
-                        guides and protocols, equipping you with the knowledge to handle various emergencies.
-                        Information is regularly updated to reflect the most current medical practices.
+                      <p className="text-sm font-inter text-gray-700">
+                        From common injuries to critical medical events, Lifeline offers a wide range of first aid guides and resources, equipping you with the knowledge to handle various emergencies. Information is regularly updated to reflect the most current medical practices.
                       </p>
                     </div>
                   </div>

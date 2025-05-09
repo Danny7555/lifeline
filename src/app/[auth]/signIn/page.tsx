@@ -115,7 +115,7 @@ export default function SignIn() {
                 <div className="mt-8 text-center text-sm text-gray-600">
                   Don&apos;t have an account?{" "}
                   <Link
-                    href="/register"
+                    href="/auth/signUp"
                     className="font-medium text-gray-600 hover:text-gray-700 hover:underline transition-colors"
                   >
                     Register
