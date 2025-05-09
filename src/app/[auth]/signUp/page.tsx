@@ -15,7 +15,7 @@ export default function SignUpPage() {
       />
 
       <div className="container max-w-5xl mx-auto z-10">
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className=" rounded-xl shadow-lg overflow-hidden">
           {/* Top labels */}
           <div className="relative h-8">
             <Link href="#" className="absolute top-3 left-4 text-gray-400 text-xs font-light">/home</Link>
@@ -104,7 +104,7 @@ export default function SignUpPage() {
                     <input
                       id="name"
                       type="text"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent pr-10"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent pr-10 bg-transparent"
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
                       <svg
@@ -135,7 +135,7 @@ export default function SignUpPage() {
                     <input
                       id="email"
                       type="email"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent pr-10"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent pr-10 bg-transparent"
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
                       <svg
@@ -166,7 +166,7 @@ export default function SignUpPage() {
                     <input
                       id="password"
                       type="password"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent pr-10"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent pr-10 bg-transparent"
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
                       <svg
@@ -197,7 +197,7 @@ export default function SignUpPage() {
                     <input
                       id="repeat-password"
                       type="password"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent pr-10"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent pr-10 bg-transparent"
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
                       <svg
@@ -224,7 +224,7 @@ export default function SignUpPage() {
                   <input
                     type="checkbox"
                     id="remember"
-                    className="h-4 w-4 text-[#ff6b6b] focus:ring-[#ff6b6b] border-gray-300 rounded"
+                    className="h-4 w-4 text-[#ff6b6b] focus:ring-[#ff6b6b] border-gray-500 rounded bg-gray-500"
                   />
                   <label htmlFor="remember" className="text-sm text-gray-700">
                     Remember me
