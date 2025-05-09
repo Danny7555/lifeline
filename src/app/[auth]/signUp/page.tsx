@@ -63,7 +63,7 @@ export default function SignUpPage() {
               <p className="text-gray-700 mb-6">Sign up to continue</p>
 
               {/* Google button */}
-              <button className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2 px-4 text-gray-700 mb-6 hover:bg-gray-50 transition-colors text-sm bg-transparent">
+              <button className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2 px-4 text-gray-700 mb-6  transition-colors text-sm bg-transparent">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                   <path
                     fill="#4285F4"
@@ -239,7 +239,7 @@ export default function SignUpPage() {
                 {/* Login link */}
                 <div className="text-center text-sm text-gray-600 mt-2">
                   Already have an account?{" "}
-                  <Link href="/login" className="text-[#ff6b6b] hover:underline">
+                  <Link href="/auth/signIn" className="text-[#ff6b6b] hover:underline">
                     Login
                   </Link>
                 </div>
