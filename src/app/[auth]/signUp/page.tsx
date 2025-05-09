@@ -1,55 +1,69 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Input } from "@/components/ui/input"
 
 export default function SignUpPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#faf9f8] relative">
-      <div className="absolute top-0 left-0 right-0 bottom-0 bg-[url('/medical-pattern.png')] opacity-10 z-0"></div>
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Background pattern */}
+      <div
+        className="absolute inset-0 z-0 opacity-15"
+        style={{
+          backgroundImage: `url('/images/background.jpg')`,
+          backgroundSize: "800px",
+          backgroundPosition: "center",
+        }}
+      />
 
-      <div className="container max-w-6xl mx-auto">
-        <div className="bg-white rounded-lg shadow-md overflow-hidden z-10 relative">
-          <div className="absolute top-4 left-4 text-gray-500 text-sm">frame</div>
-          <div className="absolute top-4 right-4">
-            <button className="flex items-center text-gray-500 text-sm gap-1.5">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-globe"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <line x1="2" x2="22" y1="12" y2="12" />
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-              </svg>
-              English (UK)
-            </button>
+      <div className="container max-w-5xl mx-auto z-10">
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          {/* Top labels */}
+          <div className="relative h-8">
+            <Link href="#" className="absolute top-3 left-4 text-gray-400 text-xs font-light">/home</Link>
+            <div className="absolute top-3 right-4">
+              <button className="flex items-center text-gray-500 text-xs gap-1.5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-globe"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" x2="22" y1="12" y2="12" />
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                </svg>
+                English (UK)
+              </button>
+            </div>
           </div>
 
           <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-5/12 bg-white p-8 flex items-center justify-center">
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-dyv98RaP2QihXRtt1gHA4JJ9JJeENP.png"
-                alt="Medical illustration"
-                width={400}
-                height={400}
-                className="max-w-full h-auto"
-              />
+            {/* Left side with illustration */}
+            <div className="w-full md:w-5/12 p-6 md:p-8 flex items-center justify-center">
+              <div className="w-full max-w-[300px] md:max-w-none">
+                <Image
+                  src="/images/signup.png"
+                  alt="Medical illustration"
+                  width={400}
+                  height={400}
+                  className="w-full h-auto"
+                  priority
+                />
+              </div>
             </div>
 
-            <div className="w-full md:w-7/12 p-8 md:p-12">
-              <h1 className="text-4xl font-bold text-[#ff6b6b] mb-2">Welcome!</h1>
+            {/* Right side with form */}
+            <div className="w-full md:w-7/12 p-6 md:p-10 lg:p-12">
+              <h1 className="text-3xl md:text-4xl font-bold text-[#ff6b6b] mb-1">Welcome!</h1>
               <p className="text-gray-700 mb-6">Sign up to continue</p>
 
-              <button className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2 px-4 text-gray-700 mb-6 hover:bg-gray-50 transition-colors">
+              {/* Google button */}
+              <button className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2 px-4 text-gray-700 mb-6 hover:bg-gray-50 transition-colors text-sm bg-transparent">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                   <path
                     fill="#4285F4"
@@ -71,21 +85,27 @@ export default function SignUpPage() {
                 Continue with Google
               </button>
 
+              {/* OR divider */}
               <div className="relative flex items-center justify-center mb-6">
                 <div className="flex-grow border-t border-gray-300"></div>
-                <span className="flex-shrink mx-4 text-gray-500">OR</span>
+                <span className="flex-shrink mx-4 text-gray-500 text-sm">OR</span>
                 <div className="flex-grow border-t border-gray-300"></div>
               </div>
 
               <h2 className="text-gray-700 font-medium mb-4">Enter your details below</h2>
 
               <div className="space-y-4">
+                {/* Name field */}
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                     Name
                   </label>
                   <div className="relative">
-                    <Input id="name" className="pr-10 border-gray-300" />
+                    <input
+                      id="name"
+                      type="text"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent pr-10"
+                    />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -106,12 +126,17 @@ export default function SignUpPage() {
                   </div>
                 </div>
 
+                {/* Email field */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                     Email
                   </label>
                   <div className="relative">
-                    <Input id="email" type="email" className="pr-10 border-gray-300" />
+                    <input
+                      id="email"
+                      type="email"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent pr-10"
+                    />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -132,12 +157,17 @@ export default function SignUpPage() {
                   </div>
                 </div>
 
+                {/* Password field */}
                 <div>
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
                     Password
                   </label>
                   <div className="relative">
-                    <Input id="password" type="password" className="pr-10 border-gray-300" />
+                    <input
+                      id="password"
+                      type="password"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent pr-10"
+                    />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -158,12 +188,17 @@ export default function SignUpPage() {
                   </div>
                 </div>
 
+                {/* Repeat Password field */}
                 <div>
                   <label htmlFor="repeat-password" className="block text-sm font-medium text-gray-700 mb-1">
                     Repeat Password
                   </label>
                   <div className="relative">
-                    <Input id="repeat-password" type="password" className="pr-10 border-gray-300" />
+                    <input
+                      id="repeat-password"
+                      type="password"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-transparent pr-10"
+                    />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -184,16 +219,25 @@ export default function SignUpPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="remember" />
+                {/* Remember me checkbox */}
+                <div className="flex items-center space-x-2 mt-2">
+                  <input
+                    type="checkbox"
+                    id="remember"
+                    className="h-4 w-4 text-[#ff6b6b] focus:ring-[#ff6b6b] border-gray-300 rounded"
+                  />
                   <label htmlFor="remember" className="text-sm text-gray-700">
                     Remember me
                   </label>
                 </div>
 
-                <Button className="w-full bg-[#ff6b6b] hover:bg-[#ff5252] text-white">SIGN UP</Button>
+                {/* Sign up button */}
+                <button className="w-full bg-[#ff6b6b] hover:bg-[#ff5252] text-white py-2 px-4 rounded-full transition-colors font-medium mt-2">
+                  SIGN UP
+                </button>
 
-                <div className="text-center text-sm text-gray-600">
+                {/* Login link */}
+                <div className="text-center text-sm text-gray-600 mt-2">
                   Already have an account?{" "}
                   <Link href="/login" className="text-[#ff6b6b] hover:underline">
                     Login
@@ -201,6 +245,7 @@ export default function SignUpPage() {
                 </div>
               </div>
 
+              {/* Footer links */}
               <div className="mt-8 pt-4 border-t border-gray-200 flex justify-center space-x-4 text-xs text-gray-500">
                 <Link href="/contact" className="hover:text-gray-700">
                   Contact Support

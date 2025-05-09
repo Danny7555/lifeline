@@ -45,7 +45,7 @@ export default function SignIn() {
           <div className="p-4 flex justify-end">
             <div className="text-sm text-gray-600">
               Don&apos;t have an account yet?{" "}
-              <Link href="/signup" className="font-extrabold text-red-600 hover:text-red-700 transition-colors">
+              <Link href="/auth/signUp" className="font-extrabold text-red-600 hover:text-red-700 transition-colors">
                 Sign up
               </Link>
             </div>
