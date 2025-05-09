@@ -14,7 +14,7 @@ export default function Home() {
           <div className="md:w-1/2">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4">
               Lifeline: Your answer and your emergency toolkit, so{" "}
-              <span className="underline decoration-pink-500 decoration-4">you can...</span>
+              <span className="underline decoration-pink-500 decoration-4">you</span>can...
             </h1>
             <p className="text-gray-700 mb-4">
               Lifeline provides instant access to crucial first-aid information during emergencies, ensuring you&apos;re
