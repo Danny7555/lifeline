@@ -102,10 +102,10 @@ export default function Home() {
 
         {/* Features Section - Exact Layout Match */}
         <div className="mt-12 sm:mt-16">
-          <div className="relative bg-white rounded-3xl p-4 sm:p-6 overflow-hidden border-2 border-black">
+          <div className="relative bg-[#F8D7D7] rounded-3xl p-4 sm:p-6 overflow-hidden border-2 border-black">
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:gap-2 relative">
               {/* URGENT */}
-              <div className="flex flex-col items-center text-center p-4 hover:bg-[#F8D7D7] transition-colors duration-300 rounded-2xl">
+              <div className="flex flex-col items-center text-center p-4 hover:bg-[#dc9a9a] transition-colors duration-300 rounded-2xl">
                 <div className="mb-3">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -117,7 +117,7 @@ export default function Home() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold mb-2">URGENT</h3>
+                <h3 className="text-lg font-extrabold mb-2">URGENT</h3>
                 <p className="text-xs sm:text-sm">
                   Lifeline recognizes the critical nature of emergencies and delivers information and tools for rapid
                   response.
@@ -125,7 +125,7 @@ export default function Home() {
               </div>
 
               {/* ACCURACY */}
-              <div className="flex flex-col items-center text-center p-4 hover:bg-[#F8D7D7] transition-colors duration-300 rounded-2xl">
+              <div className="flex flex-col items-center text-center p-4 hover:bg-[#dc9a9a] transition-colors duration-300 rounded-2xl">
                 <div className="mb-3">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -137,7 +137,7 @@ export default function Home() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold mb-2">ACCURACY</h3>
+                <h3 className="text-lg font-extrabold mb-2">ACCURACY</h3>
                 <p className="text-xs sm:text-sm">
                   Lifeline&apos;s content is sourced from trusted medical authorities and rigorously reviewed by healthcare
                   professionals.
@@ -145,7 +145,7 @@ export default function Home() {
               </div>
 
               {/* ACCESSIBLE - Center with different background - Keep its unique styling */}
-              <div className="flex flex-col items-center text-center p-4 bg-[#FA9D9D] rounded-2xl border-2 border-black">
+              <div className="flex flex-col items-center text-center p-4 hover:bg-[#dc9a9a] transition-colors duration-300 rounded-2xl">
                 <div className="mb-3 ">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -157,7 +157,7 @@ export default function Home() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold mb-2">ACCESSIBLE</h3>
+                <h3 className="text-lg font-extrabold mb-2">ACCESSIBLE</h3>
                 <p className="text-xs sm:text-sm">
                   Lifeline is designed to be user-friendly and accessible to everyone, regardless of technical skills or
                   circumstances.
@@ -165,7 +165,7 @@ export default function Home() {
               </div>
 
               {/* EMPOWERING - Right */}
-              <div className="flex flex-col items-center text-center p-4 hover:bg-[#F8D7D7] transition-colors duration-300 rounded-2xl">
+              <div className="flex flex-col items-center text-center p-4 hover:bg-[#dc9a9a] transition-colors duration-300 rounded-2xl">
                 <div className="mb-3">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -177,7 +177,7 @@ export default function Home() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold mb-2">EMPOWERING</h3>
+                <h3 className="text-lg font-bold mb-2">EMPOWERMENT</h3>
                 <p className="text-xs sm:text-sm">
                   Lifeline equips individuals with the knowledge and confidence to take decisive action in emergencies.
                 </p>
