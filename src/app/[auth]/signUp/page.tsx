@@ -58,7 +58,7 @@ export default function SignUpPage() {
             </div>
 
             {/* Right side with form */}
-            <div className="w-full md:w-7/12 p-6 md:p-10 lg:p-12">
+            <div className=" bg-white w-full md:w-7/12 p-6 md:p-10 lg:p-12">
               <h1 className="text-3xl md:text-4xl font-bold text-[#ff6b6b] mb-1">Welcome!</h1>
               <p className="text-gray-700 mb-6">Sign up to continue</p>
 
