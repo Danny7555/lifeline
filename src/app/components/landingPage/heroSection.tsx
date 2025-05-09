@@ -102,10 +102,10 @@ export default function Home() {
 
         {/* Features Section - Exact Layout Match */}
         <div className="mt-12 sm:mt-16">
-          <div className="relative bg-[#F5D7D7] rounded-3xl p-4 sm:p-6 overflow-hidden border-2 border-black">
+          <div className="relative bg-white rounded-3xl p-4 sm:p-6 overflow-hidden border-2 border-black">
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:gap-2 relative">
               {/* URGENT */}
-              <div className="flex flex-col items-center text-center p-4">
+              <div className="flex flex-col items-center text-center p-4 hover:bg-[#F8D7D7] transition-colors duration-300 rounded-2xl">
                 <div className="mb-3">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -125,7 +125,7 @@ export default function Home() {
               </div>
 
               {/* ACCURACY */}
-              <div className="flex flex-col items-center text-center p-4">
+              <div className="flex flex-col items-center text-center p-4 hover:bg-[#F8D7D7] transition-colors duration-300 rounded-2xl">
                 <div className="mb-3">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -144,7 +144,7 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* ACCESSIBLE - Center with different background */}
+              {/* ACCESSIBLE - Center with different background - Keep its unique styling */}
               <div className="flex flex-col items-center text-center p-4 bg-[#FA9D9D] rounded-2xl border-2 border-black">
                 <div className="mb-3 ">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -165,23 +165,23 @@ export default function Home() {
               </div>
 
               {/* EMPOWERING - Right */}
-            <div className="flex flex-col items-center text-center p-4">
-              <div className="mb-3">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M12 14c3.314 0 6-2.686 6-6s-2.686-6-6-6-6 2.686-6 6 2.686 6 6 6zM3 22c0-3.314 4.03-6 9-6s9 2.686 9 6"
-                    stroke="black"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+              <div className="flex flex-col items-center text-center p-4 hover:bg-[#F8D7D7] transition-colors duration-300 rounded-2xl">
+                <div className="mb-3">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M12 14c3.314 0 6-2.686 6-6s-2.686-6-6-6-6 2.686-6 6 2.686 6 6 6zM3 22c0-3.314 4.03-6 9-6s9 2.686 9 6"
+                      stroke="black"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold mb-2">EMPOWERING</h3>
+                <p className="text-xs sm:text-sm">
+                  Lifeline equips individuals with the knowledge and confidence to take decisive action in emergencies.
+                </p>
               </div>
-              <h3 className="text-lg font-bold mb-2">EMPOWERING</h3>
-              <p className="text-xs sm:text-sm">
-                Lifeline equips individuals with the knowledge and confidence to take decisive action in emergencies.
-              </p>
-            </div>
             </div>
           </div>
         </div>
@@ -191,9 +191,9 @@ export default function Home() {
           <div className="relative bg-white rounded-3xl overflow-hidden border-2 border-black">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
               {/* First Aid Kit Illustration - Updated to match the image */}
-              <div className="p-6 flex items-center justify-center border-b-2 md:border-b-0 md:border-r-2 border-black">
+              <div className="p-6 flex items-center justify-center border-b-2 md:border-b-0 md:border-r-2 border-black hover:bg-[#F8D7D7] transition-colors duration-300">
                 <div className="relative w-full h-72 md:h-full">
-                  <div className="absolute inset-0 bg-white rounded-xl -z-10"></div>
+                  <div className="absolute inset-0 rounded-xl -z-10"></div>
                   <div className="relative h-full w-full">
                     <Image
                       src="/images/bucket.png"
@@ -206,8 +206,8 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* About Us - Updated to match the image */}
-              <div className="bg-[#F8D7D7] p-6 md:p-8 flex flex-col justify-center border-b-2 md:border-b-0 md:border-r-2 border-black">
+              {/* About Us - Changed to start with white background and hover to pink */}
+              <div className="bg-white hover:bg-[#F8D7D7] transition-colors duration-300 p-6 md:p-8 flex flex-col justify-center border-b-2 md:border-b-0 md:border-r-2 border-black">
                 <h2 className="text-3xl font-bold mb-4">About Us</h2>
                 <p className="text-md font-inter">
                   Lifeline was created by a team of dedicated healthcare professionals and technology experts who recognized the critical need for accessible and reliable first aid information during emergencies. Our mission is to empower individuals with the knowledge and tools to take swift and effective action, potentially saving lives and minimizing the impact of medical crises. We are committed to providing up-to-date, evidence-based guidance through a user-friendly platform, ensuring that help is always within reach.
@@ -217,8 +217,8 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Why Choose Us - Updated to match the image layout */}
-              <div className="p-6 md:p-8">
+              {/* Why Choose Us - Added hover effect */}
+              <div className="p-6 md:p-8 hover:bg-[#F8D7D7] transition-colors duration-300">
                 <h2 className="text-3xl font-bold mb-6">Why Choose Us</h2>
 
                 <div className="space-y-6">
