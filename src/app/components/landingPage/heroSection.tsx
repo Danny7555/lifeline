@@ -102,10 +102,10 @@ export default function Home() {
 
         {/* Features Section - Exact Layout Match */}
         <div className="mt-12 sm:mt-16">
-          <div className="relative bg-[#F8D7D7] rounded-3xl p-4 sm:p-6 overflow-hidden border-2 border-black">
+          <div className="relative bg-[#F8D7D7] rounded-3xl p-4 sm:p-6 overflow-visible border-2 border-black">
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:gap-2 relative">
               {/* URGENT */}
-              <div className="flex flex-col items-center text-center p-4 hover:bg-[#dc9a9a] transition-colors duration-300 rounded-2xl">
+              <div className="flex flex-col items-center text-center p-4 hover:bg-[#dc9a9a] transition-all duration-300 rounded-2xl transform hover:scale-110 hover:translate-y-[-8px] hover:shadow-xl z-10 hover:z-20">
                 <div className="mb-3">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -119,13 +119,12 @@ export default function Home() {
                 </div>
                 <h3 className="text-lg font-extrabold mb-2">URGENT</h3>
                 <p className="text-xs sm:text-sm">
-                  Lifeline recognizes the critical nature of emergencies and delivers information and tools for rapid
-                  response.
+                  Lifeline recognizes the critical nature of emergencies and delivers information and tools for rapid response.
                 </p>
               </div>
 
               {/* ACCURACY */}
-              <div className="flex flex-col items-center text-center p-4 hover:bg-[#dc9a9a] transition-colors duration-300 rounded-2xl">
+              <div className="flex flex-col items-center text-center p-4 hover:bg-[#dc9a9a] transition-all duration-300 rounded-2xl transform hover:scale-110 hover:translate-y-[-8px] hover:shadow-xl z-10 hover:z-20">
                 <div className="mb-3">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -139,14 +138,13 @@ export default function Home() {
                 </div>
                 <h3 className="text-lg font-extrabold mb-2">ACCURACY</h3>
                 <p className="text-xs sm:text-sm">
-                  Lifeline&apos;s content is sourced from trusted medical authorities and rigorously reviewed by healthcare
-                  professionals.
+                  Lifeline&apos;s content is sourced from trusted medical authorities and rigorously reviewed by healthcare professionals.
                 </p>
               </div>
 
-              {/* ACCESSIBLE - Center with different background - Keep its unique styling */}
-              <div className="flex flex-col items-center text-center p-4 hover:bg-[#dc9a9a] transition-colors duration-300 rounded-2xl">
-                <div className="mb-3 ">
+              {/* ACCESSIBLE */}
+              <div className="flex flex-col items-center text-center p-4 hover:bg-[#dc9a9a] transition-all duration-300 rounded-2xl transform hover:scale-110 hover:translate-y-[-8px] hover:shadow-xl z-10 hover:z-20">
+                <div className="mb-3">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M12 2a10 10 0 100 20 10 10 0 000-20zM2 12h20M12 2a15 15 0 014 10 15 15 0 01-4 10 15 15 0 01-4-10 15 15 0 014-10z"
@@ -159,13 +157,12 @@ export default function Home() {
                 </div>
                 <h3 className="text-lg font-extrabold mb-2">ACCESSIBLE</h3>
                 <p className="text-xs sm:text-sm">
-                  Lifeline is designed to be user-friendly and accessible to everyone, regardless of technical skills or
-                  circumstances.
+                  Lifeline is designed to be user-friendly and accessible to everyone, regardless of technical skills or circumstances.
                 </p>
               </div>
 
-              {/* EMPOWERING - Right */}
-              <div className="flex flex-col items-center text-center p-4 hover:bg-[#dc9a9a] transition-colors duration-300 rounded-2xl">
+              {/* EMPOWERING */}
+              <div className="flex flex-col items-center text-center p-4 hover:bg-[#dc9a9a] transition-all duration-300 rounded-2xl transform hover:scale-110 hover:translate-y-[-8px] hover:shadow-xl z-10 hover:z-20">
                 <div className="mb-3">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -186,12 +183,12 @@ export default function Home() {
           </div>
         </div>
 
-        {/* About Us & Why Choose Us Section */}
+        {/* About Us Section */}
         <div className="mt-16 sm:mt-24">
           <div className="relative bg-white rounded-3xl overflow-hidden border-2 border-black">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
-              {/* First Aid Kit Illustration - Updated to match the image */}
-              <div className="p-6 flex items-center justify-center border-b-2 md:border-b-0 md:border-r-2 border-black hover:bg-[#F8D7D7] transition-colors duration-300">
+              {/* First Aid Kit Illustration */}
+              <div className="p-6 flex items-center justify-center border-b-2 md:border-b-0 md:border-r-2 border-black hover:bg-[#F8D7D7] transition-transform duration-300 transform hover:scale-105 hover:shadow-lg">
                 <div className="relative w-full h-72 md:h-full">
                   <div className="absolute inset-0 rounded-xl -z-10"></div>
                   <div className="relative h-full w-full">
@@ -206,8 +203,8 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* About Us - Changed to start with white background and hover to pink */}
-              <div className="bg-white hover:bg-[#F8D7D7] transition-colors duration-300 p-6 md:p-8 flex flex-col justify-center border-b-2 md:border-b-0 md:border-r-2 border-black">
+              {/* About Us */}
+              <div className="bg-white hover:bg-[#F8D7D7] transition-transform duration-300 transform hover:scale-105 hover:shadow-lg p-6 md:p-8 flex flex-col justify-center border-b-2 md:border-b-0 md:border-r-2 border-black">
                 <h2 className="text-3xl font-bold mb-4">About Us</h2>
                 <p className="text-md font-inter">
                   Lifeline was created by a team of dedicated healthcare professionals and technology experts who recognized the critical need for accessible and reliable first aid information during emergencies. Our mission is to empower individuals with the knowledge and tools to take swift and effective action, potentially saving lives and minimizing the impact of medical crises. We are committed to providing up-to-date, evidence-based guidance through a user-friendly platform, ensuring that help is always within reach.
@@ -217,10 +214,9 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Why Choose Us - Added hover effect */}
-              <div className="p-6 md:p-8 hover:bg-[#F8D7D7] transition-colors duration-300">
+              {/* Why Choose Us */}
+              <div className="p-6 md:p-8 hover:bg-[#F8D7D7] transition-transform duration-300 transform hover:scale-105 hover:shadow-lg">
                 <h2 className="text-3xl font-bold mb-6">Why Choose Us</h2>
-
                 <div className="space-y-6">
                   {/* Expert-Backed Information */}
                   <div className="flex gap-4">
