@@ -1,11 +1,9 @@
 import React from 'react';
-import SignIn from "./[auth]/signIn/page";
-
-
+import LandingPage from './components/landingPage/page';
 export default function page() {
   return (
     <>
-      <SignIn />
+      <LandingPage />
     </>
   )
 }

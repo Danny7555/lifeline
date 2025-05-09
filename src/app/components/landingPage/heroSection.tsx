@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import Counter from "@/app/components/counter"
+import { CheckCircle, User, Globe } from "lucide-react"
 
 export default function Home() {
   return (
@@ -27,7 +28,7 @@ export default function Home() {
             <div className="relative h-64 sm:h-80 w-full">
               <div className="absolute -z-10 top-0 right-0 w-64 h-64 bg-pink-100 rounded-full opacity-50 blur-3xl"></div>
               <Image
-                src="/placeholder.svg?height=400&width=400"
+                src="/images/woman.png"
                 alt="Person with first aid kit"
                 fill
                 className="object-contain"
@@ -40,165 +41,234 @@ export default function Home() {
         <div className="mt-8 sm:mt-12 mb-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
             {/* Lifeliners Stat */}
-            <div className="bg-gradient-to-br from-pink-100 to-pink-200 rounded-2xl p-6 shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+            <div className="bg-[#F5D7D7] rounded-2xl p-6 shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
               <div className="flex flex-col items-center">
                 <div className="relative mb-2">
-                  <span className="text-5xl sm:text-6xl font-extrabold text-pink-500">
+                  <span className="text-5xl sm:text-6xl font-extrabold text-[#FC7A7A]">
                     <Counter end={100} duration={2000} />
                   </span>
                   <span
-                    className="absolute text-2xl sm:text-3xl font-bold text-pink-500"
+                    className="absolute text-2xl sm:text-3xl font-bold text-[#FC7A7A]"
                     style={{ top: "0", right: "-20px" }}
                   >
                     +
                   </span>
                 </div>
                 <p className="text-base sm:text-lg font-medium text-gray-700">Lifeliners</p>
-                <div className="mt-3 w-16 h-1 bg-pink-400 rounded-full"></div>
+                <div className="mt-3 w-16 h-1 bg-[#FC7A7A] rounded-full"></div>
               </div>
             </div>
 
             {/* Emergency Scenarios Stat */}
-            <div className="bg-gradient-to-br from-pink-100 to-pink-200 rounded-2xl p-6 shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+            <div className="bg-[#F5D7D7] rounded-2xl p-6 shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
               <div className="flex flex-col items-center">
                 <div className="relative mb-2">
-                  <span className="text-5xl sm:text-6xl font-extrabold text-pink-500">
+                  <span className="text-5xl sm:text-6xl font-extrabold text-[#FC7A7A]">
                     <Counter end={46} duration={1800} />
                   </span>
                   <span
-                    className="absolute text-2xl sm:text-3xl font-bold text-pink-500"
+                    className="absolute text-2xl sm:text-3xl font-bold text-[#FC7A7A]"
                     style={{ top: "0", right: "-20px" }}
                   >
                     +
                   </span>
                 </div>
                 <p className="text-base sm:text-lg font-medium text-gray-700">Emergency Scenarios</p>
-                <div className="mt-3 w-16 h-1 bg-pink-400 rounded-full"></div>
+                <div className="mt-3 w-16 h-1 bg-[#FC7A7A] rounded-full"></div>
               </div>
             </div>
 
             {/* Medical Professionals Stat */}
-            <div className="bg-gradient-to-br from-pink-100 to-pink-200 rounded-2xl p-6 shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg sm:col-span-2 md:col-span-1 sm:mx-auto md:mx-0 sm:max-w-md md:max-w-none">
+            <div className="bg-[#F5D7D7] rounded-2xl p-6 shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg sm:col-span-2 md:col-span-1 sm:mx-auto md:mx-0 sm:max-w-md md:max-w-none">
               <div className="flex flex-col items-center">
                 <div className="relative mb-2">
-                  <span className="text-5xl sm:text-6xl font-extrabold text-pink-500">
+                  <span className="text-5xl sm:text-6xl font-extrabold text-[#FC7A7A]">
                     <Counter end={10} duration={1500} />
                   </span>
                   <span
-                    className="absolute text-2xl sm:text-3xl font-bold text-pink-500"
+                    className="absolute text-2xl sm:text-3xl font-bold text-[#FC7A7A]"
                     style={{ top: "0", right: "-20px" }}
                   >
                     +
                   </span>
                 </div>
                 <p className="text-base sm:text-lg font-medium text-gray-700">Medical Professionals</p>
-                <div className="mt-3 w-16 h-1 bg-pink-400 rounded-full"></div>
+                <div className="mt-3 w-16 h-1 bg-[#FC7A7A] rounded-full"></div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Features Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mt-12 sm:mt-16">
-          <div className="bg-gradient-to-br from-pink-100 to-pink-200 rounded-xl p-6 sm:p-8 shadow-md hover:shadow-lg transition-shadow duration-300">
-            <div className="mb-4 flex justify-center">
-              {/* Custom Alert/Urgent Icon */}
-              <svg
-                width="64"
-                height="64"
-                viewBox="0 0 64 64"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-pink-500"
-              >
-                <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="2" fill="white" />
-                <path d="M32 16V36" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-                <circle cx="32" cy="44" r="3" fill="currentColor" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold mb-3 text-gray-800 text-center">URGENT</h3>
-            <p className="text-gray-600 text-center sm:text-left">
-              Lifeline recognizes the critical nature of emergencies and delivers information and tools for rapid
-              response.
-            </p>
-          </div>
+        {/* Features Section - Exact Layout Match */}
+        <div className="mt-12 sm:mt-16">
+          <div className="relative bg-[#F5D7D7] rounded-3xl p-4 sm:p-6 overflow-hidden border-2 border-black">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:gap-2 relative">
+              {/* URGENT */}
+              <div className="flex flex-col items-center text-center p-4">
+                <div className="mb-3">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M12 6v6m0 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"
+                      stroke="black"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold mb-2">URGENT</h3>
+                <p className="text-xs sm:text-sm">
+                  Lifeline recognizes the critical nature of emergencies and delivers information and tools for rapid
+                  response.
+                </p>
+              </div>
 
-          <div className="bg-gradient-to-br from-pink-100 to-pink-200 rounded-xl p-6 sm:p-8 shadow-md hover:shadow-lg transition-shadow duration-300">
-            <div className="mb-4 flex justify-center">
-              {/* Custom Checkmark/Accuracy Icon */}
-              <svg
-                width="64"
-                height="64"
-                viewBox="0 0 64 64"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-pink-500"
-              >
-                <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="2" fill="white" />
-                <path
-                  d="M20 32L28 40L44 24"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold mb-3 text-gray-800 text-center">ACCURACY</h3>
-            <p className="text-gray-600 text-center sm:text-left">
-              Lifeline&apos;s content is sourced from trusted medical authorities and rigorously reviewed by healthcare professionals.
-            </p>
-          </div>
+              {/* ACCURACY */}
+              <div className="flex flex-col items-center text-center p-4">
+                <div className="mb-3">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M5 12l5 5L20 7"
+                      stroke="black"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold mb-2">ACCURACY</h3>
+                <p className="text-xs sm:text-sm">
+                  Lifeline&apos;s content is sourced from trusted medical authorities and rigorously reviewed by healthcare
+                  professionals.
+                </p>
+              </div>
 
-          <div className="bg-gradient-to-br from-pink-400 to-pink-500 rounded-xl p-6 sm:p-8 shadow-md hover:shadow-lg transition-shadow duration-300">
-            <div className="mb-4 flex justify-center">
-              {/* Globe Icon */}
-              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="32" cy="32" r="28" stroke="white" strokeWidth="2" fill="none" />
-                <path d="M32 4C32 4 16 18 16 32C16 46 32 60 32 60" stroke="white" strokeWidth="2" />
-                <path d="M32 4C32 4 48 18 48 32C48 46 32 60 32 60" stroke="white" strokeWidth="2" />
-                <path d="M4 32H60" stroke="white" strokeWidth="2" />
-                <path d="M12 16H52" stroke="white" strokeWidth="2" />
-                <path d="M12 48H52" stroke="white" strokeWidth="2" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold mb-3 text-white text-center">ACCESSIBLE</h3>
-            <p className="text-white text-center sm:text-left">
-              Lifeline is designed to be user-friendly and accessible to everyone, regardless of technical skills or
-              circumstances.
-            </p>
-          </div>
+              {/* ACCESSIBLE - Center with different background */}
+              <div className="flex flex-col items-center text-center p-4 bg-[#FA9D9D] rounded-2xl border-2 border-black">
+                <div className="mb-3 ">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M12 2a10 10 0 100 20 10 10 0 000-20zM2 12h20M12 2a15 15 0 014 10 15 15 0 01-4 10 15 15 0 01-4-10 15 15 0 014-10z"
+                      stroke="black"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold mb-2">ACCESSIBLE</h3>
+                <p className="text-xs sm:text-sm">
+                  Lifeline is designed to be user-friendly and accessible to everyone, regardless of technical skills or
+                  circumstances.
+                </p>
+              </div>
 
-          <div className="bg-gradient-to-br from-pink-100 to-pink-200 rounded-xl p-6 sm:p-8 shadow-md hover:shadow-lg transition-shadow duration-300 sm:col-span-2 md:col-span-3">
-            <div className="mb-4 flex justify-center">
-              {/* User Icon */}
-              <svg
-                width="64"
-                height="64"
-                viewBox="0 0 64 64"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-pink-500"
-              >
-                <circle cx="32" cy="22" r="12" stroke="currentColor" strokeWidth="2" fill="white" />
-                <path
-                  d="M54 54C54 42.9543 44.1503 34 32 34C19.8497 34 10 42.9543 10 54"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-                <path
-                  d="M44 44L48 48L56 40"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              {/* EMPOWERING - Right */}
+            <div className="flex flex-col items-center text-center p-4">
+              <div className="mb-3">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M12 14c3.314 0 6-2.686 6-6s-2.686-6-6-6-6 2.686-6 6 2.686 6 6 6zM3 22c0-3.314 4.03-6 9-6s9 2.686 9 6"
+                    stroke="black"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold mb-2">EMPOWERING</h3>
+              <p className="text-xs sm:text-sm">
+                Lifeline equips individuals with the knowledge and confidence to take decisive action in emergencies.
+              </p>
             </div>
-            <h3 className="text-xl font-bold mb-3 text-gray-800 text-center">ACCESSIBLE</h3>
-            <p className="text-gray-600 text-center md:text-left max-w-2xl mx-auto md:mx-0">
-              Lifeline equips individuals with the knowledge and confidence to make decisive actions in emergencies.
-            </p>
+            </div>
+          </div>
+        </div>
+
+        {/* About Us & Why Choose Us Section */}
+        <div className="mt-16 sm:mt-24">
+          <div className="relative bg-white rounded-3xl overflow-hidden border-2 border-black">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+              {/* First Aid Kit Illustration */}
+              <div className="p-6 flex items-center justify-center border-b-2 md:border-b-0 md:border-r-2 border-black">
+                <div className="relative w-full h-64 md:h-full">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl -z-10"></div>
+                  <div className="relative h-full w-full">
+                    <Image
+                      src="/images/bucket.png"
+                      alt="First aid kit with medical supplies"
+                      width={300}
+                      height={300}
+                      className="object-contain mx-auto"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* About Us */}
+              <div className="bg-[#F5D7D7] p-6 md:p-8 flex flex-col justify-center border-b-2 md:border-b-0 md:border-r-2 border-black">
+                <h2 className="text-2xl font-bold mb-4">About Us</h2>
+                <p className="text-sm">
+                  Lifeline was created by a team of dedicated healthcare professionals and technology experts who
+                  recognized the critical need for accessible and reliable first aid information during emergencies. Our
+                  mission is to empower individuals with the knowledge and tools to take swift and effective action,
+                  potentially saving lives and minimizing the impact of medical crises. We are committed to providing
+                  up-to-date, evidence-based guidance through a user-friendly platform, ensuring that help is always
+                  within reach.
+                </p>
+              </div>
+
+              {/* Why Choose Us */}
+              <div className="p-6 md:p-8">
+                <h2 className="text-2xl font-bold mb-6">Why Choose Us</h2>
+
+                <div className="space-y-6">
+                  {/* Expert-Backed Information */}
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 mt-1">
+                      <CheckCircle className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-base mb-1">Expert-Backed Information</h3>
+                      <p className="text-sm text-gray-700">
+                        Lifeline&apos;s content is developed, reviewed, validated by certified medical professionals,
+                        adhering to the latest guidelines from reputable organizations like the American Heart
+                        Association and the American Red Cross and other reputable medical sources.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Accessible and User-Friendly */}
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 mt-1">
+                      <User className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-base mb-1">Accessible and User-Friendly</h3>
+                      <p className="text-sm text-gray-700">
+                        We prioritize a clean, intuitive design, ensuring that our app is easy to navigate and
+                        understand, even in high-stress situations.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Comprehensive Coverage */}
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 mt-1">
+                      <Globe className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-base mb-1">Comprehensive Coverage</h3>
+                      <p className="text-sm text-gray-700">
+                        From common injuries to critical medical events, Lifeline offers a wide range of first aid
+                        guides and protocols, equipping you with the knowledge to handle various emergencies.
+                        Information is regularly updated to reflect the most current medical practices.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
