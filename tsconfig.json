@@ -29,7 +29,7 @@
     },
     "target": "ES2017",
     "types": [
-      "@serwist/sw"
+      
     ]
   },
   "include": [
