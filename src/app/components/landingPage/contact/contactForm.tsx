@@ -121,8 +121,8 @@ const ContactForm: React.FC = () => {
 
             {/* Content */}
             <div className="relative z-10">
-                <h3 className="text-xl font-bold mb-4">Info</h3>
-                
+                <h3 className="text-lg font-extrabold mb-4">Info</h3>
+
                 <ul className="space-y-3">
                 <li className="flex items-center gap-3">
                     <Image
