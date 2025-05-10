@@ -11,7 +11,7 @@ export default function Page() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -23,7 +23,7 @@ export default function Page() {
       
       setTimeout(() => {
         setIsLoading(false);
-      }, 1500);
+      }, 1000);
     };
 
     window.addEventListener('beforeunload', handleRouteChange);
