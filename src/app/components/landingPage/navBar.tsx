@@ -4,9 +4,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { User } from "lucide-react"
 import { useState } from "react"
+import { usePathname } from "next/navigation"
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <nav className="w-full bg-[#FFB5B5] px-4 sm:px-6 py-4 shadow-md sticky top-0 z-50">
@@ -30,27 +32,27 @@ export default function NavBar() {
         <div className="hidden md:flex items-center justify-center space-x-8 flex-1 mx-12">
           <Link 
             href="/" 
-            className="text-black font-medium border-b-2 border-black pb-1 hover:text-gray-800 transition-colors"
+            className={`text-black font-medium ${pathname === '/' ? 'border-b-2 border-black pb-1' : 'hover:text-gray-800 transition-colors group'}`}
           >
-            HOME
+            <span className={pathname !== '/' ? "group-hover:border-b-2 group-hover:border-black group-hover:pb-1" : ""}>HOME</span>
           </Link>
           <Link 
             href="/symptom-checker" 
-            className="text-black font-medium relative hover:text-gray-800 transition-colors group"
+            className={`text-black font-medium ${pathname === '/symptom-checker' ? 'border-b-2 border-black pb-1' : 'hover:text-gray-800 transition-colors group'}`}
           >
-            <span className="group-hover:border-b-2 group-hover:border-black group-hover:pb-1">SYMPTOM CHECKER</span>
+            <span className={pathname !== '/symptom-checker' ? "group-hover:border-b-2 group-hover:border-black group-hover:pb-1" : ""}>SYMPTOM CHECKER</span>
           </Link>
           <Link 
             href="/first-aid-guide" 
-            className="text-black font-medium relative hover:text-gray-800 transition-colors group"
+            className={`text-black font-medium ${pathname === '/first-aid-guide' ? 'border-b-2 border-black pb-1' : 'hover:text-gray-800 transition-colors group'}`}
           >
-            <span className="group-hover:border-b-2 group-hover:border-black group-hover:pb-1">FIRST AID GUIDE</span>
+            <span className={pathname !== '/first-aid-guide' ? "group-hover:border-b-2 group-hover:border-black group-hover:pb-1" : ""}>FIRST AID GUIDE</span>
           </Link>
           <Link 
-            href="../contact" 
-            className="text-black font-medium hover:text-gray-800 transition-colors hover:border-b-2 hover:border-black hover:pb-1"
+            href="/contact" 
+            className={`text-black font-medium ${pathname === '/contact' ? 'border-b-2 border-black pb-1' : 'hover:text-gray-800 transition-colors group'}`}
           >
-            CONTACT US
+            <span className={pathname !== '/contact' ? "group-hover:border-b-2 group-hover:border-black group-hover:pb-1" : ""}>CONTACT US</span>
           </Link>
         </div>
 
@@ -77,13 +79,13 @@ export default function NavBar() {
         <div className="hidden md:flex items-center space-x-4">
           <Link 
             href="/donate" 
-            className="bg-white text-black font-bold py-2 px-6 border-2 border-black rounded-md hover:bg-gray-100 transition-all duration-200 hover:shadow-md transform hover:-translate-y-0.5"
+            className={`bg-white text-black font-bold py-2 px-6 border-2 border-black rounded-md hover:bg-gray-100 transition-all duration-200 hover:shadow-md transform hover:-translate-y-0.5 ${pathname === '/donate' ? 'bg-gray-100 shadow-md -translate-y-0.5' : ''}`}
           >
             DONATE
           </Link>
           <Link 
             href="/auth/signIn" 
-            className="text-black p-2 rounded-full hover:bg-[#FA9D9D] transition-colors"
+            className={`text-black p-2 rounded-full ${pathname.startsWith('/auth') ? 'bg-[#FA9D9D]' : 'hover:bg-[#FA9D9D]'} transition-colors`}
             aria-label="User account"
           >
             <User className="h-7 w-7" />
@@ -93,12 +95,12 @@ export default function NavBar() {
 
       {/* Mobile Navigation - Conditional rendering based on state */}
       <div className={`md:hidden px-4 py-3 space-y-4 bg-[#FA9D9D] rounded-b-lg mt-4 transition-all duration-300 ${isMenuOpen ? 'block' : 'hidden'}`}>
-        <Link href="/" className="block text-black font-medium py-2 px-3 rounded hover:bg-[#FFB5B5] transition-colors">HOME</Link>
-        <Link href="/symptom-checker" className="block text-black font-medium py-2 px-3 rounded hover:bg-[#FFB5B5] transition-colors">SYMPTOM CHECKER</Link>
-        <Link href="/first-aid-guide" className="block text-black font-medium py-2 px-3 rounded hover:bg-[#FFB5B5] transition-colors">FIRST AID GUIDE</Link>
-        <Link href="/contact" className="block text-black font-medium py-2 px-3 rounded hover:bg-[#FFB5B5] transition-colors">CONTACT US</Link>
-        <Link href="/donate" className="block text-white font-medium py-2 px-3 mt-4 bg-black rounded-md hover:bg-gray-800 transition-colors">DONATE</Link>
-        <Link href="/auth/signIn" className="flex items-center text-black font-medium py-2 px-3 rounded hover:bg-[#FFB5B5] transition-colors">
+        <Link href="/" className={`block font-medium py-2 px-3 rounded transition-colors ${pathname === '/' ? 'bg-[#FFB5B5] text-black font-semibold' : 'text-black hover:bg-[#FFB5B5]'}`}>HOME</Link>
+        <Link href="/symptom-checker" className={`block font-medium py-2 px-3 rounded transition-colors ${pathname === '/symptom-checker' ? 'bg-[#FFB5B5] text-black font-semibold' : 'text-black hover:bg-[#FFB5B5]'}`}>SYMPTOM CHECKER</Link>
+        <Link href="/first-aid-guide" className={`block font-medium py-2 px-3 rounded transition-colors ${pathname === '/first-aid-guide' ? 'bg-[#FFB5B5] text-black font-semibold' : 'text-black hover:bg-[#FFB5B5]'}`}>FIRST AID GUIDE</Link>
+        <Link href="/contact" className={`block font-medium py-2 px-3 rounded transition-colors ${pathname === '/contact' ? 'bg-[#FFB5B5] text-black font-semibold' : 'text-black hover:bg-[#FFB5B5]'}`}>CONTACT US</Link>
+        <Link href="/donate" className={`block font-medium py-2 px-3 mt-4 rounded-md transition-colors ${pathname === '/donate' ? 'bg-gray-800 text-white' : 'bg-black text-white hover:bg-gray-800'}`}>DONATE</Link>
+        <Link href="/auth/signIn" className={`flex items-center font-medium py-2 px-3 rounded transition-colors ${pathname.startsWith('/auth') ? 'bg-[#FFB5B5] text-black font-semibold' : 'text-black hover:bg-[#FFB5B5]'}`}>
           <User className="h-5 w-5 mr-2" />
           <span>ACCOUNT</span>
         </Link>
