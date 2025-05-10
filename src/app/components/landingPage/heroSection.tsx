@@ -2,8 +2,6 @@
 
 import Image from "next/image"
 import Counter from "@/app/components/counter"
-import { CheckCircle, User, Globe } from "lucide-react"
-
 
 export default function Home() {
   return (
@@ -12,10 +10,10 @@ export default function Home() {
         {/* Hero Section */}
         <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
           <div className="md:w-1/2">
-           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4">
-            <b>Lifeline:</b> Your answer and your emergency toolkit, so{" "}
-            <span className="underline decoration-pink-700 decoration-2">you</span>&nbsp;can...
-          </h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4">
+              <b>Lifeline:</b> Your answer and your emergency toolkit, so{" "}
+              <span className="underline decoration-pink-700 decoration-2">you</span>&nbsp;can...
+            </h1>
 
             <p className="text-gray-700 mb-4  font-poppins">
               Lifeline provides instant access to crucial first-aid information during emergencies, ensuring you&apos;re
@@ -29,10 +27,13 @@ export default function Home() {
           <div className="md:w-1/2">
             <div className="relative h-64 sm:h-80 w-full">
               <div className="absolute -z-10 top-0 right-0 w-64 h-64 bg-pink-100 rounded-full opacity-50 blur-3xl"></div>
-              <Image src="/images/woman.png" alt="Person with first aid kit" 
-                className="object-contain" 
-               height={400}
-               width={400} />
+              <Image
+                src="/images/woman.png"
+                alt="Person with first aid kit"
+                className="object-contain"
+                height={400}
+                width={400}
+              />
             </div>
           </div>
         </div>
@@ -99,104 +100,100 @@ export default function Home() {
           </div>
         </div>
 
-                {/* Features Section  */}
-          <div className="mt-12 sm:mt-16">
-            <div className="relative bg-white rounded-3xl p-4 sm:p-6 overflow-visible border-2 border-black">
-              <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
-                {/* URGENT */}
-                <div className="group p-6 relative overflow-visible">
-                  <div className="absolute inset-0 bg-white rounded-3x1 group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
-                  <div className="relative z-20 flex flex-col items-center text-center">
-                    <div className="mb-3">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M12 6v6m0 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"
-                          stroke="black"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <h3 className="text-lg font-extrabold mb-2">URGENT</h3>
-                    <p className="text-sm sm:text-sm">
-                      Lifeline recognizes the critical nature of emergencies and delivers information and tools for
-                      rapid response.
-                    </p>
+        {/* Features Section  */}
+        <div className="mt-12 sm:mt-16">
+          <div className="relative bg-white rounded-3xl p-4 sm:p-6 overflow-visible border-2 border-black">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+              {/* URGENT */}
+              <div className="group p-6 relative overflow-visible">
+                <div className="absolute inset-0 bg-white rounded-3x1 group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+                <div className="relative z-20 flex flex-col items-center text-center">
+                  <div className="mb-3 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-12 h-12 flex items-center justify-center">
+                    <Image
+                      src="/images/alarm.png"
+                      alt="Urgent Icon"
+                      width={32}
+                      height={32}
+                      className="transition-transform duration-300 group-hover:scale-110"
+                    />
                   </div>
+                  <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#FC7A7A]">
+                    URGENT
+                  </h3>
+                  <p className="text-sm sm:text-sm">
+                    Lifeline recognizes the critical nature of emergencies and delivers information and tools for rapid
+                    response.
+                  </p>
                 </div>
+              </div>
 
-                {/* ACCURACY */}
-                <div className="group p-6 relative overflow-visible ">
-                  <div className="absolute inset-0 bg-white rounded-none group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
-                  <div className="relative z-20 flex flex-col items-center text-center">
-                    <div className="mb-3">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M5 12l5 5L20 7"
-                          stroke="black"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <h3 className="text-lg font-extrabold mb-2">ACCURACY</h3>
-                    <p className="text-sm sm:text-sm">
-                      Lifeline&apos;s content is sourced from trusted medical authorities and rigorously reviewed by
-                      healthcare professionals.
-                    </p>
+              {/* ACCURACY */}
+              <div className="group p-6 relative overflow-visible ">
+                <div className="absolute inset-0 bg-white rounded-none group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+                <div className="relative z-20 flex flex-col items-center text-center">
+                  <div className="mb-3 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-12 h-12 flex items-center justify-center">
+                    <Image
+                      src="/images/correct.png"
+                      alt="Accuracy Icon"
+                      width={32}
+                      height={32}
+                      className="transition-transform duration-300 group-hover:scale-110"
+                    />
                   </div>
+                  <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#FC7A7A]">
+                    ACCURACY
+                  </h3>
+                  <p className="text-sm sm:text-sm">
+                    Lifeline&apos;s content is sourced from trusted medical authorities and rigorously reviewed by
+                    healthcare professionals.
+                  </p>
                 </div>
+              </div>
 
-                {/* ACCESSIBLE */}
-                <div className="group p-6 relative overflow-visible ">
-                  <div className="absolute inset-0 bg-white rounded-none group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
-                  <div className="relative z-20 flex flex-col items-center text-center">
-                    <div className="mb-3">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M12 2a10 10 0 100 20 10 10 0 000-20zM2 12h20M12 2a15 15 0 014 10 15 15 0 01-4 10 15 15 0 01-4-10 15 15 0 014-10z"
-                          stroke="black"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <h3 className="text-lg font-extrabold mb-2">ACCESSIBLE</h3>
-                    <p className="text-sm sm:text-sm">
-                      Lifeline is designed to be user-friendly and accessible to everyone, regardless of technical
-                      skills or circumstances.
-                    </p>
+              {/* ACCESSIBLE */}
+              <div className="group p-6 relative overflow-visible ">
+                <div className="absolute inset-0 bg-white rounded-none group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+                <div className="relative z-20 flex flex-col items-center text-center">
+                  <div className="mb-3 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-12 h-12 flex items-center justify-center">
+                    <Image
+                      src="/images/globe.png"
+                      alt="Accessible Icon"
+                      width={32}
+                      height={32}
+                      className="transition-transform duration-300 group-hover:scale-110"
+                    />
                   </div>
+                  <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#FC7A7A]">ACCESSIBLE</h3>
+                  <p className="text-sm sm:text-sm">
+                    Lifeline is designed to be user-friendly and accessible to everyone, regardless of technical skills
+                    or circumstances.
+                  </p>
                 </div>
+              </div>
 
-                {/* EMPOWERING */}
-                <div className="group p-6 relative overflow-visible">
-                  <div className="absolute inset-0 bg-white rounded-none group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
-                  <div className="relative z-20 flex flex-col items-center text-center">
-                    <div className="mb-3">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M12 14c3.314 0 6-2.686 6-6s-2.686-6-6-6-6 2.686-6 6 2.686 6 6 6zM3 22c0-3.314 4.03-6 9-6s9 2.686 9 6"
-                          stroke="black"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <h3 className="text-lg font-bold mb-2">EMPOWERMENT</h3>
-                    <p className="text-sm sm:text-sm">
-                      Lifeline equips individuals with the knowledge and confidence to take decisive action in
-                      emergencies.
-                    </p>
+              {/* EMPOWERING */}
+              <div className="group p-6 relative overflow-visible">
+                <div className="absolute inset-0 bg-white rounded-none group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+                <div className="relative z-20 flex flex-col items-center text-center">
+                  <div className="mb-3 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-12 h-12 flex items-center justify-center">
+                    <Image
+                      src="/images/body.png"
+                      alt="Empowerment Icon"
+                      width={32}
+                      height={32}
+                      className="transition-transform duration-300 group-hover:scale-110"
+                    />
                   </div>
+                  <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#FC7A7A]">EMPOWERMENT</h3>
+                  <p className="text-sm sm:text-sm">
+                    Lifeline equips individuals with the knowledge and confidence to take decisive action in
+                    emergencies.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
         {/* About Us Section */}
         <div className="mt-16 sm:mt-24">
@@ -224,7 +221,7 @@ export default function Home() {
               <div className="group p-6 md:p-8 relative overflow-visible border-b-2 md:border-b-0 md:border-r-2 border-black">
                 <div className="absolute inset-0 bg-white rounded-md group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
                 <div className="relative z-20">
-                  <h2 className="text-3xl font-bold mb-4">About Us</h2>
+                  <h2 className="text-3xl font-bold mb-4 transition-colors duration-300 group-hover:text-[#FC7A7A]">About Us</h2>
                   <p className="text-md font-inter">
                     Lifeline was created by a team of dedicated healthcare professionals and technology experts who
                     recognized the critical need for accessible and reliable first aid information during emergencies.
@@ -235,9 +232,7 @@ export default function Home() {
                   </p>
                   <p className="text-md font-inter mt-4 font-medium">
                     The exciting thing also is that it can be accessed{" "}
-                    <span className="text-red-600 font-extrabold underline">
-                      OFFLINE
-                    </span>
+                    <span className="text-red-600 font-extrabold underline transition-colors duration-300 group-hover:text-[#FC7A7A]">OFFLINE</span>
                   </p>
                 </div>
               </div>
@@ -246,17 +241,23 @@ export default function Home() {
               <div className="group p-6 md:p-8 relative overflow-visible">
                 <div className="absolute inset-0 bg-white rounded-none group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
                 <div className="relative z-20">
-                  <h2 className="text-3xl font-bold mb-6">Why Choose Us</h2>
+                  <h2 className="text-3xl font-bold mb-6 transition-colors duration-300 group-hover:text-[#FC7A7A]">Why Choose Us</h2>
                   <div className="space-y-6">
                     {/* Expert-Backed Information */}
                     <div className="flex gap-4">
                       <div className="flex-shrink-0 mt-1">
-                        <div className="bg-gray-100 rounded-full p-1">
-                          <CheckCircle className="h-5 w-5" />
+                        <div className=" rounded-full p-1 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-10 h-10 flex items-center justify-center">
+                          <Image
+                            src="/images/expert.png"
+                            alt="Expert Information Icon"
+                            width={24}
+                            height={24}
+                            className="transition-transform duration-300 group-hover:scale-110"
+                          />
                         </div>
                       </div>
                       <div>
-                        <h3 className="font-bold text-base mb-1">Expert-Backed Information</h3>
+                        <h3 className="font-bold text-base mb-1 transition-colors duration-300 group-hover:text-[#FC7A7A]">Expert-Backed Information</h3>
                         <p className="text-sm font-inter text-gray-700">
                           Lifeline&apos;s content is developed, reviewed, validated by certified medical professionals,
                           adhering to the latest guidelines from reputable organizations like the American Heart
@@ -268,12 +269,18 @@ export default function Home() {
                     {/* Accessible and User-Friendly */}
                     <div className="flex gap-4">
                       <div className="flex-shrink-0 mt-1">
-                        <div className="bg-gray-100 rounded-full p-1">
-                          <User className="h-5 w-5" />
+                        <div className=" rounded-full p-1 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-10 h-10 flex items-center justify-center">
+                          <Image
+                            src="/images/globe.png"
+                            alt="User Friendly Icon"
+                            width={24}
+                            height={24}
+                            className="transition-transform duration-300 group-hover:scale-110"
+                          />
                         </div>
                       </div>
                       <div>
-                        <h3 className="font-bold text-base mb-1">Accessible and User-Friendly</h3>
+                        <h3 className="font-bold text-base mb-1 transition-colors duration-300 group-hover:text-[#FC7A7A]">Accessible and User-Friendly</h3>
                         <p className="text-sm font-inter text-gray-700">
                           We prioritize a clean, intuitive design, ensuring that our app is easy to navigate and
                           understand, even in high-stress situations.
@@ -284,12 +291,18 @@ export default function Home() {
                     {/* Comprehensive Coverage */}
                     <div className="flex gap-4">
                       <div className="flex-shrink-0 mt-1">
-                        <div className="bg-gray-100 rounded-full p-1">
-                          <Globe className="h-5 w-5" />
+                        <div className=" rounded-full p-1 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-10 h-10 flex items-center justify-center">
+                          <Image
+                            src="/images/chat.png"
+                            alt="Comprehensive Coverage Icon"
+                            width={24}
+                            height={24}
+                            className="transition-transform duration-300 group-hover:scale-110"
+                          />
                         </div>
                       </div>
                       <div>
-                        <h3 className="font-bold text-base mb-1">Comprehensive Coverage</h3>
+                        <h3 className="font-bold text-base mb-1 transition-colors duration-300 group-hover:text-[#FC7A7A]">Comprehensive Coverage</h3>
                         <p className="text-sm font-inter text-gray-700">
                           From common injuries to critical medical events, Lifeline offers a wide range of first aid
                           guides and resources, equipping you with the knowledge to handle various emergencies.
