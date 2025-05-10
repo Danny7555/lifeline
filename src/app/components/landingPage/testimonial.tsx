@@ -6,11 +6,11 @@ import HalfStar from "../halfStar"
 export default function Testimonials() {
   return (
     <div className="w-full bg-white py-12">
-      <h1 className="text-5xl font-extrabold text-center mb-20">Testimonials</h1>
+      <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-16 md:mb-20 px-4">Testimonials</h1>
       
-      <div className="flex flex-col md:flex-row justify-center gap-8 px-4 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 md:gap-8 px-4 max-w-6xl mx-auto">
         {/* First Testimonial */}
-        <div className="flex-1 border border-gray-600 rounded-3xl p-6 flex flex-col items-center relative">
+        <div className="flex-1 border border-gray-600 rounded-3xl p-4 md:p-6 flex flex-col items-center relative">
           <div className="absolute -top-12">
             <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-sm bg-gray-100">
               <Image
@@ -40,7 +40,7 @@ export default function Testimonials() {
         </div>
         
         {/* Second Testimonial */}
-        <div className="flex-1 border border-gray-600 rounded-3xl p-6 flex flex-col items-center relative">
+        <div className="flex-1 border border-gray-600 rounded-3xl p-4 md:p-6 flex flex-col items-center relative">
           <div className="absolute -top-12">
             <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-sm bg-gray-100">
               <Image
@@ -74,7 +74,7 @@ export default function Testimonials() {
 
         
         {/* Third Testimonial */}
-        <div className="flex-1 border border-gray-600 rounded-3xl p-6 flex flex-col items-center relative">
+        <div className="flex-1 border border-gray-600 rounded-3xl p-4 md:p-6 flex flex-col items-center relative">
           <div className="absolute -top-12">
             <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-sm bg-gray-100">
               <Image

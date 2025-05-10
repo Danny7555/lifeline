@@ -3,19 +3,19 @@
 import Image from "next/image"
 import Counter from "@/app/components/counter"
 
-export default function Home() {
+export default function heroSection() {
   return (
     <main className="min-h-screen bg-white">
       <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-16 max-w-6xl">
         {/* Hero Section */}
         <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
-          <div className="md:w-1/2">
+          <div className="md:w-1/2 text-center md:text-left">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4">
               <b>Lifeline:</b> Your answer and your emergency toolkit, so{" "}
               <span className="underline decoration-pink-700 decoration-2">you</span>&nbsp;can...
             </h1>
 
-            <p className="text-gray-700 mb-4  font-poppins">
+            <p className="text-gray-700 mb-4 font-poppins">
               Lifeline provides instant access to crucial first-aid information during emergencies, ensuring you&apos;re
               prepared to act quickly and effectively.
             </p>
@@ -30,7 +30,7 @@ export default function Home() {
               <Image
                 src="/images/woman.png"
                 alt="Person with first aid kit"
-                className="object-contain"
+                className="object-contain mx-auto"
                 height={400}
                 width={400}
               />
@@ -40,16 +40,16 @@ export default function Home() {
 
         {/* Stats Section - With Counters */}
         <div className="mt-8 sm:mt-12 mb-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {/* Lifeliners Stat */}
             <div className="bg-[#F5D7D7] rounded-2xl p-6 shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
               <div className="flex flex-col items-center">
                 <div className="relative mb-2">
-                  <span className="text-5xl sm:text-6xl font-extrabold text-[#FC7A7A]">
+                  <span className="text-4xl xs:text-5xl sm:text-6xl font-extrabold text-[#FC7A7A]">
                     <Counter end={100} duration={2000} />
                   </span>
                   <span
-                    className="absolute text-2xl sm:text-3xl font-bold text-[#FC7A7A]"
+                    className="absolute text-xl xs:text-2xl sm:text-3xl font-bold text-[#FC7A7A]"
                     style={{ top: "0", right: "-20px" }}
                   >
                     +
@@ -64,11 +64,11 @@ export default function Home() {
             <div className="bg-[#F5D7D7] rounded-2xl p-6 shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
               <div className="flex flex-col items-center">
                 <div className="relative mb-2">
-                  <span className="text-5xl sm:text-6xl font-extrabold text-[#FC7A7A]">
+                  <span className="text-4xl xs:text-5xl sm:text-6xl font-extrabold text-[#FC7A7A]">
                     <Counter end={46} duration={1800} />
                   </span>
                   <span
-                    className="absolute text-2xl sm:text-3xl font-bold text-[#FC7A7A]"
+                    className="absolute text-xl xs:text-2xl sm:text-3xl font-bold text-[#FC7A7A]"
                     style={{ top: "0", right: "-20px" }}
                   >
                     +
@@ -83,17 +83,17 @@ export default function Home() {
             <div className="bg-[#F5D7D7] rounded-2xl p-6 shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg sm:col-span-2 md:col-span-1 sm:mx-auto md:mx-0 sm:max-w-md md:max-w-none">
               <div className="flex flex-col items-center">
                 <div className="relative mb-2">
-                  <span className="text-5xl sm:text-6xl font-extrabold text-[#FC7A7A]">
+                  <span className="text-4xl xs:text-5xl sm:text-6xl font-extrabold text-[#FC7A7A]">
                     <Counter end={10} duration={1500} />
                   </span>
                   <span
-                    className="absolute text-2xl sm:text-3xl font-bold text-[#FC7A7A]"
+                    className="absolute text-xl xs:text-2xl sm:text-3xl font-bold text-[#FC7A7A]"
                     style={{ top: "0", right: "-20px" }}
                   >
                     +
                   </span>
                 </div>
-                <p className="text-base sm:text-lg  text-gray-700 font-bold">Medical Professionals</p>
+                <p className="text-base sm:text-lg text-gray-700 font-bold">Medical Professionals</p>
                 <div className="mt-3 w-16 h-1 bg-[#FC7A7A] rounded-full"></div>
               </div>
             </div>
@@ -103,10 +103,10 @@ export default function Home() {
         {/* Features Section  */}
         <div className="mt-12 sm:mt-16">
           <div className="relative bg-white rounded-3xl p-4 sm:p-6 overflow-visible border-2 border-black">
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-3">
               {/* URGENT */}
-              <div className="group p-6 relative overflow-visible">
-                <div className="absolute inset-0 bg-white rounded-3x1 group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+              <div className="group p-4 sm:p-6 relative overflow-visible">
+                <div className="absolute inset-0 bg-white rounded-3xl group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300  group-hover:border-black"></div>
                 <div className="relative z-20 flex flex-col items-center text-center">
                   <div className="mb-3 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-12 h-12 flex items-center justify-center">
                     <Image
@@ -114,13 +114,14 @@ export default function Home() {
                       alt="Urgent Icon"
                       width={32}
                       height={32}
+                      style={{ width: "auto", height: "auto" }}
                       className="transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
                   <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#FC7A7A]">
                     URGENT
                   </h3>
-                  <p className="text-sm sm:text-sm">
+                  <p className="text-sm">
                     Lifeline recognizes the critical nature of emergencies and delivers information and tools for rapid
                     response.
                   </p>
@@ -128,8 +129,8 @@ export default function Home() {
               </div>
 
               {/* ACCURACY */}
-              <div className="group p-6 relative overflow-visible ">
-                <div className="absolute inset-0 bg-white rounded-none group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+              <div className="group p-4 sm:p-6 relative overflow-visible">
+                <div className="absolute inset-0 bg-white rounded-3xl group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
                 <div className="relative z-20 flex flex-col items-center text-center">
                   <div className="mb-3 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-12 h-12 flex items-center justify-center">
                     <Image
@@ -137,13 +138,14 @@ export default function Home() {
                       alt="Accuracy Icon"
                       width={32}
                       height={32}
+                      style={{ width: "auto", height: "auto" }}
                       className="transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
                   <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#FC7A7A]">
                     ACCURACY
                   </h3>
-                  <p className="text-sm sm:text-sm">
+                  <p className="text-sm">
                     Lifeline&apos;s content is sourced from trusted medical authorities and rigorously reviewed by
                     healthcare professionals.
                   </p>
@@ -151,8 +153,8 @@ export default function Home() {
               </div>
 
               {/* ACCESSIBLE */}
-              <div className="group p-6 relative overflow-visible ">
-                <div className="absolute inset-0 bg-white rounded-none group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+              <div className="group p-4 sm:p-6 relative overflow-visible">
+                <div className="absolute inset-0 bg-white rounded-3xl group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
                 <div className="relative z-20 flex flex-col items-center text-center">
                   <div className="mb-3 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-12 h-12 flex items-center justify-center">
                     <Image
@@ -164,7 +166,7 @@ export default function Home() {
                     />
                   </div>
                   <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#FC7A7A]">ACCESSIBLE</h3>
-                  <p className="text-sm sm:text-sm">
+                  <p className="text-sm">
                     Lifeline is designed to be user-friendly and accessible to everyone, regardless of technical skills
                     or circumstances.
                   </p>
@@ -172,8 +174,8 @@ export default function Home() {
               </div>
 
               {/* EMPOWERING */}
-              <div className="group p-6 relative overflow-visible">
-                <div className="absolute inset-0 bg-white rounded-none group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+              <div className="group p-4 sm:p-6 relative overflow-visible">
+                <div className="absolute inset-0 bg-white rounded-3xl group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
                 <div className="relative z-20 flex flex-col items-center text-center">
                   <div className="mb-3 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-12 h-12 flex items-center justify-center">
                     <Image
@@ -185,7 +187,7 @@ export default function Home() {
                     />
                   </div>
                   <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#FC7A7A]">EMPOWERMENT</h3>
-                  <p className="text-sm sm:text-sm">
+                  <p className="text-sm">
                     Lifeline equips individuals with the knowledge and confidence to take decisive action in
                     emergencies.
                   </p>
@@ -198,11 +200,11 @@ export default function Home() {
         {/* About Us Section */}
         <div className="mt-16 sm:mt-24">
           <div className="relative bg-white rounded-3xl p-4 sm:p-6 overflow-visible border-2 border-black">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-2">
               {/* First Aid Kit Illustration */}
-              <div className="group p-6 md:p-8 relative overflow-visible border-b-2 md:border-b-0 md:border-r-2 border-black">
-                <div className="absolute inset-0 bg-white rounded-md group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
-                <div className="relative z-20 w-full h-80 md:h-full">
+              <div className="group p-4 sm:p-6 md:p-8 relative overflow-visible border-b-2 md:border-b-0 md:border-r-2 border-black">
+                <div className="absolute inset-0 bg-white rounded-md group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+                <div className="relative z-20 w-full h-60 sm:h-80 md:h-full">
                   <div className="absolute inset-0 rounded-xl -z-10"></div>
                   <div className="relative h-full w-full">
                     <Image
@@ -218,11 +220,11 @@ export default function Home() {
               </div>
 
               {/* About Us */}
-              <div className="group p-6 md:p-8 relative overflow-visible border-b-2 md:border-b-0 md:border-r-2 border-black">
-                <div className="absolute inset-0 bg-white rounded-md group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+              <div className="group p-4 sm:p-6 md:p-8 relative overflow-visible border-b-2 md:border-b-0 md:border-r-2 border-black">
+                <div className="absolute inset-0 bg-white rounded-md group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
                 <div className="relative z-20">
-                  <h2 className="text-3xl font-bold mb-4 transition-colors duration-300 group-hover:text-[#FC7A7A]">About Us</h2>
-                  <p className="text-md font-inter">
+                  <h2 className="text-3xl font-bold mb-4 transition-colors duration-300 group-hover:text-[#FC7A7A] text-center sm:text-left">About Us</h2>
+                  <p className="text-md font-inter text-center sm:text-left">
                     Lifeline was created by a team of dedicated healthcare professionals and technology experts who
                     recognized the critical need for accessible and reliable first aid information during emergencies.
                     Our mission is to empower individuals with the knowledge and tools to take swift and effective
@@ -230,7 +232,7 @@ export default function Home() {
                     providing up-to-date, evidence-based guidance through a user-friendly platform, ensuring that help
                     is always within reach.
                   </p>
-                  <p className="text-md font-inter mt-4 font-medium">
+                  <p className="text-md font-inter mt-4 font-medium text-center sm:text-left">
                     The exciting thing also is that it can be accessed{" "}
                     <span className="text-red-600 font-extrabold underline transition-colors duration-300 group-hover:text-[#FC7A7A]">OFFLINE</span>
                   </p>
@@ -238,15 +240,15 @@ export default function Home() {
               </div>
 
               {/* Why Choose Us */}
-              <div className="group p-6 md:p-8 relative overflow-visible">
-                <div className="absolute inset-0 bg-white rounded-none group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+              <div className="group p-4 sm:p-6 md:p-8 relative overflow-visible">
+                <div className="absolute inset-0 bg-white rounded-none group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
                 <div className="relative z-20">
-                  <h2 className="text-3xl font-bold mb-6 transition-colors duration-300 group-hover:text-[#FC7A7A]">Why Choose Us</h2>
+                  <h2 className="text-3xl font-bold mb-6 transition-colors duration-300 group-hover:text-[#FC7A7A] text-center sm:text-left">Why Choose Us</h2>
                   <div className="space-y-6">
                     {/* Expert-Backed Information */}
-                    <div className="flex gap-4">
-                      <div className="flex-shrink-0 mt-1">
-                        <div className=" rounded-full p-1 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-10 h-10 flex items-center justify-center">
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <div className="flex-shrink-0">
+                        <div className="rounded-full p-1 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-10 h-10 flex items-center justify-center mx-auto sm:mx-0">
                           <Image
                             src="/images/expert.png"
                             alt="Expert Information Icon"
@@ -257,8 +259,8 @@ export default function Home() {
                         </div>
                       </div>
                       <div>
-                        <h3 className="font-bold text-base mb-1 transition-colors duration-300 group-hover:text-[#FC7A7A]">Expert-Backed Information</h3>
-                        <p className="text-sm font-inter text-gray-700">
+                        <h3 className="font-bold text-base mb-1 transition-colors duration-300 group-hover:text-[#FC7A7A] text-center sm:text-left">Expert-Backed Information</h3>
+                        <p className="text-sm font-inter text-gray-700 text-center sm:text-left">
                           Lifeline&apos;s content is developed, reviewed, validated by certified medical professionals,
                           adhering to the latest guidelines from reputable organizations like the American Heart
                           Association and the American Red Cross and other reputable medical sources.
@@ -267,9 +269,9 @@ export default function Home() {
                     </div>
 
                     {/* Accessible and User-Friendly */}
-                    <div className="flex gap-4">
-                      <div className="flex-shrink-0 mt-1">
-                        <div className=" rounded-full p-1 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-10 h-10 flex items-center justify-center">
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <div className="flex-shrink-0">
+                        <div className="rounded-full p-1 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-10 h-10 flex items-center justify-center mx-auto sm:mx-0">
                           <Image
                             src="/images/globe.png"
                             alt="User Friendly Icon"
@@ -280,8 +282,8 @@ export default function Home() {
                         </div>
                       </div>
                       <div>
-                        <h3 className="font-bold text-base mb-1 transition-colors duration-300 group-hover:text-[#FC7A7A]">Accessible and User-Friendly</h3>
-                        <p className="text-sm font-inter text-gray-700">
+                        <h3 className="font-bold text-base mb-1 transition-colors duration-300 group-hover:text-[#FC7A7A] text-center sm:text-left">Accessible and User-Friendly</h3>
+                        <p className="text-sm font-inter text-gray-700 text-center sm:text-left">
                           We prioritize a clean, intuitive design, ensuring that our app is easy to navigate and
                           understand, even in high-stress situations.
                         </p>
@@ -289,21 +291,22 @@ export default function Home() {
                     </div>
 
                     {/* Comprehensive Coverage */}
-                    <div className="flex gap-4">
-                      <div className="flex-shrink-0 mt-1">
-                        <div className=" rounded-full p-1 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-10 h-10 flex items-center justify-center">
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <div className="flex-shrink-0">
+                        <div className="rounded-full p-1 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-10 h-10 flex items-center justify-center mx-auto sm:mx-0">
                           <Image
                             src="/images/chat.png"
                             alt="Comprehensive Coverage Icon"
                             width={24}
                             height={24}
+                            style={{ width: "auto", height: "auto" }}
                             className="transition-transform duration-300 group-hover:scale-110"
                           />
                         </div>
                       </div>
                       <div>
-                        <h3 className="font-bold text-base mb-1 transition-colors duration-300 group-hover:text-[#FC7A7A]">Comprehensive Coverage</h3>
-                        <p className="text-sm font-inter text-gray-700">
+                        <h3 className="font-bold text-base mb-1 transition-colors duration-300 group-hover:text-[#FC7A7A] text-center sm:text-left">Comprehensive Coverage</h3>
+                        <p className="text-sm font-inter text-gray-700 text-center sm:text-left">
                           From common injuries to critical medical events, Lifeline offers a wide range of first aid
                           guides and resources, equipping you with the knowledge to handle various emergencies.
                           Information is regularly updated to reflect the most current medical practices.

@@ -1,5 +1,4 @@
 "use client";
-
 import React, { ReactNode } from "react";
 import Navbar from "./navBar";
 import Footer from "./footer";
@@ -24,5 +23,4 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     </div>
   );
 };
-
 export default Layout;
