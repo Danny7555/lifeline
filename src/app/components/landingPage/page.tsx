@@ -2,13 +2,27 @@ import React from "react";
 import NavBar from "./navBar";
 import HeroSection from "./heroSection";
 import FeatureCards from "./featureCard";
+import FirstAidScenarios from "./firstAidScenatios";
+import Testimonials from "./testimonial";
+import LifelineFAQ from "./lifeLineFaq";
+import Footer from "./footer";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export default function landingPage() {
     return (
-        <div>
+        <div className={inter.className}>
             <NavBar />
             <HeroSection />
-            <FeatureCards />
+            <FeatureCards /><br/>
+            <FirstAidScenarios />
+            <Testimonials />
+            <LifelineFAQ />
+            <Footer />
         </div>
     );
 }
