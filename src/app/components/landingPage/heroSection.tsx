@@ -162,6 +162,7 @@ export default function heroSection() {
                       alt="Accessible Icon"
                       width={32}
                       height={32}
+                       style={{ width: "auto", height: "auto" }}
                       className="transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
@@ -183,6 +184,7 @@ export default function heroSection() {
                       alt="Empowerment Icon"
                       width={32}
                       height={32}
+                       style={{ width: "auto", height: "auto" }}
                       className="transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
@@ -299,7 +301,6 @@ export default function heroSection() {
                             alt="Comprehensive Coverage Icon"
                             width={24}
                             height={24}
-                            style={{ width: "auto", height: "auto" }}
                             className="transition-transform duration-300 group-hover:scale-110"
                           />
                         </div>
