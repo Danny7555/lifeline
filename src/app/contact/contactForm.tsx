@@ -131,7 +131,7 @@ const ContactForm: React.FC = () => {
                     width={20}
                     height={20}
                     />
-                    <span className="text-gray-900">danielleoasiedu755@gmail.com</span>
+                    <span className="text-gray-900">daniellaasiedu755@gmail.com</span>
                 </li>
                 <li className="flex items-center gap-3">
                     <Image
