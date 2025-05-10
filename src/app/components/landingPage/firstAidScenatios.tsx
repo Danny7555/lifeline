@@ -41,7 +41,7 @@ export default function FirstAidScenarios() {
             },
             {
               src: "/videos/paul.gif",
-              title: "Bleeding?",
+              title: "Minor Injury?",
               subtitle: "Recognizing the Break, Providing Support.",
             },
           ].map(({ src, title, subtitle }, idx) => (
