@@ -12,23 +12,27 @@ export default function Home() {
         {/* Hero Section */}
         <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
           <div className="md:w-1/2">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4">
-              Lifeline: Your answer and your emergency toolkit, so{" "}
-              <span className="underline decoration-pink-500 decoration-4">you &nbsp;</span>can...
-            </h1>
-            <p className="text-gray-700 mb-4">
+           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4">
+            <b>Lifeline:</b> Your answer and your emergency toolkit, so{" "}
+            <span className="underline decoration-pink-700 decoration-2">you</span>&nbsp;can...
+          </h1>
+
+            <p className="text-gray-700 mb-4  font-poppins">
               Lifeline provides instant access to crucial first-aid information during emergencies, ensuring you&apos;re
               prepared to act quickly and effectively.
             </p>
-            <p className="text-gray-700 mb-4">Your pocket guide to handling medical emergencies with confidence.</p>
-            <p className="text-gray-700 mb-6">
+            <p className="text-gray-700 mb-4 font-poppins">Your pocket guide to handling medical emergencies with confidence.</p>
+            <p className="text-gray-700 mb-6 font-poppins">
               Empowering you to take control in critical situations, with clear, step-by-step guidance.
             </p>
           </div>
           <div className="md:w-1/2">
             <div className="relative h-64 sm:h-80 w-full">
               <div className="absolute -z-10 top-0 right-0 w-64 h-64 bg-pink-100 rounded-full opacity-50 blur-3xl"></div>
-              <Image src="/images/woman.png" alt="Person with first aid kit" fill className="object-contain" />
+              <Image src="/images/woman.png" alt="Person with first aid kit" 
+                className="object-contain" 
+               height={400}
+               width={400} />
             </div>
           </div>
         </div>
@@ -50,7 +54,7 @@ export default function Home() {
                     +
                   </span>
                 </div>
-                <p className="text-base sm:text-lg font-medium text-gray-700">Lifeliners</p>
+                <p className="text-base sm:text-lg font-bold text-gray-700">Lifeliners</p>
                 <div className="mt-3 w-16 h-1 bg-[#FC7A7A] rounded-full"></div>
               </div>
             </div>
@@ -69,7 +73,7 @@ export default function Home() {
                     +
                   </span>
                 </div>
-                <p className="text-base sm:text-lg font-medium text-gray-700">Emergency Scenarios</p>
+                <p className="text-base sm:text-lg font-bold text-gray-700">Emergency Scenarios</p>
                 <div className="mt-3 w-16 h-1 bg-[#FC7A7A] rounded-full"></div>
               </div>
             </div>
@@ -88,7 +92,7 @@ export default function Home() {
                     +
                   </span>
                 </div>
-                <p className="text-base sm:text-lg font-medium text-gray-700">Medical Professionals</p>
+                <p className="text-base sm:text-lg  text-gray-700 font-bold">Medical Professionals</p>
                 <div className="mt-3 w-16 h-1 bg-[#FC7A7A] rounded-full"></div>
               </div>
             </div>
@@ -98,10 +102,10 @@ export default function Home() {
                 {/* Features Section  */}
           <div className="mt-12 sm:mt-16">
             <div className="relative bg-white rounded-3xl p-4 sm:p-6 overflow-visible border-2 border-black">
-              <div className="grid grid-cols-1 sm:grid-cols-4 gap-0">
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                 {/* URGENT */}
                 <div className="group p-6 relative overflow-visible">
-                  <div className="absolute inset-0 bg-white rounded-none group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+                  <div className="absolute inset-0 bg-white rounded-3x1 group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
                   <div className="relative z-20 flex flex-col items-center text-center">
                     <div className="mb-3">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -115,7 +119,7 @@ export default function Home() {
                       </svg>
                     </div>
                     <h3 className="text-lg font-extrabold mb-2">URGENT</h3>
-                    <p className="text-xs sm:text-sm">
+                    <p className="text-sm sm:text-sm">
                       Lifeline recognizes the critical nature of emergencies and delivers information and tools for
                       rapid response.
                     </p>
@@ -138,7 +142,7 @@ export default function Home() {
                       </svg>
                     </div>
                     <h3 className="text-lg font-extrabold mb-2">ACCURACY</h3>
-                    <p className="text-xs sm:text-sm">
+                    <p className="text-sm sm:text-sm">
                       Lifeline&apos;s content is sourced from trusted medical authorities and rigorously reviewed by
                       healthcare professionals.
                     </p>
@@ -161,7 +165,7 @@ export default function Home() {
                       </svg>
                     </div>
                     <h3 className="text-lg font-extrabold mb-2">ACCESSIBLE</h3>
-                    <p className="text-xs sm:text-sm">
+                    <p className="text-sm sm:text-sm">
                       Lifeline is designed to be user-friendly and accessible to everyone, regardless of technical
                       skills or circumstances.
                     </p>
@@ -184,7 +188,7 @@ export default function Home() {
                       </svg>
                     </div>
                     <h3 className="text-lg font-bold mb-2">EMPOWERMENT</h3>
-                    <p className="text-xs sm:text-sm">
+                    <p className="text-sm sm:text-sm">
                       Lifeline equips individuals with the knowledge and confidence to take decisive action in
                       emergencies.
                     </p>
@@ -197,18 +201,19 @@ export default function Home() {
         {/* About Us Section */}
         <div className="mt-16 sm:mt-24">
           <div className="relative bg-white rounded-3xl p-4 sm:p-6 overflow-visible border-2 border-black">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
               {/* First Aid Kit Illustration */}
               <div className="group p-6 md:p-8 relative overflow-visible border-b-2 md:border-b-0 md:border-r-2 border-black">
-                <div className="absolute inset-0 bg-white rounded-none group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
-                <div className="relative z-20 w-full h-72 md:h-full">
+                <div className="absolute inset-0 bg-white rounded-md group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+                <div className="relative z-20 w-full h-80 md:h-full">
                   <div className="absolute inset-0 rounded-xl -z-10"></div>
                   <div className="relative h-full w-full">
                     <Image
                       src="/images/bucket.png"
                       alt="First aid kit with medical supplies"
-                      fill
-                      className="object-contain"
+                      width={500}
+                      height={500}
+                      className="object-contain w-full h-full rounded-xl"
                       priority
                     />
                   </div>
@@ -217,7 +222,7 @@ export default function Home() {
 
               {/* About Us */}
               <div className="group p-6 md:p-8 relative overflow-visible border-b-2 md:border-b-0 md:border-r-2 border-black">
-                <div className="absolute inset-0 bg-white rounded-none group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+                <div className="absolute inset-0 bg-white rounded-md group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
                 <div className="relative z-20">
                   <h2 className="text-3xl font-bold mb-4">About Us</h2>
                   <p className="text-md font-inter">

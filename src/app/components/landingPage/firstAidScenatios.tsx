@@ -11,7 +11,7 @@ const inter = Inter({
 export default function FirstAidScenarios() {
   return (
     <div
-      className={`relative w-full min-h-screen bg-repeat bg-white bg-opacity-90 ${inter.className}`}
+      className={`relative w-full min-h-screen bg-repeat border-t border-b border-2 border-gray-900 bg-white bg-opacity-90 ${inter.className}`}
     >
       {/* Background pattern */}
       <div className="absolute inset-0 bg-[url('/images/background.jpg')] bg-repeat opacity-10 pointer-events-none z-0" />
