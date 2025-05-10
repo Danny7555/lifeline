@@ -47,26 +47,26 @@ export default function FirstAidScenarios() {
           ].map(({ src, title, subtitle }, idx) => (
             <div
               key={idx}
-              className="flex flex-col sm:flex-row bg-white bg-opacity-95 rounded-lg shadow-md overflow-hidden border border-gray-200"
+              className="flex flex-col sm:flex-row  bg-opacity-95  overflow-hidden"
             >
               <div className="w-full sm:w-1/4 flex items-center justify-center p-2">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-md overflow-hidden bg-gray-100 flex items-center justify-center">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl overflow-hidden bg-gray-100 flex items-center justify-center">
                   <Image
                     src={src}
                     alt={title}
                     width={96}
                     height={96}
                     unoptimized
-                    className="object-cover rounded-md w-full h-full"
+                    className="object-cover rounded-3xl w-full h-full"
                   />
                 </div>
               </div>
               <div className="w-full sm:w-3/4 p-3 md:p-4">
                 <h3 className="text-xl md:text-2xl font-bold">{title}</h3>
-                <p className="text-gray-700 mb-2 md:mb-3 text-sm md:text-base">
+                <p className="text-gray-900 mb-2 md:mb-3 text-sm md:text-base">
                   {subtitle}
                 </p>
-                <button className="bg-red-200 text-gray-800 px-4 md:px-6 py-1.5 md:py-2 rounded-full text-xs md:text-sm hover:bg-red-300 transition-colors">
+                <button className="bg-red-200 text-gray-900 px-4 md:px-6 py-1.5 md:py-2 rounded-full text-xs md:text-sm hover:bg-red-300 transition-colors">
                   Learn to Save a Life
                 </button>
               </div>
@@ -76,7 +76,7 @@ export default function FirstAidScenarios() {
 
         {/* Footer Button */}
         <div className="mt-6 md:mt-8 text-center">
-          <button className="bg-red-400 text-white px-6 md:px-8 py-2 md:py-3 rounded-full font-medium hover:bg-red-500 transition-colors text-base md:text-lg">
+          <button className="bg-red-400 text-black px-6 md:px-8 py-2 md:py-3 rounded-full font-medium hover:bg-red-500 transition-colors text-base md:text-lg">
             View First Aid Guides?
           </button>
         </div>

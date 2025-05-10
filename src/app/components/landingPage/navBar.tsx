@@ -47,7 +47,7 @@ export default function NavBar() {
             <span className="group-hover:border-b-2 group-hover:border-black group-hover:pb-1">FIRST AID GUIDE</span>
           </Link>
           <Link 
-            href="/contact" 
+            href="./contact" 
             className="text-black font-medium hover:text-gray-800 transition-colors hover:border-b-2 hover:border-black hover:pb-1"
           >
             CONTACT US

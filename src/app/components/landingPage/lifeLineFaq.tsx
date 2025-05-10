@@ -39,7 +39,7 @@ const LifelineFAQ: FC = () => {
     {
       id: 5,
       question: "How do I update Lifeline?",
-      answer: "Lifeline updates automatically when connected to the internet. If you want to manually check for updates, go to your app store (Google Play or App Store), search for Lifeline, and check if there's an update available."
+      answer: "Lifeline updates automatically when connected to the internet with our offline mode on the webApp which allows you to access the app without an internet connection."
     },
     {
       id: 6,
@@ -187,7 +187,7 @@ const LifelineFAQ: FC = () => {
                   type="submit"
                   className="w-full py-2 px-4 bg-red-300 hover:bg-red-400 text-center rounded-full font-bold transition-colors"
                 >
-                  Sent
+                  Send
                 </button>
               </form>
 
