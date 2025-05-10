@@ -79,7 +79,7 @@ const ContactForm: React.FC = () => {
               
               <button 
                 type="submit" 
-                className="w-full py-3 bg-red-100 text-gray-900 font-semibold rounded-xl hover:bg-red-200 transition-colors mt-3"
+                className="w-full py-3 bg-red-100 text-gray-900 font-semibold rounded-xl border-t border-2 border-gray-900 hover:bg-red-200 transition-colors mt-3"
               >
                 SEND
               </button>
@@ -121,8 +121,8 @@ const ContactForm: React.FC = () => {
 
             {/* Content */}
             <div className="relative z-10">
-                <h3 className="text-xl font-bold mb-4">Info</h3>
-                
+                <h3 className="text-lg font-extrabold mb-4">Info</h3>
+
                 <ul className="space-y-3">
                 <li className="flex items-center gap-3">
                     <Image

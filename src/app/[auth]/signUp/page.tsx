@@ -29,6 +29,7 @@ export default function SignUp() {
                 alt="Medical illustration"
                 width={400}
                 height={400}
+                 style={{ width: "auto", height: "auto" }}
                 className="relative z-10 mx-auto drop-shadow-lg"
               />
             </div>

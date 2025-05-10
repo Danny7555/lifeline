@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
         <div className={styles.navLinks}>
           <Link href="/symptoms" className={styles.link}>Symptoms Checker</Link>
           <Link href="/first-aid" className={styles.link}>First Aid Guide</Link>
-          <Link href="/contact" className={styles.link}>Contact Us</Link>
+          <Link href="./contact" className={styles.link}>Contact Us</Link>
         </div>
         
         <div className={styles.socialIcons}>

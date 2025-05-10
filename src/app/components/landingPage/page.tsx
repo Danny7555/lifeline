@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import NavBar from "./navBar";
 import HeroSection from "./heroSection";
@@ -14,7 +15,7 @@ const inter = Inter({
   display: "swap",
 });
 
-export default function landingPage() {
+export default function LandingPage() {
     return (
         <div className={inter.className}>
             <NavBar />

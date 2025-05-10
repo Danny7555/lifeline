@@ -48,7 +48,6 @@ const LifelineFAQ: FC = () => {
     },
   ];
 
-  // Close modal when clicking outside of it
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -176,7 +175,7 @@ const LifelineFAQ: FC = () => {
                   <input
                     type="text"
                     id="question"
-                    className="w-full p-2 border border-gray-300 rounded"
+                    className="w-full p-2 border border-gray-800 rounded"
                     value={question}
                     onChange={handleQuestionChange}
                     aria-label="Enter your question"
@@ -185,7 +184,7 @@ const LifelineFAQ: FC = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-2 px-4 bg-red-300 hover:bg-red-400 text-center rounded-full font-bold transition-colors"
+                  className="w-full py-2 px-4 bg-red-300 hover:bg-red-400 text-center rounded-full  border-t border-2 border-gray-900 font-bold transition-colors"
                 >
                   Send
                 </button>
