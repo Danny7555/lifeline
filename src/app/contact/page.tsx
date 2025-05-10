@@ -1,10 +1,14 @@
 import React from 'react';
 import EmergencySection from './emergencySection';
 import ContactForm from './contactForm';
+import Navbar from '../components/landingPage/navBar';
+import Footer from '../components/landingPage/footer';
 
-export default function contactUS() {
+export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-white py-8 px-4">
+    <>
+      <Navbar />
+       <div className="min-h-screen bg-white py-8 px-4">
       <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <EmergencySection />
@@ -12,6 +16,7 @@ export default function contactUS() {
         </div>
       </div>
     </div>
+      <Footer />
+    </>
   );
 }
-

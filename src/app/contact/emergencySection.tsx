@@ -72,13 +72,13 @@ const EmergencySection: React.FC = () => {
           width={32}
           height={32}
         />
-        <span className="font-bold text-2xl">Call: 112/030 278 7301</span>
+        <span className="font-extrabold text-xl">Call: 112/030 278 7301</span>
       </div>
       
       {contactGroups.map((group, groupIndex) => (
         <div key={groupIndex} className="mb-4 last:mb-0">
           <div className="bg-white rounded-2xl p-4 border border-gray-800">
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-6 items-center">
               <div className="flex-shrink-0">
                 {groupIndex === 0 ? (
                   <Image
