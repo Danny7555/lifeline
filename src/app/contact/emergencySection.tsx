@@ -37,7 +37,7 @@ const EmergencySection: React.FC = () => {
       contacts: [
         { name: 'Ama Atta Aidoo', phone: '020 567 0800' },
         { name: 'Okomfo Anokye', phone: '025 273 9510' },
-        { name: 'Tagbe Tsali', phone: '032 200 1769' },
+        { name: 'Togbe Tsali', phone: '032 200 1769' },
         { name: 'Agorkoli', phone: '034 202 3011' }
       ]
     }
