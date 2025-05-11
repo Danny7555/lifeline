@@ -102,13 +102,13 @@ export default function heroSection() {
 
         {/* Features Section  */}
         <div className="mt-12 sm:mt-16">
-          <div className="relative bg-white rounded-3xl p-4 sm:p-6 overflow-visible border-2 border-black">
+          <div className="relative bg-[#F8D7D7] rounded-3xl p-4 sm:p-6 overflow-visible border-2 border-black">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-3">
               {/* URGENT */}
               <div className="group p-4 sm:p-6 relative overflow-visible">
-                <div className="absolute inset-0 bg-white rounded-3xl group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+                <div className="absolute inset-0 bg-[#F8D7D7] rounded-3xl group-hover:bg-[#FA9D9D] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
                 <div className="relative z-20 flex flex-col items-center text-center">
-                  <div className="mb-3 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-12 h-12 flex items-center justify-center">
+                  <div className="mb-3 transition-colors duration-300 group-hover:bg-[#FA9D9D] w-12 h-12 flex items-center justify-center">
                     <Image
                       src="/images/alarm.png"
                       alt="Urgent Icon"
@@ -118,7 +118,7 @@ export default function heroSection() {
                       className="transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
-                  <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#FC7A7A]">
+                  <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#aa4f4f]">
                     URGENT
                   </h3>
                   <p className="text-sm">
@@ -130,9 +130,9 @@ export default function heroSection() {
 
               {/* ACCURACY */}
               <div className="group p-4 sm:p-6 relative overflow-visible">
-                <div className="absolute inset-0 bg-white rounded-3xl group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+                <div className="absolute inset-0 bg-[#F8D7D7] rounded-3xl group-hover:bg-[#FA9D9D] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
                 <div className="relative z-20 flex flex-col items-center text-center">
-                  <div className="mb-3 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-12 h-12 flex items-center justify-center">
+                  <div className="mb-3 transition-colors duration-300 group-hover:bg-[#FA9D9D] w-12 h-12 flex items-center justify-center">
                     <Image
                       src="/images/correct.png"
                       alt="Accuracy Icon"
@@ -142,7 +142,7 @@ export default function heroSection() {
                       className="transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
-                  <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#FC7A7A]">
+                  <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#aa4f4f]">
                     ACCURACY
                   </h3>
                   <p className="text-sm">
@@ -154,9 +154,9 @@ export default function heroSection() {
 
               {/* ACCESSIBLE */}
               <div className="group p-4 sm:p-6 relative overflow-visible">
-                <div className="absolute inset-0 bg-white rounded-3xl group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+                <div className="absolute inset-0 bg-[#F8D7D7] rounded-3xl group-hover:bg-[#FA9D9D] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
                 <div className="relative z-20 flex flex-col items-center text-center">
-                  <div className="mb-3 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-12 h-12 flex items-center justify-center">
+                  <div className="mb-3 transition-colors duration-300 group-hover:bg-[#FA9D9D] w-12 h-12 flex items-center justify-center">
                     <Image
                       src="/images/globe.png"
                       alt="Accessible Icon"
@@ -166,7 +166,7 @@ export default function heroSection() {
                       className="transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
-                  <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#FC7A7A]">ACCESSIBLE</h3>
+                  <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#aa4f4f]">ACCESSIBLE</h3>
                   <p className="text-sm">
                     Lifeline is designed to be user-friendly and accessible to everyone, regardless of technical skills
                     or circumstances.
@@ -176,9 +176,9 @@ export default function heroSection() {
 
               {/* EMPOWERING */}
               <div className="group p-4 sm:p-6 relative overflow-visible">
-                <div className="absolute inset-0 bg-white rounded-3xl group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
+                <div className="absolute inset-0 bg-[#F8D7D7] rounded-3xl group-hover:bg-[#FA9D9D] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
                 <div className="relative z-20 flex flex-col items-center text-center">
-                  <div className="mb-3 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-12 h-12 flex items-center justify-center">
+                  <div className="mb-3 transition-colors duration-300 group-hover:bg-[#FA9D9D] w-12 h-12 flex items-center justify-center">
                     <Image
                       src="/images/body.png"
                       alt="Empowerment Icon"
@@ -188,7 +188,7 @@ export default function heroSection() {
                       className="transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
-                  <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#FC7A7A]">EMPOWERMENT</h3>
+                  <h3 className="text-lg font-extrabold mb-2 transition-colors duration-300 group-hover:text-[#aa4f4f]">EMPOWERMENT</h3>
                   <p className="text-sm">
                     Lifeline equips individuals with the knowledge and confidence to take decisive action in
                     emergencies.
