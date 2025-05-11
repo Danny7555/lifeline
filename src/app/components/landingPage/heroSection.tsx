@@ -6,37 +6,41 @@ import Counter from "@/app/components/counter"
 export default function heroSection() {
   return (
     <main className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-16 max-w-6xl">
-        {/* Hero Section */}
-        <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
-          <div className="md:w-1/2 text-center md:text-left">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4">
-              <b>Lifeline:</b> Your answer and your emergency toolkit, so{" "}
-              <span className="underline decoration-pink-700 decoration-2">you</span>&nbsp;can...
-            </h1>
-
-            <p className="text-gray-700 mb-4 font-poppins">
-              Lifeline provides instant access to crucial first-aid information during emergencies, ensuring you&apos;re
-              prepared to act quickly and effectively.
-            </p>
-            <p className="text-gray-700 mb-4 font-poppins">Your pocket guide to handling medical emergencies with confidence.</p>
-            <p className="text-gray-700 mb-6 font-poppins">
-              Empowering you to take control in critical situations, with clear, step-by-step guidance.
-            </p>
-          </div>
-          <div className="md:w-1/2">
-            <div className="relative h-64 sm:h-80 w-full">
-              <div className="absolute -z-10 top-0 right-0 w-64 h-64 bg-pink-100 rounded-full opacity-50 blur-3xl"></div>
-              <Image
-                src="/images/woman.png"
-                alt="Person with first aid kit"
-                className="object-contain mx-auto"
-                height={400}
-                width={400}
-              />
-            </div>
+         <div className="container mx-auto px-4 py-8 md:py-16 max-w-6xl">
+      {/* Hero Section */}
+      <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+        <div className="w-full md:w-1/2 text-center md:text-left">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-3 md:mb-4">
+            <b>Lifeline:</b> Your answer and your emergency toolkit, so{" "}
+            <span className="underline decoration-pink-700 decoration-2">you</span>&nbsp;can...
+          </h1>
+          
+          <p className="text-sm sm:text-base text-gray-700 mb-3 md:mb-4 font-poppins">
+            Lifeline provides instant access to crucial first-aid information during emergencies, ensuring you&apos;re
+            prepared to act quickly and effectively.
+          </p>
+          <p className="text-sm sm:text-base text-gray-700 mb-3 md:mb-4 font-poppins">
+            Your pocket guide to handling medical emergencies with confidence.
+          </p>
+          <p className="text-sm sm:text-base text-gray-700 mb-4 md:mb-6 font-poppins">
+            Empowering you to take control in critical situations, with clear, step-by-step guidance.
+          </p>
+        </div>
+        
+        <div className="w-full md:w-1/2 mt-4 md:mt-0">
+          <div className="relative h-48 sm:h-56 md:h-64 lg:h-80 w-full">
+            <div className="absolute -z-10 top-0 right-0 w-40 sm:w-48 md:w-56 lg:w-64 h-40 sm:h-48 md:h-56 lg:h-64 bg-pink-100 rounded-full opacity-50 blur-3xl"></div>
+            <Image
+              src="/images/woman.png"
+              alt="Person with first aid kit"
+              className="object-contain mx-auto h-full"
+              height={400}
+              width={400}
+              priority
+            />
           </div>
         </div>
+      </div>
 
         {/* Stats Section - With Counters */}
         <div className="mt-8 sm:mt-12 mb-8">
