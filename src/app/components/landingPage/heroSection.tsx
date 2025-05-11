@@ -12,7 +12,7 @@ export default function heroSection() {
         <div className="w-full md:w-1/2 text-center md:text-left">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-3 md:mb-4">
             <b>Lifeline:</b> Your answer and your emergency toolkit, so{" "}
-            <span className="underline decoration-pink-700 decoration-2">you</span>&nbsp;can...
+            <span className="underline decoration-pink-700 decoration-2 whitespace-nowrap">you</span>&nbsp;can...
           </h1>
           
           <p className="text-sm sm:text-base text-gray-700 mb-3 md:mb-4 font-poppins">
