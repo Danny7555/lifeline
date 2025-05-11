@@ -65,7 +65,7 @@ const EmergencySection: React.FC = () => {
       </div>
       
       <div className="bg-red-600 text-white rounded-2xl p-4 flex items-center justify-center gap-4 mb-6 shadow-md transform hover:scale-102 transition-transform duration-200">
-        <div className="bg-white  rounded-full">
+        <div className="bg-white p-1  rounded-full">
           <Image
             src="/images/ambulance.png"
             alt="Ambulance"
