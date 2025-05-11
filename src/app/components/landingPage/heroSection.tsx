@@ -106,7 +106,7 @@ export default function heroSection() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-3">
               {/* URGENT */}
               <div className="group p-4 sm:p-6 relative overflow-visible">
-                <div className="absolute inset-0 bg-white rounded-3xl group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300  group-hover:border-black"></div>
+                <div className="absolute inset-0 bg-white rounded-3xl group-hover:bg-[#F8D7D7] group-hover:rounded-3xl group-hover:-m-6 sm:group-hover:-m-10 group-hover:z-10 transition-all duration-300 group-hover:shadow-xl group-hover:border-[3px] group-hover:border-black"></div>
                 <div className="relative z-20 flex flex-col items-center text-center">
                   <div className="mb-3 transition-colors duration-300 group-hover:bg-[#F8D7D7] w-12 h-12 flex items-center justify-center">
                     <Image
