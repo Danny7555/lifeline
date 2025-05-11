@@ -4,37 +4,88 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  transition: opacity 0.3s ease-in-out;
+  transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .loaderContent {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
+  padding: 32px;
+  
 }
 
 .logoImage {
-  animation: pulse 2s infinite;
+  width: 80px;
+  height: 80px;
+  background-color: transparent;
+  animation: float 3s ease-in-out infinite;
+}
+
+.loadingText {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  color: #555;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  animation: fadeInOut 2s infinite;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #3498db;
+  animation: spin 1s ease-in-out infinite;
+  margin-top: 8px;
+}
+
+.progress {
+  width: 180px;
+  height: 4px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progressBar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #3498db, #8e44ad);
+  animation: progress 2.5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 @keyframes pulse {
   0% {
     opacity: 0.6;
-    transform: scale(0.95);
+    transform: scale(0.98);
   }
   50% {
     opacity: 1;
-    transform: scale(1.05);
+    transform: scale(1.02);
   }
   100% {
     opacity: 0.6;
-    transform: scale(0.95);
+    transform: scale(0.98);
   }
 }
 
@@ -46,3 +97,25 @@
     transform: rotate(360deg);
   }
 }
+
+@keyframes progress {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 70%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
