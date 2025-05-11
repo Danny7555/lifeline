@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
       <div className={styles.container}>
         <div className={styles.logo}>
           <h1>LIFELINE</h1>
-        </div>
+        </div><br/>
         
         <div className={styles.navLinks}>
           <Link href="/symptoms" className={styles.link}>Symptoms Checker</Link>
