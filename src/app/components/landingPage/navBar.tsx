@@ -34,15 +34,15 @@ export default function NavBar() {
         <Link href="/" className="flex items-center group relative">
           <div className="relative h-11 w-11 sm:h-12 sm:w-12 md:h-14 md:w-14 overflow-hidden rounded-full border-2 border-white shadow-md transition-transform duration-200 group-hover:scale-110">
             <Image
-              src="/images/logo.png" 
-              alt="Lifeline Logo"
-              fill
-              priority={true}
-              sizes="(max-width: 640px) 44px, (max-width: 768px) 48px, 56px"
-              className={`object-contain ${imageLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
-              onLoadingComplete={() => setImageLoaded(true)}
-              onError={() => console.error("Logo image failed to load")}
-            />
+            src="/images/logo.png" 
+            alt="Lifeline Logo"
+            fill
+            priority={true}
+            sizes="(max-width: 640px) 44px, (max-width: 768px) 48px, 56px"
+            className={`object-contain ${imageLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+            onLoad={() => setImageLoaded(true)}
+            onError={() => console.error("Logo image failed to load")}
+          />
             {/* Fallback while image loads */}
             {!imageLoaded && (
               <div className="absolute inset-0 bg-[#FA9D9D] flex items-center justify-center">

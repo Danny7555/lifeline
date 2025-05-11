@@ -11,9 +11,15 @@ export default function heroSection() {
       <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
         <div className="w-full md:w-1/2 text-center md:text-left">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-3 md:mb-4">
-            <b>Lifeline:</b> Your answer and your emergency toolkit, so{" "}
-            <span className="underline decoration-pink-700 decoration-2">you</span>&nbsp;can...
-          </h1>
+        <b>Lifeline:</b> Your answer and your emergency toolkit, so{" "}
+        <span className="relative inline-block whitespace-nowrap">
+          <span>you</span>
+          <span 
+          className="absolute bottom-0 left-0 w-full h-1 bg-pink-500"
+          ></span>
+        </span>{" "}
+        can...
+      </h1>
           
           <p className="text-sm sm:text-base text-gray-700 mb-3 md:mb-4 font-poppins">
             Lifeline provides instant access to crucial first-aid information during emergencies, ensuring you&apos;re
