@@ -74,7 +74,7 @@ const EmergencySection: React.FC = () => {
             height={32}
           />
         </div>
-        <span className="font-extrabold text-xl">Call: 112/030 278 7301</span>
+        <span className="font-extrabold text-xl sm:text-md">Call: 112/030 278 7301</span>
       </div>
       
       {contactGroups.map((group, groupIndex) => (
