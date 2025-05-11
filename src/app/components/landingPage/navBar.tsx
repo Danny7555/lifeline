@@ -31,17 +31,16 @@ export default function NavBar() {
       <div className="container mx-auto max-w-6xl flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="flex items-center group">
-          <div className="relative h-10 w-10 sm:h-12 sm:w-12 bg-white rounded-md overflow-hidden border-2 border-black shadow-sm transition-transform duration-200 group-hover:scale-105">
+          <div className="relative h-14 w-14 sm:h-14 sm:w-16 overflow-hidden transition-transform duration-200 group-hover:scale-110">
             <Image
-              src="/images/logo.jpg" 
+              src="/images/logo.png" 
               alt="Lifeline Logo"
-              width={48}
-              height={48}
-              className="object-contain"
+              fill
+              sizes="(max-width: 640px) 100px, (max-width: 768px) 120px, (max-width: 1024px) 150px, (max-width: 1280px) 180px, (max-width: 1536px) 200px"
+              className="object-cover brightness-180 rounded-full"
               priority
             />
           </div>
-          <span className="ml-2 font-bold text-lg sm:text-xl">LIFELINE</span>
         </Link>
 
         {/* Navigation Links - Desktop */}
