@@ -13,7 +13,7 @@ const Loader: React.FC<LoaderProps> = ({ isLoading }) => {
     <div className={styles.loaderContainer}>
       <div className={styles.loaderContent}>
         <Image
-          src="/images/signup.png"
+          src="/images/lifeline.jpeg"
           alt="Lifeline Logo"
           width={120}
           height={120}
