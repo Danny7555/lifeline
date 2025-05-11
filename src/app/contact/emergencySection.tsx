@@ -48,7 +48,7 @@ const EmergencySection: React.FC = () => {
       <h1 className="text-3xl font-extrabold text-center mb-4">EMERGENCY HELP NEEDED?</h1>
       
       <div className="flex justify-center mb-4">
-        <div className="p-4 rounded-xl">
+        <div className="bg-red-50 p-4 rounded-full shadow-md flex items-center justify-center">
           <Image
             src="/images/emergency.png" 
             alt="Emergency" 
@@ -64,15 +64,17 @@ const EmergencySection: React.FC = () => {
         <p className="text-gray-700 text-xl">Reach out to the contacts below</p>
       </div>
       
-      <div className="bg-white rounded-2xl p-4 flex items-center gap-4 mb-6 border border-gray-500">
-        <Image
-          src="/images/ambulance.png"
-          alt="Ambulance"
-          className="w-8 h-8"
-          width={32}
-          height={32}
-        />
-        <span className="font-extrabold text-xl">Call: 112/030 278 7301</span>
+      <div className="bg-red-600 text-white rounded-xl p-4 flex items-center justify-center gap-4 mb-8 shadow-md transform hover:scale-102 transition-transform duration-200">
+        <div className="bg-white p-2 rounded-full">
+          <Image
+            src="/images/ambulance.png"
+            alt="Ambulance"
+            className="w-8 h-8"
+            width={32}
+            height={32}
+          />
+        </div>
+        <span className="font-extrabold text-xl sm:text-2xl">Call: 112/030 278 7301</span>
       </div>
       
       {contactGroups.map((group, groupIndex) => (

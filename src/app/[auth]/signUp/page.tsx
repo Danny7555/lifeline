@@ -25,6 +25,7 @@ export default function SignUp() {
           <span className="text-sm font-bold">English (UK)</span>
         </div>
       </div><br /><br />
+      
       <main className="flex-1 flex flex-col md:flex-row relative z-10">
         {/* Left side with illustration */}
         <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-12">
