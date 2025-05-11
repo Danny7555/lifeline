@@ -64,7 +64,7 @@ const EmergencySection: React.FC = () => {
         <p className="text-gray-700 text-xl">Reach out to the contacts below</p>
       </div>
       
-      <div className="bg-red-600 text-white rounded-xl p-4 flex items-center justify-center gap-4 mb-8 shadow-md transform hover:scale-102 transition-transform duration-200">
+      <div className="bg-red-600 text-white rounded-2xl p-4 flex items-center justify-center gap-4 mb-6 shadow-md transform hover:scale-102 transition-transform duration-200">
         <div className="bg-white p-2 rounded-full">
           <Image
             src="/images/ambulance.png"
