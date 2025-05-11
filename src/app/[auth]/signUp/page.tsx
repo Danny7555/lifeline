@@ -11,7 +11,7 @@ export default function SignUp() {
   return (
     <div className="min-h-screen flex flex-col relative bg-gradient-to-br from-white to-red-50">
       {/* Background pattern */}
-      <div className="absolute inset-0 bg-[url('/images/background.jpg')] bg-repeat opacity-10 pointer-events-none" />
+      <div className="absolute inset-0 bg-[url('/images/background.jpg')] bg-cover bg-repeat opacity-10 pointer-events-none" />
            {/* Navigation overlay - positioned on top of background */}
       <div className="absolute top-0 left-0 right-0 py-2 px-4 flex justify-between items-center z-10">
         <div className="w-20">
@@ -20,7 +20,6 @@ export default function SignUp() {
         <Link href="/" className="flex items-center text-gray-400 hover:text-gray-900">
           <span className="text-sm font-bold">/home</span>
         </Link>
-
         <div className="flex items-center text-gray-400">
           <Globe size={16} className="mr-1 " />
           <span className="text-sm font-bold">English (UK)</span>
