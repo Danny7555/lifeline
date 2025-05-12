@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import LoaderWrapper from './components/LoaderWrapper';
 import "./globals.css";
 
@@ -14,6 +13,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Lifeliner - Your Health Companion',
   description: 'Login to your Lifeliner account and manage your health journey',
+  manifest: '/manifest.json',
+  icons: {
+    apple: '/icons/life.png',
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -29,19 +32,16 @@ export const viewport: Viewport = {
   initialScale: 1,
   themeColor: '#000000',
   viewportFit: 'cover',
+  minimumScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/icons/life.png" />
-      </head>
       <body className={inter.className}>
         <LoaderWrapper>
           {children}
-          <SpeedInsights />
         </LoaderWrapper>
       </body>
     </html>
