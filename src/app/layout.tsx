@@ -2,6 +2,7 @@
 import React from 'react';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import LoaderWrapper from './components/LoaderWrapper';
 import "./globals.css";
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={inter.className}>
         <LoaderWrapper>
           {children}
+          <SpeedInsights />
         </LoaderWrapper>
       </body>
     </html>
