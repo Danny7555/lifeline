@@ -1,25 +1,4 @@
-import NextPWA from 'next-pwa'
-
-const withPWA = NextPWA({
-  dest: 'public',
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development',
-  runtimeCaching: [
-    {
-      urlPattern: /^https?.*/,
-      handler: 'NetworkFirst',
-      options: {
-        cacheName: 'lifeline-offline-v1',
-        expiration: {
-          maxEntries: 200,
-          maxAgeSeconds: 24 * 60 * 60 // 24 hours
-        },
-        networkTimeoutSeconds: 15
-      },
-    },
-  ],
-});
+import withSerwist from "@serwist/next";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -32,6 +11,11 @@ const nextConfig = {
       },
     ],
   },
-}
+};
 
-export default withPWA(nextConfig);
+export default withSerwist({
+  swSrc: "src/app/sw.ts",
+  swDest: "public/sw.js",
+  disable: process.env.NODE_ENV === "development",
+  // Remove the swOptions key - it's not supported
+})(nextConfig);
