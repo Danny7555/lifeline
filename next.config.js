@@ -5,32 +5,18 @@ const withPWA = require('next-pwa')({
   disable: process.env.NODE_ENV === 'development',
   runtimeCaching: [
     {
-      urlPattern: /^https:\/\/lifeline-mu\.vercel\.app\/.*$/,
-      handler: 'NetworkFirst',
-      options: {
-        cacheName: 'html-cache',
-        expiration: {
-          maxEntries: 50,
-          maxAgeSeconds: 24 * 60 * 60,
-        },
-      },
-    },
-    {
-      // Cache external HTTP(S) assets
       urlPattern: /^https?.*/,
       handler: 'NetworkFirst',
       options: {
-        cacheName: 'offlineCache',
+        cacheName: 'lifeline-offline-v1',
         expiration: {
           maxEntries: 200,
-          maxAgeSeconds: 24 * 60 * 60, // 24 hours
+          maxAgeSeconds: 24 * 60 * 60 // 24 hours
         },
+        networkTimeoutSeconds: 15
       },
     },
   ],
-  fallbacks: {
-    document: '/offline.html',
-  },
 });
 
 /** @type {import('next').NextConfig} */
@@ -44,6 +30,6 @@ const nextConfig = {
       },
     ],
   },
-};
+}
 
-module.exports = withPWA(nextConfig);
+export default withPWA(nextConfig);
