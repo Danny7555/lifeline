@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
       </div><br/>
       <div className={styles.bottomLine}></div>
        <div className="text-center text-gray-800 text-md mt-2 font-inter font-light">
-          &copy; {new Date().getFullYear()} Lifeliner. All rights reserved. Daniella Asiedu. Credits to <Link href="https://github.com/Aristocratjnr" className="text-red-500 hover:text-red-600">Aristocratjnr</Link> for the assistance.
+          &copy; {new Date().getFullYear()} Lifeliner. All rights reserved. Daniella Asiedu. Credits to <Link href="https://github.com/Aristocratjnr" className="text-red-600 hover:text-red-700">David O. Ayim</Link> for the assistance.
         </div>
     </footer>
   );
