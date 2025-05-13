@@ -36,8 +36,10 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
-, "src/app/sw.js", "src/app/sw.js"  ],
+    ".next/types/**/*.ts",
+    "src/app/sw.ts",
+    "src/app/sw.js"
+  ],
   "exclude": [
     "node_modules"
   ]
