@@ -1,210 +1,481 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>You're Offline</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Assistant Bot - Offline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #FC7A7A;
+      --primary-light: #FFEBEE;
+      --primary-dark: #C62828;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      --red-500: #0fa421;
+      --white: #ffffff;
+    }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--gray-50);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+      color: var(--gray-800);
+    }
+
+    .chat-container {
+      width: 100%;
+      max-width: 480px;
+      height: 90vh;
+      max-height: 800px;
+      min-height: 500px;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      display: flex;
+      align-items: center;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--gray-100);
+      min-height: 72px;
+    }
+
+    .bot-avatar {
+      background: var(--primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .bot-avatar svg {
+      width: 24px;
+      height: 24px;
+      color: var(--white);
+    }
+
+    .bot-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .bot-name {
+      font-weight: 600;
+      color: var(--gray-900);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .bot-status {
+      font-size: 0.75rem;
+      color: var(--red-500);
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .status-indicator {
+      width: 8px;
+      height: 8px;
+      background: var(--red-500);
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      animation: pulse 2s infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .messages-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+      background: var(--gray-50);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .message {
+      max-width: 85%;
+      padding: 0.75rem 1rem;
+      border-radius: 16px;
+      animation: fadeIn 0.3s ease-out;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .bot-message {
+      align-self: flex-start;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .user-message {
+      align-self: flex-end;
+      background: var(--primary);
+      color: var(--white);
+      border-bottom-right-radius: 4px;
+    }
+
+    .system-message {
+      align-self: center;
+      background: var(--gray-100);
+      color: var(--gray-600);
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8125rem;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 95%;
+    }
+
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .suggestion-chip {
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 0.4rem 0.8rem;
+      border-radius: 9999px;
+      font-size: 0.8125rem;
+      cursor: pointer;
+      font-weight: 500;
+      background: transparent;
+      transition: background 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .suggestion-chip:hover {
+      background: var(--primary-light);
+    }
+
+    .check-connection-btn {
+      align-self: center;
+      margin-top: 1rem;
+      background: var(--primary);
+      color: var(--white);
+      padding: 0.6rem 1.25rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.9375rem;
+      box-shadow: 0 2px 5px rgba(79, 70, 229, 0.3);
+      transition: transform 0.2s ease;
+      width: auto;
+      min-width: 180px;
+    }
+
+    .check-connection-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .chat-input {
+      padding: 1rem;
+      display: flex;
+      border-top: 1px solid var(--gray-100);
+      background: var(--white);
+      min-height: 80px;
+    }
+
+    .message-input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid var(--gray-200);
+      background: var(--gray-50);
+      font-size: 0.9375rem;
+      color: var(--gray-800);
+      min-width: 0;
+    }
+
+    .send-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-left: 0.75rem;
+      background: var(--gray-200);
+      color: var(--gray-500);
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: not-allowed;
+      flex-shrink: 0;
+    }
+
+    footer {
+      padding: 0.5rem;
+      background: var(--white);
+      border-top: 1px solid var(--gray-100);
+    }
+
+    footer div {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--gray-500);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
       body {
-        font-family: 'Inter', sans-serif;
-        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-        color: #111827;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        text-align: center;
+        padding: 0;
+        height: 100vh;
+      }
+      
+      .chat-container {
+        max-width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+      }
+      
+      .messages-container {
         padding: 1rem;
-        line-height: 1.5;
       }
-
-      .container {
-        max-width: 480px;
-        width: 100%;
-        background: #ffffff;
-        padding: 3rem 2.5rem;
-        border-radius: 20px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-        position: relative;
-        overflow: hidden;
+      
+      .message {
+        max-width: 90%;
       }
-
-      .container::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 6px;
-        background: linear-gradient(90deg, #3b82f6, #6366f1);
+      
+      .suggestions {
+        gap: 0.4rem;
       }
-
-      h1 {
-        font-size: 1.75rem;
-        font-weight: 700;
-        margin-bottom: 0.75rem;
-        color: #1f2937;
+      
+      .suggestion-chip {
+        padding: 0.35rem 0.7rem;
+        font-size: 0.75rem;
       }
+    }
 
-      p {
-        margin-bottom: 2rem;
-        font-size: 1rem;
-        color: #4b5563;
-        font-weight: 400;
+    @media (max-width: 400px) {
+      .chat-header {
+        padding: 0.75rem 1rem;
       }
-
-      .icon {
-        width: 100px;
-        height: 100px;
-        background: #f0f4ff;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 1.5rem;
-        position: relative;
-      }
-
-      .icon svg {
-        width: 50px;
-        height: 50px;
-        color: #3b82f6;
-      }
-
-      .btn {
-        background: linear-gradient(90deg, #3b82f6, #6366f1);
-        color: white;
-        border: none;
-        padding: 0.875rem 2rem;
-        border-radius: 10px;
-        font-weight: 600;
-        text-decoration: none;
-        display: inline-block;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
-        cursor: pointer;
-        font-size: 0.9375rem;
-      }
-
-      .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
-      }
-
-      .btn:active {
-        transform: translateY(0);
-      }
-
-      .connection-status {
-        display: inline-block;
-        background: #fee2e2;
-        color: #dc2626;
-        padding: 0.375rem 0.75rem;
-        border-radius: 20px;
-        font-size: 0.8125rem;
-        font-weight: 500;
-        margin-bottom: 1.5rem;
-      }
-
-      .tips {
-        margin-top: 2rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid #e5e7eb;
-        text-align: left;
-      }
-
-      .tips h3 {
-        font-size: 0.9375rem;
-        font-weight: 600;
-        color: #374151;
-        margin-bottom: 0.75rem;
-      }
-
-      .tips ul {
-        list-style: none;
-        font-size: 0.875rem;
-        color: #6b7280;
-      }
-
-      .tips li {
-        margin-bottom: 0.5rem;
-        display: flex;
-        align-items: flex-start;
-      }
-
-      .tips li::before {
-        content: '•';
-        color: #9ca3af;
+      
+      .bot-avatar {
+        width: 36px;
+        height: 36px;
         margin-right: 0.5rem;
       }
-
-      @media (max-width: 480px) {
-        .container {
-          padding: 2.5rem 1.5rem;
-        }
-        
-        h1 {
-          font-size: 1.5rem;
-        }
-        
-        .icon {
-          width: 80px;
-          height: 80px;
-        }
-        
-        .icon svg {
-          width: 40px;
-          height: 40px;
-        }
+      
+      .message {
+        padding: 0.6rem 0.9rem;
+        font-size: 0.9rem;
       }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="icon">
+      
+      .system-message {
+        font-size: 0.75rem;
+      }
+      
+      .check-connection-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        min-width: 160px;
+      }
+      
+      .chat-input {
+        padding: 0.75rem;
+      }
+      
+      .message-input {
+        font-size: 0.875rem;
+        padding: 0.6rem 0.9rem;
+      }
+    }
+
+    /* Landscape orientation adjustments */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .chat-container {
+        height: 100vh;
+        max-height: 100vh;
+      }
+      
+      .messages-container {
+        padding: 0.75rem;
+      }
+      
+      .message {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+      }
+      
+      .suggestion-chip {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <div class="bot-avatar">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
         </svg>
       </div>
-      <div class="connection-status">No Internet Connection</div>
-      <h1>You're Offline</h1>
-      <p>We can't connect to the internet right now. Check your connection and we'll get you back online.</p>
-      <a href="/" class="btn">Retry Connection</a>
-      
-      <div class="tips">
-        <h3>Quick Tips:</h3>
-        <ul>
-          <li>Check your Wi-Fi or mobile data connection</li>
-          <li>Restart your router or modem</li>
-          <li>Try moving to a different location</li>
-          <li>Disable any VPN or proxy services</li>
-        </ul>
+      <div class="bot-info">
+        <div class="bot-name">LifeLine Bot</div>
+        <div class="bot-status">
+          <div class="status-indicator"></div>
+          Online
+        </div>
       </div>
     </div>
-    
-    <script>
-      // Simple retry functionality
-      document.querySelector('.btn').addEventListener('click', function(e) {
-        if (!navigator.onLine) {
-          e.preventDefault();
-          document.querySelector('.btn').textContent = 'Retrying...';
-          setTimeout(() => {
-            document.querySelector('.btn').textContent = 'Retry Connection';
-          }, 1500);
-        }
+
+    <div class="messages-container" id="messages-container">
+      <div class="message bot-message">
+        <strong>Hi LifeLiner!</strong> It looks like you're currently offline😞. I can't connect to our servers right now.
+      </div>
+      <div class="message system-message">Connection lost at <span id="disconnect-time"></span></div>
+      <div class="message bot-message">
+        I got you, Here are a few things you can try:
+        <div class="suggestions">
+          <button class="suggestion-chip">Check WiFi</button>
+          <button class="suggestion-chip">Restart router</button>
+          <button class="suggestion-chip">Mobile data</button>
+          <button class="suggestion-chip">Disable VPN</button>
+        </div>
+      </div>
+      <button class="check-connection-btn" id="check-connection-btn">Tap to reconnect</button>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" class="message-input" placeholder="Type a message..." disabled>
+      <button class="send-button" disabled>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+        </svg>
+      </button>
+    </div>
+    <footer>
+      <div>
+        &copy;LifeLine. Built by Aristocratjnr.
+      </div>
+    </footer>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const ampm = hours >= 12 ? "PM" : "AM";
+      const formattedTime = `${hours % 12 || 12}:${minutes.toString().padStart(2, "0")} ${ampm}`;
+      document.getElementById("disconnect-time").textContent = formattedTime;
+
+      const messagesContainer = document.getElementById("messages-container");
+      const checkBtn = document.getElementById("check-connection-btn");
+
+      document.querySelectorAll(".suggestion-chip").forEach((chip) => {
+        chip.addEventListener("click", () => {
+          const userMsg = document.createElement("div");
+          userMsg.className = "message user-message";
+          userMsg.textContent = chip.textContent;
+          messagesContainer.appendChild(userMsg);
+
+          const botMsg = document.createElement("div");
+          botMsg.className = "message bot-message";
+
+          switch (chip.textContent) {
+            case "Check WiFi":
+              botMsg.textContent = "Make sure your WiFi is on and connected. Try reconnecting.";
+              break;
+            case "Restart router":
+              botMsg.textContent = "Turn off your router for 30 seconds, then power it on.";
+              break;
+            case "Mobile data":
+              botMsg.textContent = "If WiFi is down, consider using mobile data temporarily.";
+              break;
+            case "Disable VPN":
+              botMsg.textContent = "Some VPNs block connections. Try disabling your VPN.";
+              break;
+            default:
+              botMsg.textContent = "Let me know if that helped.";
+          }
+
+          messagesContainer.appendChild(botMsg);
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        });
       });
-    </script>
-  </body>
+
+      checkBtn.addEventListener("click", () => {
+        checkBtn.disabled = true;
+        checkBtn.textContent = "Checking...";
+
+        setTimeout(() => {
+          const statusMsg = document.createElement("div");
+          statusMsg.className = "message system-message";
+          if (navigator.onLine) {
+            statusMsg.textContent = "Connection restored! Reloading...";
+            messagesContainer.appendChild(statusMsg);
+            setTimeout(() => location.reload(), 1500);
+          } else {
+            statusMsg.textContent = "Still offline. Please try again later.";
+            messagesContainer.appendChild(statusMsg);
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Connection";
+          }
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }, 2000);
+      });
+      
+      // Better handling of viewport height on mobile
+      function adjustHeight() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      }
+      
+      window.addEventListener('resize', adjustHeight);
+      adjustHeight();
+    });
+  </script>
+</body>
 </html>
