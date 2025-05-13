@@ -25,23 +25,32 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
+  applicationName: 'Lifeliner',
+  authors: [{ name: 'Lifeliner Team' }],
+  keywords: ['health', 'wellness', 'tracking', 'medical', 'accessibility'],
+  category: 'Health & Wellness',
 };
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#000000',
+  themeColor: '#FC7A7A',
   viewportFit: 'cover',
   minimumScale: 1,
-  maximumScale: 1,
+  maximumScale: 5, 
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className="h-full">
+      <body className={`${inter.className} h-full`}>
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:p-4 focus:bg-white focus:text-black focus:z-50">
+          Skip to main content
+        </a>
         <LoaderWrapper>
-          {children}
+          <main id="main-content">
+            {children}
+          </main>
         </LoaderWrapper>
       </body>
     </html>
