@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import LoaderWrapper from './components/LoaderWrapper';
+import IndexedDBInitializer from '../components/IndexedDBInitializer';
 import "./globals.css";
 
 const inter = Inter({
@@ -47,6 +48,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:p-4 focus:bg-white focus:text-black focus:z-50">
           Skip to main content
         </a>
+        {/* This initializes IndexedDB on client-side */}
+        <IndexedDBInitializer />
         <LoaderWrapper>
           <main id="main-content">
             {children}

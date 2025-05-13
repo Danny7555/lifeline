@@ -5,6 +5,11 @@
 const DB_NAME = 'lifelinerDB';
 const DB_VERSION = 1;
 
+/**
+ * Check if running in browser environment
+ */
+const isBrowser = typeof window !== 'undefined' && window.indexedDB;
+
 // Define your database schema types
 export interface HealthRecord {
   id?: number;
@@ -19,7 +24,8 @@ export interface HealthRecord {
 export const initDB = (): Promise<IDBDatabase> => {
   return new Promise((resolve, reject) => {
     // IndexedDB is only available in browser environments
-    if (typeof window === 'undefined') {
+    if (!isBrowser) {
+      console.warn('IndexedDB is not available in this environment');
       reject(new Error('IndexedDB is not available in this environment'));
       return;
     }
@@ -27,6 +33,7 @@ export const initDB = (): Promise<IDBDatabase> => {
     const request = indexedDB.open(DB_NAME, DB_VERSION);
 
     request.onerror = (event) => {
+      console.error('IndexedDB error:', event);
       reject(new Error('Failed to open IndexedDB'));
     };
 
@@ -37,6 +44,7 @@ export const initDB = (): Promise<IDBDatabase> => {
 
     // This is called if the database doesn't exist or needs upgrading
     request.onupgradeneeded = (event) => {
+      console.log('Creating or upgrading IndexedDB');
       const db = (event.target as IDBOpenDBRequest).result;
       
       // Create object stores (similar to tables in SQL)
