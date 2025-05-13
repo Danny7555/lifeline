@@ -141,16 +141,16 @@ const FirstAidQuickSupport: React.FC = () => {
   return (
     <div className="first-aid-container bg-white rounded-lg shadow-xl overflow-hidden max-w-6xl mx-auto my-4 md:my-8">
       {/* Header */}
-      <div className="bg-gradient-to-r from-red-600 to-red-700 text-white p-4 md:p-6 flex flex-col md:flex-row justify-between items-start md:items-center">
+      <div className="bg-[#FFB5B5] text-white p-4 md:p-6 flex flex-col md:flex-row justify-between items-start md:items-center">
         <div className="flex items-center mb-3 md:mb-0">
-          <div className="bg-white text-red-600 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+          <div className="bg-white text-[#FC7A7A] rounded-full w-10 h-10 flex items-center justify-center mr-3">
             <FiHeart className="text-xl" />
           </div>
-          <h1 className="text-xl md:text-2xl font-bold">First Aid Quick Support</h1>
+          <h1 className="text-xl md:text-2xl text-black">First Aid Quick Support</h1>
         </div>
         <button 
           onClick={handleEmergencyCall}
-          className="bg-white text-red-600 px-4 py-2 rounded-lg font-semibold flex items-center hover:bg-red-50 transition shadow-md w-full md:w-auto justify-center"
+          className="bg-white text-[#FC7A7A] px-4 py-2 rounded-lg font-semibold flex items-center hover:bg-[#ece6e6] transition shadow-md w-full md:w-auto justify-center"
         >
           <FiAlertTriangle className="mr-2" /> Emergency Help
         </button>
@@ -167,7 +167,7 @@ const FirstAidQuickSupport: React.FC = () => {
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
-              setUserClearedSelection(false); // Reset when search changes
+              setUserClearedSelection(false); 
             }}
           />
         </div>
@@ -287,13 +287,13 @@ const FirstAidQuickSupport: React.FC = () => {
                   <div className="flex items-start">
                     <FiAlertTriangle className="text-red-500 mt-1 mr-3 flex-shrink-0 text-xl" />
                     <div>
-                      <h4 className="font-semibold text-red-700 text-lg">Emergency Alert</h4>
+                      <h4 className="font-semibold text-[#FC7A7A] text-lg">Emergency Alert</h4>
                       <p className="text-red-600">
                         This is a life-threatening emergency. Perform first aid immediately while someone calls for emergency medical services.
                       </p>
                       <button 
                         onClick={handleEmergencyCall}
-                        className="mt-3 bg-red-600 text-white px-4 py-2 rounded-lg font-medium flex items-center hover:bg-red-700 transition"
+                        className="mt-3 bg-[#d15c5c] text-white px-4 py-2 rounded-lg font-medium flex items-center hover:bg-[#d15c5c] transition"
                       >
                         <FiPhone className="mr-2" /> Call Emergency Services Now
                       </button>
@@ -323,8 +323,8 @@ const FirstAidQuickSupport: React.FC = () => {
       {showEmergencyModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-xl shadow-2xl max-w-md w-full overflow-hidden animate-fade-in">
-            <div className="bg-red-600 text-white p-4 flex justify-between items-center">
-              <h2 className="text-xl font-bold flex items-center">
+            <div className="bg-[#d99191] text-white p-4 flex justify-between items-center">
+              <h2 className="text-xl  flex items-center text-black">
                 <FiAlertTriangle className="mr-2" /> Emergency Assistance
               </h2>
               <button onClick={closeModal} className="text-white hover:text-red-200">
@@ -334,7 +334,7 @@ const FirstAidQuickSupport: React.FC = () => {
             
             <div className="p-6">
               <div className="flex items-start mb-6">
-                <div className="bg-red-100 text-red-600 rounded-full p-3 mr-4">
+                <div className="bg-red-100 text-[#FC7A7A] rounded-full p-3 mr-4">
                   <FiPhone className="text-2xl" />
                 </div>
                 <div>
@@ -361,13 +361,12 @@ const FirstAidQuickSupport: React.FC = () => {
               <div className="space-y-3">
                 <button
                   onClick={() => {
-                    // In a real app, this would trigger a phone call
-                    alert('Calling emergency services at 911...');
+                    alert('Calling emergency services at 913...');
                     closeModal();
                   }}
-                  className="w-full bg-red-600 text-white py-3 px-4 rounded-lg font-semibold flex items-center justify-center hover:bg-red-700 transition"
+                  className="w-full bg-[#e47f7f] text-white py-3 px-4 rounded-lg font-semibold flex items-center justify-center hover:bg-[#d66666] transition"
                 >
-                  <FiPhone className="mr-2" /> Call Now (911)
+                  <FiPhone className="mr-2 font-poppins font-bold" /> Call Now (913)
                 </button>
                 
                 <button
@@ -380,7 +379,7 @@ const FirstAidQuickSupport: React.FC = () => {
             </div>
             
             <div className="bg-gray-50 p-3 text-center text-xs text-gray-500 border-t">
-              <p>Emergency numbers vary by location. 911 is used in North America.</p>
+              <p>Emergency numbers vary by location. 193 is used in Ghana.</p>
             </div>
           </div>
         </div>
