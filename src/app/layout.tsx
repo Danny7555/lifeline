@@ -2,7 +2,7 @@ import React from 'react';
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import LoaderWrapper from './components/LoaderWrapper';
-import IndexedDBInitializer from '../components/IndexedDBInitializer';
+import IndexedDBInitializer from '../indexed-components/IndexedDBInitializer';
 import "./globals.css";
 
 const inter = Inter({
