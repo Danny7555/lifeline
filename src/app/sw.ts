@@ -46,7 +46,15 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     (async () => {
       const cache = await caches.open('offline-assets');
-      await cache.addAll(['/offline.html', '/icons/life.png', '/manifest.json']);
+      await cache.addAll([
+        '/', 
+        '/auth',
+        '/landingPage', 
+        '/contact',
+        '/offline.html',
+        '/icons/life.png',
+        '/manifest.json'
+      ]);
       await self.skipWaiting();
     })()
   );
@@ -70,6 +78,7 @@ self.addEventListener('activate', (event) => {
 // Fetch event for offline fallback
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+  
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request).catch(() => 
@@ -78,10 +87,26 @@ self.addEventListener('fetch', (event) => {
         )
       )
     );
+  } else {
+    const url = new URL(event.request.url);
+    const isImage = /\.(jpe?g|png|gif|svg|webp|bmp|ico)$/i.test(url.pathname);
+    
+    if (isImage) {
+      event.respondWith(
+        caches.match(event.request)
+          .then(cachedResponse => {
+            if (cachedResponse) {
+              return cachedResponse;
+            }
+            return fetch(event.request).catch(() => {
+              return new Response('Image not available offline', { status: 404 });
+            });
+          })
+      );
+    }
   }
 });
 
-// Optional: listen for messages to skip waiting
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
