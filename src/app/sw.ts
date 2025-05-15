@@ -41,12 +41,14 @@ installSerwist({
   runtimeCaching,
 });
 
-// Offline installation
+// Offline installation with error handling
 self.addEventListener('install', (event) => {
   event.waitUntil(
     (async () => {
       const cache = await caches.open('offline-assets');
-      await cache.addAll([
+      
+      // Resources to cache
+      const resourcesToPrecache = [
         '/', 
         '/auth',
         '/landingPage', 
@@ -54,7 +56,17 @@ self.addEventListener('install', (event) => {
         '/offline.html',
         '/icons/life.png',
         '/manifest.json'
-      ]);
+      ];
+      const cachePromises = resourcesToPrecache.map(async (resource) => {
+        try {
+          await cache.add(resource);
+          console.log(`Cached: ${resource}`);
+        } catch (error) {
+          console.warn(`Failed to cache: ${resource}`, error);
+        }
+      });
+
+      await Promise.all(cachePromises);
       await self.skipWaiting();
     })()
   );
