@@ -50,8 +50,7 @@ self.addEventListener('install', (event) => {
       // Resources to cache
       const resourcesToPrecache = [
         '/', 
-        '/auth',
-        '/landingPage', 
+        '/favicon.ico', 
         '/contact',
         '/offline.html',
         '/icons/life.png',
