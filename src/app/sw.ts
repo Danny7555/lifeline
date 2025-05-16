@@ -25,7 +25,7 @@ const runtimeCaching = [
     handler: 'NetworkFirst',
     options: {
       cacheName: 'api-cache',
-      networkTimeoutSeconds: 10,
+      networkTimeoutSeconds: 5, // Reduced timeout
       expiration: { maxEntries: 50, maxAgeSeconds: 86400 }, // 24 hours
     },
   },
@@ -41,62 +41,82 @@ installSerwist({
   runtimeCaching,
 });
 
-// Offline installation with error handling
+
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    (async () => {
-      const cache = await caches.open('offline-assets');
-      
-      // Resources to cache
-      const resourcesToPrecache = [
-        '/', 
-        '/favicon.ico', 
-        '/contact',
-        '/offline.html',
-        '/icons/life.png',
-        '/manifest.json'
-      ];
-      const cachePromises = resourcesToPrecache.map(async (resource) => {
-        try {
-          await cache.add(resource);
-          console.log(`Cached: ${resource}`);
-        } catch (error) {
-          console.warn(`Failed to cache: ${resource}`, error);
-        }
-      });
-
-      await Promise.all(cachePromises);
-      await self.skipWaiting();
-    })()
+    caches.open('offline-assets').then((cache) => 
+      cache.add('/offline.html').catch(err => 
+        console.warn('Failed to cache offline page', err)
+      )
+    )
   );
 });
 
-// Activate and cleanup
+// Activate and cleanup - cache the rest of resources after activation
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     (async () => {
+      // Clean up old caches
       const keys = await caches.keys();
       await Promise.all(
         keys
           .filter((k) => !['offline-assets', 'static-assets', 'api-cache'].includes(k))
           .map((k) => caches.delete(k))
       );
+      
+      // Now cache the remaining resources in background
+      const cache = await caches.open('offline-assets');
+      const resourcesToPrecache = [
+        '/', 
+        '/favicon.ico', 
+        '/contact',
+        '/icons/life.png',
+        '/manifest.json'
+      ];
+      
+      // Cache resources in the background with timeouts
+      resourcesToPrecache.forEach(resource => {
+        // Use a timeout to prevent blocking
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Timeout')), 3000)
+        );
+        
+        Promise.race([
+          fetch(resource).then(response => {
+            if (response.ok) cache.put(resource, response);
+            return response;
+          }),
+          timeoutPromise
+        ]).catch(err => console.warn(`Background caching failed for ${resource}:`, err));
+      });
+      
       await self.clients.claim();
     })()
   );
 });
 
-// Fetch event for offline fallback
+// Optimized fetch handler
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   
+  // Use navigation preload for better performance
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request).catch(() => 
-        caches.match('/offline.html').then(response => 
-          response ?? new Response('Offline page not found', { status: 404 })
-        )
-      )
+      (async () => {
+        try {
+          // Try to use navigation preload response if available
+          const preloadResponse = await event.preloadResponse;
+          if (preloadResponse) return preloadResponse;
+          
+          // Otherwise do a network request
+          return await fetch(event.request);
+        } catch (error) {
+          // Fall back to the offline page if network fails
+          const cache = await caches.open('offline-assets');
+          const cachedResponse = await cache.match('/offline.html');
+          return cachedResponse || new Response('Offline page not found', { status: 404 });
+        }
+      })()
     );
   } else {
     const url = new URL(event.request.url);
@@ -106,12 +126,10 @@ self.addEventListener('fetch', (event) => {
       event.respondWith(
         caches.match(event.request)
           .then(cachedResponse => {
-            if (cachedResponse) {
-              return cachedResponse;
-            }
-            return fetch(event.request).catch(() => {
-              return new Response('Image not available offline', { status: 404 });
-            });
+            if (cachedResponse) return cachedResponse;
+            return fetch(event.request).catch(() => 
+              new Response('Image not available offline', { status: 404 })
+            );
           })
       );
     }
