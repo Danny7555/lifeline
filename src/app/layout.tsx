@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import LoaderWrapper from './components/LoaderWrapper';
 import IndexedDBInitializer from '../indexed-components/IndexedDBInitializer';
 import "./globals.css";
 
@@ -49,11 +50,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </a>
         {/* This initializes IndexedDB on client-side */}
         <IndexedDBInitializer />
-    
+        <LoaderWrapper>
           <main id="main-content">
             {children}
           </main>
-        
+        </LoaderWrapper>
       </body>
     </html>
   );
