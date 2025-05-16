@@ -117,7 +117,7 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4 transition-opacity duration-300"
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-1 xs:p-2 sm:p-4 transition-opacity duration-300"
       style={{ opacity: animateIn ? 1 : 0 }}
       onClick={(e) => {
         if (e.target === e.currentTarget) handleClose()
@@ -127,35 +127,35 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
         className="bg-white rounded-md w-full max-w-md max-h-[90vh] overflow-y-auto shadow-xl transition-transform duration-300"
         style={{ transform: animateIn ? "translateY(0)" : "translateY(20px)" }}
       >
-        <div className="p-4 sm:p-6 relative">
+        <div className="p-3 xs:p-4 sm:p-6 relative">
           <button
             onClick={handleClose}
-            className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
+            className="absolute right-3 xs:right-4 top-3 xs:top-4 text-gray-500 hover:text-gray-700"
             aria-label="Close feedback modal"
           >
-            <X size={20} />
+            <X size={18} className="sm:size-20" />
           </button>
 
-          <div className="space-y-6 sm:space-y-8 pt-2">
+          <div className="space-y-4 sm:space-y-8 pt-2">
             {/* Rating Section */}
-            <div className="space-y-3 sm:space-y-4">
-              <h3 className="font-medium text-base">
+            <div className="space-y-2 sm:space-y-4">
+              <h3 className="font-medium text-sm sm:text-base">
                 <span className="text-red-500 mr-1">*</span>
                 What is your overall rating for this page?
               </h3>
 
-              <div className="flex flex-col space-y-2 sm:space-y-3">
+              <div className="flex flex-col space-y-1 sm:space-y-3">
                 <div className="flex justify-between text-xs sm:text-sm text-gray-500">
                   <span>Very dissatisfied</span>
                   <span>Very satisfied</span>
                 </div>
 
-                <div className="flex justify-between gap-0.5 sm:gap-1">
+                <div className="flex justify-between gap-[2px] xs:gap-0.5 sm:gap-1">
                   {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
                     <button
                       key={value}
                       onClick={() => handleRatingChange(value)}
-                      className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium transition-colors
+                      className={`w-5 h-5 xs:w-6 xs:h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-[10px] xs:text-xs sm:text-sm font-medium transition-colors
                         ${
                           value === 10 && rating === 10
                             ? "bg-black text-white"
@@ -173,13 +173,13 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
 
             {/* Satisfaction Reasons */}
             <div className="space-y-2 sm:space-y-3">
-              <h3 className="font-medium text-base">
+              <h3 className="font-medium text-sm sm:text-base">
                 <span className="text-red-500 mr-1">*</span>
                 What makes you satisfied with this page?
               </h3>
-              <p className="text-xs sm:text-sm text-gray-500">(Select no more than 3 items)</p>
+              <p className="text-[10px] xs:text-xs sm:text-sm text-gray-500">(Select no more than 3 items)</p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 gap-2 xs:gap-3 sm:gap-4">
                 {currentReasons.map((reason) => (
                   <div key={reason} className="flex items-start gap-2">
                     <input
@@ -188,9 +188,9 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
                       checked={satisfactionReasons.includes(reason)}
                       onChange={() => handleSatisfactionChange(reason)}
                       disabled={satisfactionReasons.length >= 3 && !satisfactionReasons.includes(reason)}
-                      className="mt-1 h-4 w-4 border-gray-300 text-black focus:ring-0 focus:ring-offset-0"
+                      className="mt-1 h-3 w-3 xs:h-4 xs:w-4 border-gray-300 text-black focus:ring-0 focus:ring-offset-0"
                     />
-                    <label htmlFor={`reason-${reason}`} className="text-gray-700 text-xs sm:text-sm">
+                    <label htmlFor={`reason-${reason}`} className="text-gray-700 text-[11px] xs:text-xs sm:text-sm">
                       {reason}
                     </label>
                   </div>
@@ -200,13 +200,13 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
 
             {/* Satisfied Parts */}
             <div className="space-y-2 sm:space-y-3">
-              <h3 className="font-medium text-base">
+              <h3 className="font-medium text-sm sm:text-base">
                 <span className="text-red-500 mr-1">*</span>
                 Which part of this page are you satisfied with?
               </h3>
-              <p className="text-xs sm:text-sm text-gray-500">(Select no more than 3 items)</p>
+              <p className="text-[10px] xs:text-xs sm:text-sm text-gray-500">(Select no more than 3 items)</p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 gap-2 xs:gap-3 sm:gap-4">
                 {[
                   "Appearance design",
                   "Screen quality",
@@ -222,9 +222,9 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
                       checked={satisfiedParts.includes(part)}
                       onChange={() => handleSatisfiedPartsChange(part)}
                       disabled={satisfiedParts.length >= 3 && !satisfiedParts.includes(part)}
-                      className="mt-1 h-4 w-4 border-gray-300 text-black focus:ring-0 focus:ring-offset-0"
+                      className="mt-1 h-3 w-3 xs:h-4 xs:w-4 border-gray-300 text-black focus:ring-0 focus:ring-offset-0"
                     />
-                    <label htmlFor={`part-${part}`} className="text-gray-700 text-xs sm:text-sm">
+                    <label htmlFor={`part-${part}`} className="text-gray-700 text-[11px] xs:text-xs sm:text-sm">
                       {part}
                     </label>
                   </div>
@@ -234,17 +234,17 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
 
             {/* Additional Feedback */}
             <div className="space-y-2 sm:space-y-3">
-              <h3 className="font-medium text-base">Tell us more about your experience.</h3>
+              <h3 className="font-medium text-sm sm:text-base">Tell us more about your experience.</h3>
 
               <textarea
                 value={additionalFeedback}
                 onChange={(e) => setAdditionalFeedback(e.target.value)}
-                className="w-full border border-gray-300 rounded-md p-3 min-h-[80px] sm:min-h-[100px] focus:outline-none focus:ring-1 focus:ring-gray-400 text-xs sm:text-sm bg-gray-100"
+                className="w-full border border-gray-300 rounded-md p-2 xs:p-3 min-h-[60px] xs:min-h-[80px] sm:min-h-[100px] focus:outline-none focus:ring-1 focus:ring-gray-400 text-[11px] xs:text-xs sm:text-sm bg-gray-100"
                 placeholder="Your feedback helps us improve"
                 maxLength={500}
               />
               <div className="flex justify-end">
-                <span className="text-xs text-gray-500">{additionalFeedback.length}/500</span>
+                <span className="text-[10px] xs:text-xs text-gray-500">{additionalFeedback.length}/500</span>
               </div>
             </div>
 
@@ -252,7 +252,7 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
             <div className="flex justify-center mt-4 sm:mt-6">
               <button
                 onClick={handleSubmit}
-                className="bg-gray-400 text-white px-12 sm:px-12 py-2 rounded-full hover:bg-gray-300 transition-colors text-xs sm:text-sm font-bold"
+                className="w-full xs:w-auto bg-gray-400 text-white px-4 xs:px-12 py-2 rounded-full hover:bg-gray-300 transition-colors text-xs sm:text-sm font-bold"
                 disabled={!rating || satisfactionReasons.length === 0 || satisfiedParts.length === 0}
               >
                 Submit
