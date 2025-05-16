@@ -173,7 +173,7 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
               </h3>
               <p className="text-[10px] xs:text-xs sm:text-sm text-gray-500">(Select no more than 3 items)</p>
 
-              <div className="grid grid-cols-1 gap-2 xs:gap-3 sm:gap-4">
+              <div className="grid grid-cols-2 gap-2 xs:gap-3 sm:gap-4">
                 {currentReasons.map((reason) => (
                   <div key={reason} className="flex items-start gap-2">
                     <input
@@ -200,7 +200,7 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
               </h3>
               <p className="text-[10px] xs:text-xs sm:text-sm text-gray-500">(Select no more than 3 items)</p>
 
-              <div className="grid grid-cols-1 gap-2 xs:gap-3 sm:gap-4">
+              <div className="grid grid-cols-2 gap-2 xs:gap-3 sm:gap-4">
                 {[
                   "Appearance design",
                   "Screen quality",
