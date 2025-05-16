@@ -22,6 +22,8 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
   const [satisfiedParts, setSatisfiedParts] = useState<string[]>([])
   const [additionalFeedback, setAdditionalFeedback] = useState("")
   const [animateIn, setAnimateIn] = useState(false)
+  const [otherSatisfactionReason, setOtherSatisfactionReason] = useState("")
+  const [otherSatisfiedPart, setOtherSatisfiedPart] = useState("")
 
   // Define different options based on rating
   const standardReasons = useMemo(() => [
@@ -76,9 +78,13 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
 
   if (!isOpen) return null
 
+  // Modify handleSatisfactionChange
   const handleSatisfactionChange = (reason: string) => {
     if (satisfactionReasons.includes(reason)) {
       setSatisfactionReasons(satisfactionReasons.filter((item) => item !== reason))
+      if (reason === "Other") {
+        setOtherSatisfactionReason("")
+      }
     } else {
       if (satisfactionReasons.length < 3) {
         setSatisfactionReasons([...satisfactionReasons, reason])
@@ -86,9 +92,13 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
     }
   }
 
+  // Modify handleSatisfiedPartsChange
   const handleSatisfiedPartsChange = (part: string) => {
     if (satisfiedParts.includes(part)) {
       setSatisfiedParts(satisfiedParts.filter((item) => item !== part))
+      if (part === "Other") {
+        setOtherSatisfiedPart("")
+      }
     } else {
       if (satisfiedParts.length < 3) {
         setSatisfiedParts([...satisfiedParts, part])
@@ -96,16 +106,16 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
     }
   }
 
-  const handleRatingChange = (value: number) => {
-    setRating(value)
-  }
-
+  // Update the submission data
   const handleSubmit = () => {
-    // Call the onSubmit prop with the form data
     onSubmit({
       rating,
-      satisfactionReasons,
-      satisfiedParts,
+      satisfactionReasons: satisfactionReasons.map(reason => 
+        reason === "Other" ? `Other: ${otherSatisfactionReason}` : reason
+      ),
+      satisfiedParts: satisfiedParts.map(part => 
+        part === "Other" ? `Other: ${otherSatisfiedPart}` : part
+      ),
       additionalFeedback,
     })
   }
@@ -113,6 +123,10 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
   const handleClose = () => {
     setAnimateIn(false)
     setTimeout(() => onClose(), 300)
+  }
+
+  function handleRatingChange(value: number): void {
+    throw new Error("Function not implemented.")
   }
 
   return (
@@ -175,18 +189,30 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
 
               <div className="grid grid-cols-2 gap-2 xs:gap-3 sm:gap-4">
                 {currentReasons.map((reason) => (
-                  <div key={reason} className="flex items-start gap-2">
-                    <input
-                      type="checkbox"
-                      id={`reason-${reason}`}
-                      checked={satisfactionReasons.includes(reason)}
-                      onChange={() => handleSatisfactionChange(reason)}
-                      disabled={satisfactionReasons.length >= 3 && !satisfactionReasons.includes(reason)}
-                      className="mt-0.5 h-5 w-5 border-gray-300 text-black focus:ring-0 focus:ring-offset-0"
-                    />
-                    <label htmlFor={`reason-${reason}`} className="text-gray-700 text-[11px] xs:text-xs sm:text-sm">
-                      {reason}
-                    </label>
+                  <div key={reason} className="flex flex-col gap-1">
+                    <div className="flex items-start gap-2">
+                      <input
+                        type="checkbox"
+                        id={`reason-${reason}`}
+                        checked={satisfactionReasons.includes(reason)}
+                        onChange={() => handleSatisfactionChange(reason)}
+                        disabled={satisfactionReasons.length >= 3 && !satisfactionReasons.includes(reason)}
+                        className="mt-0.5 h-5 w-5 border-gray-300 text-black focus:ring-0 focus:ring-offset-0"
+                      />
+                      <label htmlFor={`reason-${reason}`} className="text-gray-700 text-[11px] xs:text-xs sm:text-sm">
+                        {reason}
+                      </label>
+                    </div>
+                    {reason === "Other" && satisfactionReasons.includes("Other") && (
+                      <input
+                        type="text"
+                        value={otherSatisfactionReason}
+                        onChange={(e) => setOtherSatisfactionReason(e.target.value)}
+                        placeholder="Please specify"
+                        className="ml-7 p-1 text-xs border-b border-gray-300 focus:outline-none focus:border-gray-400"
+                        maxLength={50}
+                      />
+                    )}
                   </div>
                 ))}
               </div>
@@ -209,18 +235,30 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
                   "Smart experience",
                   "Other",
                 ].map((part) => (
-                  <div key={part} className="flex items-start gap-2">
-                    <input
-                      type="checkbox"
-                      id={`part-${part}`}
-                      checked={satisfiedParts.includes(part)}
-                      onChange={() => handleSatisfiedPartsChange(part)}
-                      disabled={satisfiedParts.length >= 3 && !satisfiedParts.includes(part)}
-                      className="mt-0.5 h-5 w-5 border-gray-300 text-black focus:ring-0 focus:ring-offset-0"
-                    />
-                    <label htmlFor={`part-${part}`} className="text-gray-700 text-[11px] xs:text-xs sm:text-sm">
-                      {part}
-                    </label>
+                  <div key={part} className="flex flex-col gap-1">
+                    <div className="flex items-start gap-2">
+                      <input
+                        type="checkbox"
+                        id={`part-${part}`}
+                        checked={satisfiedParts.includes(part)}
+                        onChange={() => handleSatisfiedPartsChange(part)}
+                        disabled={satisfiedParts.length >= 3 && !satisfiedParts.includes(part)}
+                        className="mt-0.5 h-5 w-5 border-gray-300 text-black focus:ring-0 focus:ring-offset-0"
+                      />
+                      <label htmlFor={`part-${part}`} className="text-gray-700 text-[11px] xs:text-xs sm:text-sm">
+                        {part}
+                      </label>
+                    </div>
+                    {part === "Other" && satisfiedParts.includes("Other") && (
+                      <input
+                        type="text"
+                        value={otherSatisfiedPart}
+                        onChange={(e) => setOtherSatisfiedPart(e.target.value)}
+                        placeholder="Please specify"
+                        className="ml-7 p-1 text-xs border-b border-gray-300 focus:outline-none focus:border-gray-400"
+                        maxLength={50}
+                      />
+                    )}
                   </div>
                 ))}
               </div>
