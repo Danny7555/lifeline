@@ -117,26 +117,26 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-1 xs:p-2 sm:p-4 transition-opacity duration-300"
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-3 sm:p-6 transition-opacity duration-300"
       style={{ opacity: animateIn ? 1 : 0 }}
       onClick={(e) => {
         if (e.target === e.currentTarget) handleClose()
       }}
     >
       <div
-        className="bg-white rounded-md w-full max-w-md max-h-[90vh] overflow-y-auto shadow-xl transition-transform duration-300"
+        className="bg-white rounded-lg w-full max-w-[95%] sm:max-w-[85%] md:max-w-[600px] max-h-[90vh] overflow-y-auto shadow-xl transition-transform duration-300"
         style={{ transform: animateIn ? "translateY(0)" : "translateY(20px)" }}
       >
-        <div className="p-3 xs:p-4 sm:p-6 relative">
+        <div className="p-4 sm:p-6 md:p-8 relative">
           <button
             onClick={handleClose}
-            className="absolute right-3 xs:right-4 top-3 xs:top-4 text-gray-500 hover:text-gray-700"
+            className="absolute right-4 top-4 text-gray-500 hover:text-gray-700 p-1"
             aria-label="Close feedback modal"
           >
-            <X size={18} className="sm:size-20" />
+            <X size={24} />
           </button>
 
-          <div className="space-y-4 sm:space-y-8 pt-2">
+          <div className="space-y-6 md:space-y-8 pt-2">
             {/* Rating Section */}
             <div className="space-y-2 sm:space-y-4">
               <h3 className="font-medium text-sm sm:text-base">
@@ -150,19 +150,13 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
                   <span>Very satisfied</span>
                 </div>
 
-                <div className="flex justify-between gap-[2px] xs:gap-0.5 sm:gap-1">
+                <div className="flex justify-between gap-1 sm:gap-2">
                   {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
                     <button
                       key={value}
                       onClick={() => handleRatingChange(value)}
-                      className={`w-5 h-5 xs:w-6 xs:h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-[10px] xs:text-xs sm:text-sm font-medium transition-colors
-                        ${
-                          value === 10 && rating === 10
-                            ? "bg-black text-white"
-                            : rating === value
-                              ? "bg-black text-white"
-                              : "bg-gray-100 hover:bg-gray-200 text-gray-800"
-                        }`}
+                      className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium transition-colors
+                        ${rating === value ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200 text-gray-800"}`}
                     >
                       {value}
                     </button>
@@ -188,7 +182,7 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
                       checked={satisfactionReasons.includes(reason)}
                       onChange={() => handleSatisfactionChange(reason)}
                       disabled={satisfactionReasons.length >= 3 && !satisfactionReasons.includes(reason)}
-                      className="mt-1 h-3 w-3 xs:h-4 xs:w-4 border-gray-300 text-black focus:ring-0 focus:ring-offset-0"
+                      className="mt-0.5 h-5 w-5 border-gray-300 text-black focus:ring-0 focus:ring-offset-0"
                     />
                     <label htmlFor={`reason-${reason}`} className="text-gray-700 text-[11px] xs:text-xs sm:text-sm">
                       {reason}
@@ -222,7 +216,7 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
                       checked={satisfiedParts.includes(part)}
                       onChange={() => handleSatisfiedPartsChange(part)}
                       disabled={satisfiedParts.length >= 3 && !satisfiedParts.includes(part)}
-                      className="mt-1 h-3 w-3 xs:h-4 xs:w-4 border-gray-300 text-black focus:ring-0 focus:ring-offset-0"
+                      className="mt-0.5 h-5 w-5 border-gray-300 text-black focus:ring-0 focus:ring-offset-0"
                     />
                     <label htmlFor={`part-${part}`} className="text-gray-700 text-[11px] xs:text-xs sm:text-sm">
                       {part}
@@ -252,7 +246,7 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
             <div className="flex justify-center mt-4 sm:mt-6">
               <button
                 onClick={handleSubmit}
-                className="w-full xs:w-auto bg-gray-400 text-white px-4 xs:px-12 py-2 rounded-full hover:bg-gray-300 transition-colors text-xs sm:text-sm font-bold"
+                className="w-full sm:w-auto bg-gray-800 text-white px-6 sm:px-12 py-3 rounded-full hover:bg-gray-700 transition-colors text-sm font-bold"
                 disabled={!rating || satisfactionReasons.length === 0 || satisfiedParts.length === 0}
               >
                 Submit
