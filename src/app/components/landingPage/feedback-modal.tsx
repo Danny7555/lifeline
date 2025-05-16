@@ -281,10 +281,10 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
             </div>
 
             {/* Submit Button */}
-            <div className="flex justify-center mt-4 sm:mt-6">
+            <div className="flex justify-center mt-4 sm:mt-6 w-full">
               <button
                 onClick={handleSubmit}
-                className="w-full sm:w-auto bg-gray-400 text-white px-6 sm:px-12 py-3 rounded-full hover:bg-gray-700 transition-colors text-sm font-bold"
+                className="w-full max-w-[400px] bg-gray-400 text-white px-6 sm:px-12 py-3 rounded-full hover:bg-gray-700 transition-colors text-sm font-bold"
                 disabled={!rating || satisfactionReasons.length === 0 || satisfiedParts.length === 0}
               >
                 Submit
