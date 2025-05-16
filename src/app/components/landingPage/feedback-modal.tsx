@@ -27,20 +27,20 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
 
   // Define different options based on rating
   const standardReasons = useMemo(() => [
-    "Reasonable sequence",
-    "Easy to understand",
-    "Pleasant look and feel",
-    "Attractive dynamic effects",
-    "Smooth page access",
+    "Clear emergency instructions",
+    "Easy to find resources",
+    "Helpful safety tips",
+    "Quick access to aid information",
+    "Well-organized content",
     "Other",
   ], [])
 
   const highRatingReasons = useMemo(() => [
-    "Excellent user experience",
-    "Intuitive navigation",
-    "Beautiful design",
-    "Fast performance",
-    "Helpful content",
+    "Comprehensive emergency guidance",
+    "Life-saving information",
+    "Excellent resource accessibility",
+    "Critical safety features",
+    "Essential aid contacts",
     "Other",
   ], [])
 
@@ -228,11 +228,11 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
 
               <div className="grid grid-cols-2 gap-2 xs:gap-3 sm:gap-4">
                 {[
-                  "Appearance design",
-                  "Screen quality",
-                  "Camera function",
-                  "Product performance",
-                  "Smart experience",
+                  "User interface design",
+                  "Navigation ease",
+                  "Resource organization",
+                  "Emergency contacts section",
+                  "Safety guidelines",
                   "Other",
                 ].map((part) => (
                   <div key={part} className="flex flex-col gap-1">
