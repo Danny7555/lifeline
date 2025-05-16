@@ -134,6 +134,19 @@ self.addEventListener('fetch', (event) => {
       );
     }
   }
+  
+  // If it's a navigation request, notify clients when complete
+  if (event.request.mode === 'navigate') {
+    event.waitUntil(
+      fetch(event.request).then(() => {
+        self.clients.matchAll().then(clients => {
+          clients.forEach(client => {
+            client.postMessage({ type: 'NAVIGATION_COMPLETE' });
+          });
+        });
+      }).catch(err => console.warn('Navigation notification failed:', err))
+    );
+  }
 });
 
 self.addEventListener('message', (event) => {
