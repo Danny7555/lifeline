@@ -58,19 +58,21 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
       document.body.style.overflow = "auto"
     }
   }, [isOpen])
-
-  // Clear satisfaction reasons when rating changes to 9 or 10, or from 9-10 to lower
+  
   useEffect(() => {
     if (rating !== null) {
       const isHighRating = rating >= 9
-      const wasHighRating = satisfactionReasons.some((reason) => highRatingReasons.includes(reason))
+      // Use memoized highRatingReasons here, but don't depend on satisfactionReasons directly
+      const wasHighRating = satisfactionReasons.some((reason) => 
+        highRatingReasons.includes(reason)
+      )
 
       // If changing between high and low rating categories, reset selections
       if ((isHighRating && !wasHighRating) || (!isHighRating && wasHighRating)) {
         setSatisfactionReasons([])
       }
     }
-  }, [highRatingReasons, rating, satisfactionReasons])
+  }, [rating, highRatingReasons, satisfactionReasons])
 
   if (!isOpen) return null
 
