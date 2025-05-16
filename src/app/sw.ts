@@ -160,7 +160,6 @@ self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   } else if (event.data && event.data.type === 'FORCE_REFRESH') {
-    // Allow the client to request a hard refresh
     const path = event.data.path || '/';
     pageRefreshTimestamps.delete(path);
   }

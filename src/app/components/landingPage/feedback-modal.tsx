@@ -235,10 +235,10 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
                 onChange={(e) => setAdditionalFeedback(e.target.value)}
                 className="w-full border border-gray-300 rounded-md p-2 xs:p-3 min-h-[60px] xs:min-h-[80px] sm:min-h-[100px] focus:outline-none focus:ring-1 focus:ring-gray-400 text-[11px] xs:text-xs sm:text-sm bg-gray-100"
                 placeholder="Your feedback helps us improve"
-                maxLength={500}
+                maxLength={200}
               />
               <div className="flex justify-end">
-                <span className="text-[10px] xs:text-xs text-gray-500">{additionalFeedback.length}/500</span>
+                <span className="text-[10px] xs:text-xs text-gray-500">{additionalFeedback.length}/200</span>
               </div>
             </div>
 
