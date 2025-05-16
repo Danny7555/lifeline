@@ -153,20 +153,6 @@ self.addEventListener('fetch', (event) => {
         }
       })()
     );
-  } else {
-    const isImage = /\.(jpe?g|png|gif|svg|webp|bmp|ico)$/i.test(url.pathname);
-    
-    if (isImage) {
-      event.respondWith(
-        caches.match(event.request)
-          .then(cachedResponse => {
-            if (cachedResponse) return cachedResponse;
-            return fetch(event.request).catch(() => 
-              new Response('Image not available offline', { status: 404 })
-            );
-          })
-      );
-    }
   }
 });
 
