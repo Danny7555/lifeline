@@ -125,8 +125,8 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
     setTimeout(() => onClose(), 300)
   }
 
-  function handleRatingChange(value: number): void {
-    throw new Error("Function not implemented.")
+  const handleRatingChange = (value: number) => {
+    setRating(value)
   }
 
   return (
