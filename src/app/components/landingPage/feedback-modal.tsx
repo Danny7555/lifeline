@@ -237,7 +237,7 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
               <textarea
                 value={additionalFeedback}
                 onChange={(e) => setAdditionalFeedback(e.target.value)}
-                className="w-full border border-gray-300 rounded-md p-3 min-h-[80px] sm:min-h-[100px] focus:outline-none focus:ring-1 focus:ring-gray-400 text-xs sm:text-sm bg-gray-50"
+                className="w-full border border-gray-300 rounded-md p-3 min-h-[80px] sm:min-h-[100px] focus:outline-none focus:ring-1 focus:ring-gray-400 text-xs sm:text-sm bg-gray-100"
                 placeholder="Your feedback helps us improve"
                 maxLength={500}
               />
@@ -250,10 +250,10 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
             <div className="flex justify-center mt-4 sm:mt-6">
               <button
                 onClick={handleSubmit}
-                className="bg-gray-200 text-white px-5 sm:px-6 py-2 rounded-full hover:bg-gray-300 transition-colors text-xs sm:text-sm font-medium"
+                className="bg-gray-400 text-white px-12 sm:px-12 py-2 rounded-full hover:bg-gray-300 transition-colors text-xs sm:text-sm font-bold"
                 disabled={!rating || satisfactionReasons.length === 0 || satisfiedParts.length === 0}
               >
-                Submit Feedback
+                Submit
               </button>
             </div>
           </div>
