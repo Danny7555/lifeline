@@ -94,23 +94,25 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Optimized fetch handler
+// Track when pages were last refreshed
+const pageRefreshTimestamps = new Map();
+
+// Modified fetch handler that includes hard refresh logic
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   
-  // Add this check to prevent infinite loading
   const url = new URL(event.request.url);
-  // Skip handling certain types of requests that might interfere with normal navigation
+  
+  // Skip handling certain types of requests
   if (url.pathname.includes('_next/data/')) {
-    return; // Let the browser handle Next.js data requests normally
+    return;
   }
   
-  // Use navigation preload for better performance
+  // Handle navigation requests with potential hard refresh
   if (event.request.mode === 'navigate') {
     event.respondWith(
       (async () => {
         try {
-          // Always notify clients after navigation, regardless of cache or network
           const sendNavigationComplete = () => {
             self.clients.matchAll().then(clients => {
               clients.forEach(client => {
@@ -119,19 +121,34 @@ self.addEventListener('fetch', (event) => {
             });
           };
           
-          // Try to use navigation preload response if available
+          const currentPath = url.pathname;
+          const currentTime = Date.now();
+          const lastRefreshTime = pageRefreshTimestamps.get(currentPath) || 0;
+          const timeSinceLastRefresh = currentTime - lastRefreshTime;
+          
+          // Force network refresh if it's been more than 30 minutes since last refresh
+          const shouldHardRefresh = timeSinceLastRefresh > 30 * 60 * 1000;
+          
+          if (shouldHardRefresh) {
+            // Bypass cache for a hard refresh
+            const response = await fetch(event.request, { cache: 'reload' });
+            // Update the refresh timestamp
+            pageRefreshTimestamps.set(currentPath, currentTime);
+            sendNavigationComplete();
+            return response;
+          }
+          
+          // Regular flow for non-hard-refresh
           const preloadResponse = await event.preloadResponse;
           if (preloadResponse) {
             sendNavigationComplete();
             return preloadResponse;
           }
           
-          // Otherwise do a network request
           const response = await fetch(event.request);
           sendNavigationComplete();
           return response;
         } catch (error) {
-          // Fall back to the offline page if network fails
           const cache = await caches.open('offline-assets');
           const cachedResponse = await cache.match('/offline.html');
           return cachedResponse || new Response('Offline page not found', { status: 404 });
@@ -139,7 +156,6 @@ self.addEventListener('fetch', (event) => {
       })()
     );
   } else {
-    const url = new URL(event.request.url);
     const isImage = /\.(jpe?g|png|gif|svg|webp|bmp|ico)$/i.test(url.pathname);
     
     if (isImage) {
@@ -154,23 +170,14 @@ self.addEventListener('fetch', (event) => {
       );
     }
   }
-  
-  // If it's a navigation request, notify clients when complete
-  if (event.request.mode === 'navigate') {
-    event.waitUntil(
-      fetch(event.request).then(() => {
-        self.clients.matchAll().then(clients => {
-          clients.forEach(client => {
-            client.postMessage({ type: 'NAVIGATION_COMPLETE' });
-          });
-        });
-      }).catch(err => console.warn('Navigation notification failed:', err))
-    );
-  }
 });
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
+  } else if (event.data && event.data.type === 'FORCE_REFRESH') {
+    // Allow the client to request a hard refresh
+    const path = event.data.path || '/';
+    pageRefreshTimestamps.delete(path);
   }
 });
