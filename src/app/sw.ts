@@ -67,8 +67,6 @@ self.addEventListener('activate', (event) => {
       const cache = await caches.open('offline-assets');
       const resourcesToPrecache = [
         '/', 
-        '/favicon.ico', 
-        '/contact',
         '/icons/life.png',
         '/manifest.json'
       ];
