@@ -101,7 +101,6 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
   }
 
   const handleSubmit = () => {
-    // Call the onSubmit prop with the form data
     onSubmit({
       rating,
       satisfactionReasons,
