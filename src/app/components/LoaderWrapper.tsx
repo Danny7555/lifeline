@@ -11,6 +11,20 @@ export default function LoaderWrapper({ children }: LoaderWrapperProps) {
   const [isLoading, setIsLoading] = useState(true);
   const pathname = usePathname();
   
+  // Listen for service worker navigation complete messages
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data && event.data.type === 'NAVIGATION_COMPLETE') {
+        setIsLoading(false);
+      }
+    };
+    
+    navigator.serviceWorker.addEventListener('message', handleMessage);
+    return () => {
+      navigator.serviceWorker.removeEventListener('message', handleMessage);
+    };
+  }, []);
+  
   useEffect(() => {
     // Initial loading with safety timeout
     const timer = setTimeout(() => {

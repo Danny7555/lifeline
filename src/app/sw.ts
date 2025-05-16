@@ -56,7 +56,6 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     (async () => {
-      // Clean up old caches
       const keys = await caches.keys();
       await Promise.all(
         keys
@@ -99,17 +98,38 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   
+  // Add this check to prevent infinite loading
+  const url = new URL(event.request.url);
+  // Skip handling certain types of requests that might interfere with normal navigation
+  if (url.pathname.includes('_next/data/')) {
+    return; // Let the browser handle Next.js data requests normally
+  }
+  
   // Use navigation preload for better performance
   if (event.request.mode === 'navigate') {
     event.respondWith(
       (async () => {
         try {
+          // Always notify clients after navigation, regardless of cache or network
+          const sendNavigationComplete = () => {
+            self.clients.matchAll().then(clients => {
+              clients.forEach(client => {
+                client.postMessage({ type: 'NAVIGATION_COMPLETE' });
+              });
+            });
+          };
+          
           // Try to use navigation preload response if available
           const preloadResponse = await event.preloadResponse;
-          if (preloadResponse) return preloadResponse;
+          if (preloadResponse) {
+            sendNavigationComplete();
+            return preloadResponse;
+          }
           
           // Otherwise do a network request
-          return await fetch(event.request);
+          const response = await fetch(event.request);
+          sendNavigationComplete();
+          return response;
         } catch (error) {
           // Fall back to the offline page if network fails
           const cache = await caches.open('offline-assets');
