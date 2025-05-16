@@ -7,6 +7,7 @@ import FirstAidScenarios from "./firstAidScenatios";
 import Testimonials from "./testimonial";
 import LifelineFAQ from "./lifeLineFaq";
 import Footer from "./footer";
+import FeedbackButton from "./feedback-button";
 import { Inter } from "next/font/google";
 
 const inter = Inter({
@@ -23,6 +24,7 @@ export default function LandingPage() {
             <FirstAidScenarios />
             <Testimonials />
             <LifelineFAQ />
+            <FeedbackButton />
             <Footer />
         </div>
     );
