@@ -8,6 +8,7 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
   const pathname = usePathname();
   
+  // Initial page load
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -16,22 +17,19 @@ export default function Page() {
     return () => clearTimeout(timer);
   }, []);
   
-  // Show loader on navigation
+  // Show loader on navigation between routes
   useEffect(() => {
-    const handleRouteChange = () => {
+  
+    if (!isLoading) {
       setIsLoading(true);
       
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setIsLoading(false);
       }, 1000);
-    };
-
-    window.addEventListener('beforeunload', handleRouteChange);
-    
-    return () => {
-      window.removeEventListener('beforeunload', handleRouteChange);
-    };
-  }, [pathname]);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [pathname, isLoading]);
 
   return (
     <>
