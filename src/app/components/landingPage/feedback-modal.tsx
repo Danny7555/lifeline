@@ -171,7 +171,7 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
                     <button
                       key={value}
                       onClick={() => handleRatingChange(value)}
-                      className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium transition-colors
+                      className={`w-8 h-8 sm:w-10 sm:h-10 rounded-md flex items-center justify-center text-xs sm:text-sm font-medium transition-colors
                         ${rating === value ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200 text-gray-800"}`}
                     >
                       {value}
