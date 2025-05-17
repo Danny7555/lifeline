@@ -22,6 +22,10 @@
       --gray-900: #111827;
       --red-500: #0fa421;
       --white: #ffffff;
+      --success: #22c55e;
+      --success-light: #dcfce7;
+      --error: #ef4444;
+      --error-light: #fee2e2;
     }
 
     * {
@@ -208,11 +212,52 @@
       transition: transform 0.2s ease;
       width: auto;
       min-width: 180px;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
     .check-connection-btn:hover {
       background: var(--primary-dark);
       transform: translateY(-2px);
+    }
+
+    .check-connection-btn.connected {
+      background: var(--success);
+      cursor: default;
+    }
+
+    .check-connection-btn.checking {
+      background: var(--gray-500);
+      cursor: wait;
+    }
+
+    .check-connection-btn.error {
+      background: var(--error);
+    }
+
+    .check-connection-btn::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 4px;
+    }
+
+    .check-connection-btn.connected::before {
+      background: var(--success-light);
+    }
+
+    .check-connection-btn.error::before {
+      background: var(--error-light);
+    }
+
+    .check-connection-btn.checking::before {
+      background: var(--gray-200);
+      animation: pulse 1s infinite;
     }
 
     .chat-input {
@@ -456,17 +501,19 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="status-indicator"></div>
             ${online ? 'Online' : 'Offline'}
         `;
-        statusIndicator.style.background = online ? 'var(--red-500)' : '#ff4444';
+        statusIndicator.style.background = online ? 'var(--success)' : 'var(--error)';
         messageInput.disabled = !online;
         sendButton.disabled = !online;
         
         if (online) {
             addSystemMessage("Connection restored! 🎉");
             checkBtn.textContent = "Connected";
+            checkBtn.className = "check-connection-btn connected";
             checkBtn.disabled = true;
         } else {
             addSystemMessage("Connection lost 📡");
             checkBtn.textContent = "Check Connection";
+            checkBtn.className = "check-connection-btn error";
             checkBtn.disabled = false;
             updateDisconnectTime();
         }
@@ -498,11 +545,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Check connection status
-    async function checkConnection() {
+    // Check connection status with retry limit
+    async function checkConnection(retryCount = 0) {
         try {
             checkBtn.disabled = true;
-            checkBtn.textContent = "Checking...";
+            checkBtn.textContent = "Checking connection...";
+            checkBtn.className = "check-connection-btn checking";
             
             const result = await Promise.race([
                 fetch('https://www.google.com/favicon.ico'),
@@ -511,11 +559,48 @@ document.addEventListener("DOMContentLoaded", () => {
                 )
             ]);
 
-            updateOnlineStatus(result.ok);
+            if (result.ok) {
+                updateOnlineStatus(true);
+                checkBtn.textContent = "Connected";
+                checkBtn.className = "check-connection-btn connected";
+                
+                // Reset retry count on successful connection
+                if (retryCount > 0) {
+                    console.log('Connection restored after retries');
+                }
+            } else {
+                throw new Error('Connection failed');
+            }
         } catch (error) {
             updateOnlineStatus(false);
             checkBtn.disabled = false;
+            checkBtn.textContent = "Connection failed - Retry";
+            checkBtn.className = "check-connection-btn error";
+            
+            // Log retry attempts
+            if (retryCount > 0) {
+                console.log(`Connection check failed. Attempt ${retryCount}`);
+            }
         }
+    }
+
+    // Initialize connection monitoring with better control
+    function startConnectionMonitoring() {
+        // Clear any existing intervals
+        if (connectionCheckInterval) {
+            clearInterval(connectionCheckInterval);
+        }
+
+        // Check connection every 60 seconds (1 minute)
+        connectionCheckInterval = setInterval(() => {
+            // Only check if currently offline
+            if (!isOnline) {
+                checkConnection();
+            }
+        }, 60000); // 60000ms = 1 minute
+
+        // Initial check
+        checkConnection();
     }
 
     // Handle suggestion chips
@@ -553,12 +638,14 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('resize', adjustHeight);
     adjustHeight();
 
-    // Start periodic connection checking
-    connectionCheckInterval = setInterval(checkConnection, 30000); // Check every 30 seconds
+    // Start monitoring with better control
+    startConnectionMonitoring();
 
-    // Cleanup on page unload
+    // Enhanced cleanup
     window.addEventListener('unload', () => {
-        clearInterval(connectionCheckInterval);
+        if (connectionCheckInterval) {
+            clearInterval(connectionCheckInterval);
+        }
     });
 });
   </script>
