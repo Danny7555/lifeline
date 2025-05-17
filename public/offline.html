@@ -249,6 +249,28 @@
       flex-shrink: 0;
     }
 
+    svg {
+      display: block; /* Ensures consistent rendering */
+      width: 24px;
+      height: 24px;
+      pointer-events: none; /* Prevents unwanted hover effects */
+      -webkit-transform: translateZ(0); /* Fixes Safari rendering */
+      transform: translateZ(0);
+    }
+
+    .send-button svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Fix for Safari specific issues */
+    @supports (-webkit-touch-callout: none) {
+      svg {
+        /* Ensures proper rendering in Safari */
+        shape-rendering: geometricPrecision;
+      }
+    }
+
     footer {
       padding: 0.5rem;
       background: var(--white);
@@ -390,9 +412,8 @@
     <div class="chat-input">
       <input type="text" class="message-input" placeholder="Type a message..." disabled>
       <button class="send-button" disabled>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
         </svg>
       </button>
     </div>
@@ -403,79 +424,143 @@
     </footer>
   </div>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const now = new Date();
-      const hours = now.getHours();
-      const minutes = now.getMinutes();
-      const ampm = hours >= 12 ? "PM" : "AM";
-      const formattedTime = `${hours % 12 || 12}:${minutes.toString().padStart(2, "0")} ${ampm}`;
-      document.getElementById("disconnect-time").textContent = formattedTime;
+document.addEventListener("DOMContentLoaded", () => {
+    // Cache DOM elements
+    const messagesContainer = document.getElementById("messages-container");
+    const checkBtn = document.getElementById("check-connection-btn");
+    const statusIndicator = document.querySelector(".status-indicator");
+    const botStatus = document.querySelector(".bot-status");
+    const messageInput = document.querySelector(".message-input");
+    const sendButton = document.querySelector(".send-button");
+    const disconnectTime = document.getElementById("disconnect-time");
 
-      const messagesContainer = document.getElementById("messages-container");
-      const checkBtn = document.getElementById("check-connection-btn");
+    // Initialize connection monitoring
+    let isOnline = navigator.onLine;
+    let connectionCheckInterval;
 
-      document.querySelectorAll(".suggestion-chip").forEach((chip) => {
-        chip.addEventListener("click", () => {
-          const userMsg = document.createElement("div");
-          userMsg.className = "message user-message";
-          userMsg.textContent = chip.textContent;
-          messagesContainer.appendChild(userMsg);
+    // Update initial disconnect time
+    function updateDisconnectTime() {
+        const now = new Date();
+        const options = {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        };
+        disconnectTime.textContent = now.toLocaleString('en-US', options);
+    }
 
-          const botMsg = document.createElement("div");
-          botMsg.className = "message bot-message";
-
-          switch (chip.textContent) {
-            case "Check WiFi":
-              botMsg.textContent = "Make sure your WiFi is on and connected. Try reconnecting.";
-              break;
-            case "Restart router":
-              botMsg.textContent = "Turn off your router for 30 seconds, then power it on.";
-              break;
-            case "Mobile data":
-              botMsg.textContent = "If WiFi is down, consider using mobile data temporarily.";
-              break;
-            case "Disable VPN":
-              botMsg.textContent = "Some VPNs block connections. Try disabling your VPN.";
-              break;
-            default:
-              botMsg.textContent = "Let me know if that helped.";
-          }
-
-          messagesContainer.appendChild(botMsg);
-          messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        });
-      });
-
-      checkBtn.addEventListener("click", () => {
-        checkBtn.disabled = true;
-        checkBtn.textContent = "Checking...";
-
-        setTimeout(() => {
-          const statusMsg = document.createElement("div");
-          statusMsg.className = "message system-message";
-          if (navigator.onLine) {
-            statusMsg.textContent = "Connection restored! Reloading...";
-            messagesContainer.appendChild(statusMsg);
-            setTimeout(() => location.reload(), 1500);
-          } else {
-            statusMsg.textContent = "Still offline. Please try again later.";
-            messagesContainer.appendChild(statusMsg);
-            checkBtn.disabled = false;
+    // Handle online/offline status changes
+    function updateOnlineStatus(online) {
+        isOnline = online;
+        botStatus.innerHTML = `
+            <div class="status-indicator"></div>
+            ${online ? 'Online' : 'Offline'}
+        `;
+        statusIndicator.style.background = online ? 'var(--red-500)' : '#ff4444';
+        messageInput.disabled = !online;
+        sendButton.disabled = !online;
+        
+        if (online) {
+            addSystemMessage("Connection restored! 🎉");
+            checkBtn.textContent = "Connected";
+            checkBtn.disabled = true;
+        } else {
+            addSystemMessage("Connection lost 📡");
             checkBtn.textContent = "Check Connection";
-          }
-          messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }, 2000);
-      });
-      
-      // Better handling of viewport height on mobile
-      function adjustHeight() {
+            checkBtn.disabled = false;
+            updateDisconnectTime();
+        }
+    }
+
+    // Add message to chat
+    function addMessage(content, type) {
+        const message = document.createElement("div");
+        message.className = `message ${type}-message`;
+        message.innerHTML = content;
+        messagesContainer.appendChild(message);
+        scrollToBottom();
+    }
+
+    // Add system message
+    function addSystemMessage(content) {
+        const message = document.createElement("div");
+        message.className = "message system-message";
+        message.textContent = content;
+        messagesContainer.appendChild(message);
+        scrollToBottom();
+    }
+
+    // Smooth scroll to bottom
+    function scrollToBottom() {
+        messagesContainer.scrollTo({
+            top: messagesContainer.scrollHeight,
+            behavior: 'smooth'
+        });
+    }
+
+    // Check connection status
+    async function checkConnection() {
+        try {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Checking...";
+            
+            const result = await Promise.race([
+                fetch('https://www.google.com/favicon.ico'),
+                new Promise((_, reject) => 
+                    setTimeout(() => reject(new Error('Timeout')), 5000)
+                )
+            ]);
+
+            updateOnlineStatus(result.ok);
+        } catch (error) {
+            updateOnlineStatus(false);
+            checkBtn.disabled = false;
+        }
+    }
+
+    // Handle suggestion chips
+    document.querySelectorAll(".suggestion-chip").forEach((chip) => {
+        chip.addEventListener("click", () => {
+            addMessage(chip.textContent, "user");
+
+            const responses = {
+                "Check WiFi": "Make sure your WiFi is on and connected. Try forgetting the network and reconnecting.",
+                "Restart router": "1. Power off your router\n2. Wait 30 seconds\n3. Power it back on\n4. Wait 2-3 minutes for full restart",
+                "Mobile data": "If WiFi is unavailable, try switching to mobile data. Make sure you have an active data plan.",
+                "Disable VPN": "Some VPNs can cause connection issues. Try temporarily disabling your VPN service."
+            };
+
+            setTimeout(() => {
+                addMessage(responses[chip.textContent] || "Let me know if that helped!", "bot");
+            }, 500);
+        });
+    });
+
+    // Event Listeners
+    window.addEventListener('online', () => updateOnlineStatus(true));
+    window.addEventListener('offline', () => updateOnlineStatus(false));
+    checkBtn.addEventListener("click", checkConnection);
+
+    // Handle viewport height on mobile
+    function adjustHeight() {
         const vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
-      }
-      
-      window.addEventListener('resize', adjustHeight);
-      adjustHeight();
+    }
+
+    // Initialize
+    updateOnlineStatus(navigator.onLine);
+    updateDisconnectTime();
+    window.addEventListener('resize', adjustHeight);
+    adjustHeight();
+
+    // Start periodic connection checking
+    connectionCheckInterval = setInterval(checkConnection, 30000); // Check every 30 seconds
+
+    // Cleanup on page unload
+    window.addEventListener('unload', () => {
+        clearInterval(connectionCheckInterval);
     });
+});
   </script>
 </body>
 </html>
