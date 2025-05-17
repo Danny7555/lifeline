@@ -255,7 +255,7 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
                         value={otherSatisfiedPart}
                         onChange={(e) => setOtherSatisfiedPart(e.target.value)}
                         placeholder="Please specify"
-                        className="ml-7 p-1 text-base sm:text-xsborder-b border-gray-300 focus:outline-none focus:border-gray-400"
+                        className="ml-7 p-1 text-base sm:text-xs border-b border-gray-300 focus:outline-none focus:border-gray-400"
                         maxLength={50}
                       />
                     )}
