@@ -63,31 +63,33 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
   
   useEffect(() => {
     if (rating !== null) {
-      const isHighRating = rating >= 9
-      // Use memoized highRatingReasons here, but don't depend on satisfactionReasons directly
+      const isHighRating = rating >= 9;
+      // Check if we previously had a different category rating selected
       const wasHighRating = satisfactionReasons.some((reason) => 
-        highRatingReasons.includes(reason)
-      )
+        highRatingReasons.includes(reason) && !standardReasons.includes(reason)
+      );
 
-      // If changing between high and low rating categories, reset selections
-      if ((isHighRating && !wasHighRating) || (!isHighRating && wasHighRating)) {
-        setSatisfactionReasons([])
+      // Only reset if we're switching between high/low categories AND have selections
+      if (satisfactionReasons.length > 0 && 
+          ((isHighRating && !wasHighRating) || (!isHighRating && wasHighRating))) {
+        setSatisfactionReasons([]);
       }
     }
-  }, [rating, highRatingReasons, satisfactionReasons])
+  }, [rating, highRatingReasons, standardReasons, satisfactionReasons])
 
   if (!isOpen) return null
 
   // Modify handleSatisfactionChange
   const handleSatisfactionChange = (reason: string) => {
+    console.log("Trying to change reason:", reason, "Current rating:", rating);
     if (satisfactionReasons.includes(reason)) {
-      setSatisfactionReasons(satisfactionReasons.filter((item) => item !== reason))
+      setSatisfactionReasons(satisfactionReasons.filter((item) => item !== reason));
       if (reason === "Other") {
-        setOtherSatisfactionReason("")
+        setOtherSatisfactionReason("");
       }
     } else {
       if (satisfactionReasons.length < 3) {
-        setSatisfactionReasons([...satisfactionReasons, reason])
+        setSatisfactionReasons([...satisfactionReasons, reason]);
       }
     }
   }
