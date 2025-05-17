@@ -209,7 +209,7 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
                         value={otherSatisfactionReason}
                         onChange={(e) => setOtherSatisfactionReason(e.target.value)}
                         placeholder="Please specify"
-                        className="ml-7 p-1 text-xs border-b border-gray-300 focus:outline-none focus:border-gray-400"
+                        className="ml-7 p-1 text-base sm:text-xs border-b border-gray-300 focus:outline-none focus:border-gray-400"
                         maxLength={50}
                       />
                     )}
@@ -271,7 +271,7 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
               <textarea
                 value={additionalFeedback}
                 onChange={(e) => setAdditionalFeedback(e.target.value)}
-                className="w-full border border-gray-300 rounded-md p-2 xs:p-3 min-h-[60px] xs:min-h-[80px] sm:min-h-[100px] focus:outline-none focus:ring-1 focus:ring-gray-400 text-[11px] xs:text-xs sm:text-sm bg-gray-100"
+                className="w-full border border-gray-300 rounded-md p-2 xs:p-3 min-h-[60px] xs:min-h-[80px] sm:min-h-[100px] focus:outline-none focus:ring-1 focus:ring-gray-400 text-base sm:text-xs bg-gray-100"
                 placeholder="Your feedback helps us improve"
                 maxLength={200}
               />
