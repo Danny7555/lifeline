@@ -10,11 +10,16 @@ function FeedbackButton() {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
   const [hasFeedbackBeenSubmitted, setHasFeedbackBeenSubmitted] = useState(false)
 
-  // Check if feedback has been submitted before
+  // Check if feedback has been submitted before and if 30 days have passed
   useEffect(() => {
-    const feedbackSubmitted = localStorage.getItem("feedbackSubmitted")
-    if (feedbackSubmitted === "true") {
-      setHasFeedbackBeenSubmitted(true)
+    const feedbackSubmittedAt = localStorage.getItem("feedbackSubmittedAt")
+    
+    if (feedbackSubmittedAt) {
+      const submissionDate = new Date(parseInt(feedbackSubmittedAt))
+      const currentDate = new Date()
+      const daysSinceSubmission = (currentDate.getTime() - submissionDate.getTime()) / (1000 * 60 * 60 * 24)
+      
+      setHasFeedbackBeenSubmitted(daysSinceSubmission < 30)
     }
   }, [])
 
@@ -27,8 +32,8 @@ function FeedbackButton() {
     // Show success modal immediately
     setIsSuccessModalOpen(true)
 
-    // Save submission state to localStorage
-    localStorage.setItem("feedbackSubmitted", "true")
+    // Save submission timestamp to localStorage
+    localStorage.setItem("feedbackSubmittedAt", Date.now().toString())
     setHasFeedbackBeenSubmitted(true)
   }
 

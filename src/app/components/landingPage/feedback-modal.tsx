@@ -197,7 +197,7 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
                         checked={satisfactionReasons.includes(reason)}
                         onChange={() => handleSatisfactionChange(reason)}
                         disabled={satisfactionReasons.length >= 3 && !satisfactionReasons.includes(reason)}
-                        className="mt-0.5 h-5 w-5 border-gray-300 text-black focus:ring-0 focus:ring-offset-0"
+                        className="mt-0.5 h-5 w-5 border-gray-300 text-gray-500 focus:ring-0 focus:ring-offset-0"
                       />
                       <label htmlFor={`reason-${reason}`} className="text-gray-700 text-[11px] xs:text-xs sm:text-sm">
                         {reason}
@@ -243,7 +243,7 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit }: FeedbackModalProps) => {
                         checked={satisfiedParts.includes(part)}
                         onChange={() => handleSatisfiedPartsChange(part)}
                         disabled={satisfiedParts.length >= 3 && !satisfiedParts.includes(part)}
-                        className="mt-0.5 h-5 w-5 border-gray-300 text-black focus:ring-0 focus:ring-offset-0"
+                        className="mt-0.5 h-5 w-5 border-gray-300 text-gray-500 focus:ring-0 focus:ring-offset-0"
                       />
                       <label htmlFor={`part-${part}`} className="text-gray-700 text-[11px] xs:text-xs sm:text-sm">
                         {part}
