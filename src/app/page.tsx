@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import LandingPage from './components/landingPage/page';
-import DashboardPage from './(dashboard)/page';
 import Loader from './components/Loader';
 
 export default function Page() {
@@ -37,7 +36,7 @@ export default function Page() {
   return (
     <>
       <Loader isLoading={isLoading} />
-      <DashboardPage />
+      <LandingPage />
     </>
   );
 }

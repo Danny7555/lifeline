@@ -8,28 +8,27 @@ interface CustomServiceWorkerGlobalScope extends ServiceWorkerGlobalScope {
 }
 declare const self: CustomServiceWorkerGlobalScope;
 
-// Define runtime caching rules
+// Define runtime caching rules - modified to prioritize fresh content
 const runtimeCaching = [
-  // Static assets
+  // Static assets - still cache but with network checks
   {
     matcher: ({ url }: { url: URL }) => {
       const exts = ['.js', '.css', '.png', '.jpg', '.jpeg', '.svg', '.gif', '.ico', '.woff', '.woff2'];
       return exts.some((ext) => url.pathname.endsWith(ext));
     },
-    handler: 'CacheFirst',
+    handler: 'StaleWhileRevalidate', // Changed from CacheFirst to always check for updates
     options: {
       cacheName: `static-assets-${CACHE_VERSION}`,
-      expiration: { maxEntries: 100, maxAgeSeconds: 2592000 }, // 30 days
+      expiration: { maxEntries: 100, maxAgeSeconds: 3600 }, // Reduced to 1 hour
     },
   },
-  // API
+  // API - always get from network first
   {
     matcher: ({ url }: { url: URL }) => url.pathname.startsWith('/api/'),
-    handler: 'NetworkFirst',
+    handler: 'NetworkOnly', // Changed from NetworkFirst to always use network
     options: {
       cacheName: `api-cache-${CACHE_VERSION}`,
-      networkTimeoutSeconds: 5, // Reduced timeout
-      expiration: { maxEntries: 50, maxAgeSeconds: 86400 }, // 24 hours
+      networkTimeoutSeconds: 5,
     },
   },
 ];
@@ -44,7 +43,7 @@ installSerwist({
   runtimeCaching,
 });
 
-
+// Only cache the offline page
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open('offline-assets').then((cache) => 
@@ -55,7 +54,7 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate and cleanup - delete old caches
+// Activate and cleanup - delete all caches except offline page
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     (async () => {
@@ -63,50 +62,21 @@ self.addEventListener('activate', (event) => {
       await Promise.all(
         keys
           .filter((key) => {
-            // Delete any cache that doesn't match our current version
-            return !key.includes(`-${CACHE_VERSION}`) && 
-                  !key.includes('offline-assets'); // Keep the offline assets cache
+            // Only keep the offline assets cache
+            return key !== 'offline-assets';
           })
           .map((key) => {
-            console.log(`Deleting old cache: ${key}`);
+            console.log(`Deleting cache: ${key}`);
             return caches.delete(key);
           })
       );
-      
-      // Now cache the remaining resources in background
-      const cache = await caches.open(`offline-assets-${CACHE_VERSION}`);
-      const resourcesToPrecache = [
-        '/', 
-        '/icons/life.png',
-        '/manifest.json',
-        '/offline.html'
-      ];
-      
-      // Cache resources in the background with timeouts
-      resourcesToPrecache.forEach(resource => {
-        // Use a timeout to prevent blocking
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Timeout')), 3000)
-        );
-        
-        Promise.race([
-          fetch(resource).then(response => {
-            if (response.ok) cache.put(resource, response);
-            return response;
-          }),
-          timeoutPromise
-        ]).catch(err => console.warn(`Background caching failed for ${resource}:`, err));
-      });
       
       await self.clients.claim();
     })()
   );
 });
 
-// Track when pages were last refreshed
-const pageRefreshTimestamps = new Map();
-
-// Modified fetch handler with more aggressive refresh strategy
+// Completely replaced fetch handler to always prioritize network
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   
@@ -117,92 +87,73 @@ self.addEventListener('fetch', (event) => {
     return;
   }
   
-  // Handle navigation requests with more aggressive refresh strategy
+  // For navigation requests, always try network first, fall back to offline page
   if (event.request.mode === 'navigate') {
     event.respondWith(
       (async () => {
         try {
-          const sendNavigationComplete = () => {
-            self.clients.matchAll().then(clients => {
-              clients.forEach(client => {
-                client.postMessage({ type: 'NAVIGATION_COMPLETE' });
-              });
-            });
-          };
+          // Always add cache-busting query param to force fresh content
+          const freshUrl = new URL(event.request.url);
+          freshUrl.searchParams.append('_sw_nocache', Date.now().toString());
           
-          const currentPath = url.pathname;
-          const currentTime = Date.now();
-          const lastRefreshTime = pageRefreshTimestamps.get(currentPath) || 0;
-          const timeSinceLastRefresh = currentTime - lastRefreshTime;
+          const customHeaders = new Headers(event.request.headers);
+          customHeaders.append('X-Force-Refresh', 'true');
+          customHeaders.append('Cache-Control', 'no-cache, no-store, must-revalidate');
+          customHeaders.append('Pragma', 'no-cache');
           
-          // Force network refresh if it's been more than 5 minutes since last refresh
-          // This is much more aggressive than the 30 minutes from before
-          const shouldHardRefresh = timeSinceLastRefresh > 5 * 60 * 1000;
-          
-          if (shouldHardRefresh) {
-            // Add a custom header to bypass CDN cache if present
-            const customHeaders = new Headers(event.request.headers);
-            customHeaders.append('X-Force-Refresh', 'true');
-            
-            // Bypass cache for a hard refresh
-            const freshRequest = new Request(event.request, {
-              cache: 'reload',
-              headers: customHeaders
-            });
-            
-            const response = await fetch(freshRequest);
-            // Update the refresh timestamp
-            pageRefreshTimestamps.set(currentPath, currentTime);
-            sendNavigationComplete();
-            return response;
-          }
-          
-          // Otherwise, try stale-while-revalidate approach
-          const cachePromise = caches.match(event.request);
-          const fetchPromise = fetch(event.request).then(response => {
-            // If we get a valid response, cache it and update timestamp
-            if (response && response.ok) {
-              const clonedResponse = response.clone();
-              caches.open(`offline-assets-${CACHE_VERSION}`).then(cache => {
-                cache.put(event.request, clonedResponse);
-              });
-              pageRefreshTimestamps.set(currentPath, currentTime);
-            }
-            return response;
+          // Always try network first with cache-busting
+          const freshRequest = new Request(freshUrl, {
+            cache: 'no-store',
+            headers: customHeaders
           });
           
-          // Try to respond with cache first, but fetch in background
-          const response = await cachePromise || fetchPromise;
-          sendNavigationComplete();
-          return response;
+          return await fetch(freshRequest);
         } catch (error) {
-          const cache = await caches.open(`offline-assets-${CACHE_VERSION}`);
+          console.error('Failed to fetch from network:', error);
+          // Only fall back to offline page when completely offline
+          const cache = await caches.open('offline-assets');
           const cachedResponse = await cache.match('/offline.html');
           return cachedResponse || new Response('Offline page not found', { status: 404 });
+        }
+      })()
+    );
+  } else {
+    // For non-navigation requests (assets, API calls)
+    event.respondWith(
+      (async () => {
+        try {
+          // For API calls, always use network
+          if (url.pathname.startsWith('/api/')) {
+            return await fetch(event.request);
+          }
+          
+          // For static assets, still try network first
+          const networkResponse = await fetch(event.request);
+          return networkResponse;
+        } catch (error) {
+          // Fall back to cache only when offline
+          const cachedResponse = await caches.match(event.request);
+          return cachedResponse || new Response('Resource not available offline', { status: 404 });
         }
       })()
     );
   }
 });
 
+// Message handler to clear caches
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
-  } else if (event.data && event.data.type === 'FORCE_REFRESH') {
-    const path = event.data.path || '/';
-    pageRefreshTimestamps.delete(path);
   } else if (event.data && event.data.type === 'CLEAR_ALL_CACHES') {
-    // Add handling for completely purging caches
     event.waitUntil(
       caches.keys().then(cacheNames => {
         return Promise.all(
-          cacheNames.map(cacheName => {
+          cacheNames.filter(name => name !== 'offline-assets').map(cacheName => {
             return caches.delete(cacheName);
           })
         );
       }).then(() => {
         console.log('All caches cleared successfully');
-        // Notify clients that caches were cleared
         self.clients.matchAll().then(clients => {
           clients.forEach(client => {
             client.postMessage({

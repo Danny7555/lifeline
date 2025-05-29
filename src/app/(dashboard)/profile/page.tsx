@@ -84,7 +84,7 @@ export default function ProfilePage() {
       <h1 className="text-2xl font-bold mb-6 text-black">Profile</h1>
 
       {/* Profile Card - Centered with better spacing */}
-      <div className="bg-white border border-gray-700 rounded-2xl p-6 mb-8 max-w-4xl mx-auto">
+      <div className="bg-white border border-gray-700 rounded-2xl p-6 mb-8 max-w-3xl mx-auto">
         <div className="flex items-start gap-6">
           <div className="rounded-full bg-white border-2 border-black w-20 h-20 flex items-center justify-center shrink-0">
             <User className="text-black w-10 h-10" />

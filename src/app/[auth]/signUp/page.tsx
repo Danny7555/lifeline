@@ -1,12 +1,116 @@
 "use client"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ArrowRight, Eye, EyeOff, User, Mail, Globe } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { auth, googleProvider } from "@/lib/firebase"
+import { 
+  signInWithRedirect, 
+  getRedirectResult,
+  createUserWithEmailAndPassword 
+} from "firebase/auth"
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  })
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
+
+  // Check for redirect result when component mounts
+  useEffect(() => {
+    const checkRedirectResult = async () => {
+      try {
+        setLoading(true)
+        const result = await getRedirectResult(auth)
+        
+        if (result) {
+          // User successfully authenticated with Google
+          console.log("Google sign-in successful", result.user)
+          
+          // Redirect to profile
+          router.push('/profile')
+        }
+      } catch (error) {
+        console.error("Error processing redirect result:", error)
+        setError(error instanceof Error ? error.message : "An unexpected error occurred")
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    checkRedirectResult()
+  }, [router])
+
+  // Handle form input changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [id]: value
+    }))
+  }
+
+  // Handle email/password signup
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setError("")
+    setLoading(true)
+
+    // Validate form
+    if (!formData.name || !formData.email || !formData.password) {
+      setError("All fields are required")
+      setLoading(false)
+      return
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match")
+      setLoading(false)
+      return
+    }
+
+    try {
+      // Create user with email and password
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      )
+      // Redirect to profile completion page
+      router.push('/profile')
+    } catch (error) {
+      console.error("Error during signup:", error)
+      setError(error instanceof Error ? error.message : "An unexpected error occurred")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Handle Google sign-in with redirect
+  const handleGoogleSignIn = () => {
+    setError("")
+    setLoading(true)
+    
+    try {
+      // Sign in with Google redirect
+      signInWithRedirect(auth, googleProvider)
+      // The page will redirect to Google's authentication page
+      // After authentication, it will redirect back to this page
+      // and the useEffect above will handle the result
+    } catch (error) {
+      console.error("Error initiating Google sign-in:", error)
+      setError(error instanceof Error ? error.message : "An unexpected error occurred")
+      setLoading(false)
+    }
+  }
 
   return (
     <div className="min-h-screen flex flex-col relative bg-gradient-to-br from-white to-red-50">
@@ -75,7 +179,14 @@ export default function SignUp() {
                   <h1 className="text-2xl md:text-3xl font-poppins mt-2 text-gray-800">Create your account</h1>
                 </div>
 
-                <form className="space-y-5">
+                {/* Show error message if any */}
+                {error && (
+                  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <span className="block sm:inline">{error}</span>
+                  </div>
+                )}
+
+                <form className="space-y-5" onSubmit={handleSignUp}>
                   <div className="space-y-2">
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                       Name
@@ -85,6 +196,8 @@ export default function SignUp() {
                         id="name"
                         type="text"
                         placeholder="Your full name"
+                        value={formData.name}
+                        onChange={handleChange}
                         className="w-full px-4 py-3 border-0 border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-gray-500 transition-all pr-10"
                       />
                       <User className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -100,6 +213,8 @@ export default function SignUp() {
                         id="email"
                         type="email"
                         placeholder="username@example.com"
+                        value={formData.email}
+                        onChange={handleChange}
                         className="w-full px-4 py-3 border-0 border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-gray-500 transition-all pr-10"
                       />
                       <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -115,6 +230,8 @@ export default function SignUp() {
                         id="password"
                         type={showPassword ? "text" : "password"}
                         placeholder="Create a strong password"
+                        value={formData.password}
+                        onChange={handleChange}
                         className="w-full px-4 py-3 border-0 border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-gray-500 transition-all"
                       />
                       <button
@@ -136,6 +253,8 @@ export default function SignUp() {
                         id="confirm-password"
                         type={showConfirmPassword ? "text" : "password"}
                         placeholder="Confirm your password"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
                         className="w-full px-4 py-3 border-0 border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-gray-500 transition-all"
                       />
                       <button
@@ -161,9 +280,10 @@ export default function SignUp() {
 
                   <button
                     type="submit"
-                    className="w-full py-3 px-4 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition duration-200 flex items-center justify-center group mt-2"
+                    disabled={loading}
+                    className={`w-full py-3 px-4 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition duration-200 flex items-center justify-center group mt-2 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
                   >
-                    Sign Up
+                    {loading ? 'Processing...' : 'Sign Up'}
                     <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
                   </button>
                 </form>
@@ -174,7 +294,12 @@ export default function SignUp() {
                   <div className="flex-grow border-t border-gray-300"></div>
                 </div>
 
-                <button className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2.5 px-4 text-gray-700 transition-colors text-sm bg-white hover:bg-gray-50">
+                <button 
+                  type="button"
+                  onClick={handleGoogleSignIn}
+                  disabled={loading}
+                  className={`w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2.5 px-4 text-gray-700 transition-colors text-sm bg-white hover:bg-gray-50 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                >
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                     <path
                       fill="#4285F4"
@@ -193,7 +318,7 @@ export default function SignUp() {
                       d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                     />
                   </svg>
-                  Continue with Google
+                  {loading ? 'Processing...' : 'Continue with Google'}
                 </button>
               </div>
             </div>
