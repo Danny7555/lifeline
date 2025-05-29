@@ -1,9 +1,8 @@
+"use client";
 import React from "react"
 import { ResponsiveSidebar } from "../components/responsive-sidebar"
-import dynamic from "next/dynamic"
+import ProfilePage from "./profile/page"
 
-// Dynamically import the client component with no SSR
-const ProfilePage = dynamic(() => import("./profile/page"), { ssr: false })
 
 export default function DashboardPage() {
   return (
