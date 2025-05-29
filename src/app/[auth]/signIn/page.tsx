@@ -110,14 +110,14 @@ export default function SignIn() {
                       </button>
                     </div>
                   </div>
+                    <button
+                      type="submit"
+                      className="w-full py-3 px-4 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition duration-200 flex items-center justify-center group"
+                    >
+                      Continue
+                      <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
+                    </button>
 
-                  <button
-                    type="submit"
-                    className="w-full py-3 px-4 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition duration-200 flex items-center justify-center group"
-                  >
-                    Continue
-                    <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
-                  </button>
                 </form>
 
                 <div className="mt-8 text-center text-sm text-gray-600">
