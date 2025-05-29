@@ -84,7 +84,7 @@ export default function ProfilePage() {
       <h1 className="text-2xl font-bold mb-6 text-black">Profile</h1>
 
       {/* Profile Card - Centered with better spacing */}
-      <div className="bg-white border border-gray-300 rounded-2xl p-6 mb-8 max-w-4xl mx-auto">
+      <div className="bg-white border border-gray-700 rounded-2xl p-6 mb-8 max-w-4xl mx-auto">
         <div className="flex items-start gap-6">
           <div className="rounded-full bg-white border-2 border-black w-20 h-20 flex items-center justify-center shrink-0">
             <User className="text-black w-10 h-10" />
@@ -120,7 +120,7 @@ export default function ProfilePage() {
           </div>
 
           {/* Timeline */}
-          <div className="bg-white border border-gray-300 rounded-2xl p-6">
+          <div className="bg-white border border-gray-700 rounded-2xl p-6">
             <h3 className="font-bold mb-6 text-black">Timeline</h3>
             <div className="relative">
               {/* Timeline line */}
@@ -135,7 +135,7 @@ export default function ProfilePage() {
                 ].map((item, index) => (
                   <div key={index} className="relative flex items-center">
                     <div className="absolute left-0 w-6 h-6 bg-gray-300 rounded-full z-10"></div>
-                    <div className="ml-12 flex-1 bg-white border border-gray-300 rounded-lg p-4 flex justify-between items-center">
+                    <div className="ml-12 flex-1 bg-white border border-gray-700 rounded-lg p-4 flex justify-between items-center">
                       <div>
                         <h4 className="font-medium text-black text-base">{item.title}</h4>
                         <p className="text-gray-600 text-sm">Last Visited: {item.date}</p>
@@ -153,9 +153,9 @@ export default function ProfilePage() {
 
         {/* Improved Daily Tip Card */}
         <div className="lg:col-span-1">
-          <div className="bg-white border border-gray-300 rounded-2xl overflow-hidden">
+          <div className="bg-white border border-gray-700 rounded-2xl overflow-hidden">
             {/* Header with accent color */}
-            <div className="bg-[#FFAEBB] px-6 py-4">
+            <div className="bg-white px-6 py-4">
               <h2 className="text-xl font-bold text-black text-center">DAILY TIP</h2>
             </div>
 
