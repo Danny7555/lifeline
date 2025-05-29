@@ -1,7 +1,7 @@
 "use client";
 import React from "react"
 import { ResponsiveSidebar } from "../components/responsive-sidebar"
-import ProfilePage from "./profile/page"
+import ProfilePage from "./profile/ProfileContent";
 
 
 export default function DashboardPage() {
