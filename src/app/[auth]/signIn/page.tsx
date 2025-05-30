@@ -2,10 +2,76 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
-import { ArrowRight, Eye, EyeOff, Globe } from "lucide-react"
+import { ArrowRight, Eye, EyeOff, User, Mail, Globe } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react"
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false)
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  })
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
+
+  // Handle form input changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [id]: value
+    }))
+  }
+
+  // Handle email/password signin
+  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setError("")
+    setLoading(true)
+
+    // Validate form
+    if (!formData.email || !formData.password) {
+      setError("Email and password are required")
+      setLoading(false)
+      return
+    }
+
+    try {
+      const result = await signIn('credentials', {
+        redirect: false,
+        email: formData.email,
+        password: formData.password
+      })
+
+      if (result?.error) {
+        throw new Error(result.error)
+      }
+
+      // Redirect to dashboard/profile
+      router.push('/dashboard/profile')
+    } catch (error) {
+      console.error("Error during sign in:", error)
+      setError(error instanceof Error ? error.message : "Invalid email or password")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Handle Google sign-in
+  const handleGoogleSignIn = async () => {
+    setError("")
+    setLoading(true)
+    
+    try {
+      await signIn('google', { callbackUrl: '/dashboard/profile' })
+    } catch (error) {
+      console.error("Error initiating Google sign-in:", error)
+      setError(error instanceof Error ? error.message : "An unexpected error occurred")
+      setLoading(false)
+    }
+  }
 
   return (
     <div className="min-h-screen flex flex-col relative bg-gradient-to-br from-white to-red-50">
@@ -22,7 +88,7 @@ export default function SignIn() {
         </div>
       </div>
 
-      <main className="flex-1 flex flex-col md:flex-row relative z-10 pt-10">
+      <main className="flex-1 flex flex-col md:flex-row relative z-10">
         {/* Left side with illustration */}
         <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-12">
           <div className="max-w-md relative">
@@ -48,13 +114,13 @@ export default function SignIn() {
           </div>
         </div>
 
-        {/* Right side with login form */}
+        {/* Right side with signin form */}
         <div className="w-full md:w-1/2 flex flex-col">
           <div className="p-4 flex justify-end">
             <div className="text-sm text-gray-600">
-              Don&apos;t have an account yet?{" "}
+              Don&apos;t have an account?{" "}
               <Link href="/auth/signUp" className="font-extrabold text-red-600 hover:text-red-700 transition-colors">
-                Sign up
+                Sign Up
               </Link>
             </div>
           </div>
@@ -66,39 +132,45 @@ export default function SignIn() {
                   <p className="text-gray-600 text-lg font-extralight">
                     Welcome back <span className="uppercase font-extrabold text-gray-500">Lifeliner!</span>
                   </p>
-                  <h1 className="text-2xl md:text-3xl font-poppins mt-2 text-gray-800">Login to your account</h1>
+                  <h1 className="text-2xl md:text-3xl font-poppins mt-2 text-gray-800">Sign in to your account</h1>
                 </div>
 
-                <form className="space-y-6">
+                {/* Show error message if any */}
+                {error && (
+                  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <span className="block sm:inline">{error}</span>
+                  </div>
+                )}
+
+                <form className="space-y-5" onSubmit={handleSignIn}>
                   <div className="space-y-2">
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                       Email
                     </label>
-                    <input
-                      id="email"
-                      type="email"
-                      placeholder="username@example.com"
-                      className="w-full px-4 py-3 border-0 border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-gray-500 transition-all "
-                    />
+                    <div className="relative">
+                      <input
+                        id="email"
+                        type="email"
+                        placeholder="username@example.com"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 border-0 border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-gray-500 transition-all pr-10"
+                      />
+                      <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                    </div>
                   </div>
 
                   <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                        Password
-                      </label>
-                      <Link
-                        href="/forgot-password"
-                        className="text-sm text-gray-600 hover:text-gray-700 hover:underline transition-colors"
-                      >
-                        Forgot Password ?
-                      </Link>
-                    </div>
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                      Password
+                    </label>
                     <div className="relative">
                       <input
                         id="password"
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
+                        value={formData.password}
+                        onChange={handleChange}
                         className="w-full px-4 py-3 border-0 border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-gray-500 transition-all"
                       />
                       <button
@@ -110,25 +182,50 @@ export default function SignIn() {
                       </button>
                     </div>
                   </div>
-                    <button
-                      type="submit"
-                      className="w-full py-3 px-4 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition duration-200 flex items-center justify-center group"
-                    >
-                      Continue
-                      <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
-                    </button>
 
+                  <div className="flex items-center justify-between mt-2">
+                    <div className="flex items-center">
+                      <input
+                        type="checkbox"
+                        id="remember"
+                        className="h-4 w-4 text-red-500 focus:ring-red-500 border-gray-300 rounded"
+                      />
+                      <label htmlFor="remember" className="ml-2 text-sm text-gray-700">
+                        Remember me
+                      </label>
+                    </div>
+                    <Link href="/auth/forgot-password" className="text-sm text-red-600 hover:text-red-700">
+                      Forgot password?
+                    </Link>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className={`w-full py-3 px-4 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition duration-200 flex items-center justify-center group mt-2 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  >
+                    {loading ? 'Signing in...' : 'Sign In'}
+                    <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
+                  </button>
                 </form>
 
-                <div className="mt-8 text-center text-sm text-gray-600">
-                  Don&apos;t have an account?{" "}
-                  <Link
-                    href="/auth/signUp"
-                    className="font-medium text-gray-600 hover:text-gray-700 hover:underline transition-colors"
-                  >
-                    Register
-                  </Link>
+                <div className="relative flex items-center justify-center my-6">
+                  <div className="flex-grow border-t border-gray-300"></div>
+                  <span className="flex-shrink mx-4 text-gray-500 text-sm">OR</span>
+                  <div className="flex-grow border-t border-gray-300"></div>
                 </div>
+
+                <button 
+                  type="button"
+                  onClick={handleGoogleSignIn}
+                  disabled={loading}
+                  className={`w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2.5 px-4 text-gray-700 transition-colors text-sm bg-white hover:bg-gray-50 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                    {/* Google icon SVG paths */}
+                  </svg>
+                  {loading ? 'Processing...' : 'Continue with Google'}
+                </button>
               </div>
             </div>
           </div>

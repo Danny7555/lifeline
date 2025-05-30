@@ -16,17 +16,17 @@ export function ResponsiveSidebar() {
     },
     { 
       name: "Lifeline History", 
-      href: "/history", 
+      href: "/dashboard/history", 
       icon: Clock 
     },
     { 
       name: "Support/Help", 
-      href: "/support", 
+      href: "/dashboard/support", 
       icon: LifeBuoy 
     },
     { 
       name: "Settings", 
-      href: "/settings", 
+      href: "/dashboard/settings", 
       icon: Settings 
     },
   ]

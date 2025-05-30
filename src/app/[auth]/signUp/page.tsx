@@ -1,15 +1,10 @@
 "use client"
 import Image from "next/image"
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { ArrowRight, Eye, EyeOff, User, Mail, Globe } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { auth, googleProvider } from "@/lib/firebase"
-import { 
-  signInWithRedirect, 
-  getRedirectResult,
-  createUserWithEmailAndPassword 
-} from "firebase/auth"
+import { signIn } from "next-auth/react"
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false)
@@ -23,31 +18,6 @@ export default function SignUp() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-
-  // Check for redirect result when component mounts
-  useEffect(() => {
-    const checkRedirectResult = async () => {
-      try {
-        setLoading(true)
-        const result = await getRedirectResult(auth)
-        
-        if (result) {
-          // User successfully authenticated with Google
-          console.log("Google sign-in successful", result.user)
-          
-          // Redirect to profile
-          router.push('/profile')
-        }
-      } catch (error) {
-        console.error("Error processing redirect result:", error)
-        setError(error instanceof Error ? error.message : "An unexpected error occurred")
-      } finally {
-        setLoading(false)
-      }
-    }
-    
-    checkRedirectResult()
-  }, [router])
 
   // Handle form input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,13 +48,35 @@ export default function SignUp() {
     }
 
     try {
-      // Create user with email and password
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      )
-      // Redirect to profile completion page
+      // Register the user through our API
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password
+        })
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Registration failed")
+      }
+
+      // Sign in the user after successful registration
+      const result = await signIn('credentials', {
+        redirect: false,
+        email: formData.email,
+        password: formData.password
+      })
+
+      if (result?.error) {
+        throw new Error(result.error)
+      }
+
+      // Redirect to profile page
       router.push('/profile')
     } catch (error) {
       console.error("Error during signup:", error)
@@ -94,17 +86,14 @@ export default function SignUp() {
     }
   }
 
-  // Handle Google sign-in with redirect
-  const handleGoogleSignIn = () => {
+  // Handle Google sign-in
+  const handleGoogleSignIn = async () => {
     setError("")
     setLoading(true)
     
     try {
-      // Sign in with Google redirect
-      signInWithRedirect(auth, googleProvider)
-      // The page will redirect to Google's authentication page
-      // After authentication, it will redirect back to this page
-      // and the useEffect above will handle the result
+      // Start Google sign-in flow
+      await signIn('google', { callbackUrl: '/dashboard/profile' })
     } catch (error) {
       console.error("Error initiating Google sign-in:", error)
       setError(error instanceof Error ? error.message : "An unexpected error occurred")
@@ -116,7 +105,8 @@ export default function SignUp() {
     <div className="min-h-screen flex flex-col relative bg-gradient-to-br from-white to-red-50">
       {/* Background pattern */}
       <div className="absolute inset-0 bg-[url('/images/background.jpg')] bg-cover bg-repeat opacity-10 pointer-events-none" />
-           {/* Navigation overlay - positioned on top of background */}
+      
+      {/* Navigation */}
       <div className="absolute top-0 left-0 right-0 py-2 px-4 flex justify-between items-center z-10">
         <div className="w-20">
           {/* Empty div for spacing */}
@@ -245,12 +235,12 @@ export default function SignUp() {
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
                       Confirm Password
                     </label>
                     <div className="relative">
                       <input
-                        id="confirm-password"
+                        id="confirmPassword" 
                         type={showConfirmPassword ? "text" : "password"}
                         placeholder="Confirm your password"
                         value={formData.confirmPassword}

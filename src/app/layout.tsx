@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import LoaderWrapper from './components/LoaderWrapper';
 import IndexedDBInitializer from '../indexed-components/IndexedDBInitializer';
 import "./globals.css";
+import { AuthProvider } from "./providers"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -48,13 +49,18 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:p-4 focus:bg-white focus:text-black focus:z-50">
           Skip to main content
         </a>
+        
         {/* This initializes IndexedDB on client-side */}
         <IndexedDBInitializer />
-        <LoaderWrapper>
-          <main id="main-content">
-            {children}
-          </main>
-        </LoaderWrapper>
+        
+        {/* Wrap everything in AuthProvider, then LoaderWrapper */}
+        <AuthProvider>
+          <LoaderWrapper>
+            <main id="main-content">
+              {children}
+            </main>
+          </LoaderWrapper>
+        </AuthProvider>
       </body>
     </html>
   );
