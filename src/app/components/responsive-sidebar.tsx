@@ -2,16 +2,30 @@
 import { User, Clock, LifeBuoy, Settings, LogOut, Menu, X } from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { signOut, useSession } from "next-auth/react"
+import Image from "next/image"
 
 export function ResponsiveSidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
+  const { data: session } = useSession()
+
+  // Handle logout with NextAuth
+  const handleLogout = async () => {
+    try {
+      await signOut({ redirect: false })
+      router.push('/auth/signIn') // Redirect to sign in page after logout
+    } catch (error) {
+      console.error("Logout failed:", error)
+    }
+  }
 
   const navigation = [
     { 
       name: "User Profile", 
-      href: "/profile", 
+      href: "/dashboard/profile", // Updated to match protected route pattern
       icon: User 
     },
     { 
@@ -54,11 +68,21 @@ export function ResponsiveSidebar() {
         {/* User Profile Section */}
         <div className="flex flex-col items-center pt-10 pb-8 px-6">
           <div className="rounded-full bg-white border-2 border-black w-20 h-20 flex items-center justify-center mb-4">
-            <User className="text-black w-10 h-10" />
+            {session?.user?.image ? (
+              <Image
+                src={session.user.image} 
+                alt={session.user.name || "User"} 
+                className="rounded-full w-full h-full object-cover"
+              />
+            ) : (
+              <User className="text-black w-10 h-10" />
+            )}
           </div>
           <p className="text-center text-black text-sm leading-tight">
             Welcome,<br />
-            <span className="font-bold text-base">LIFELINER!</span>
+            <span className="font-bold text-base">
+              {session?.user?.name || "LIFELINER"}
+            </span>
           </p>
         </div>
 
@@ -89,9 +113,12 @@ export function ResponsiveSidebar() {
           </div>
         </nav>
 
-        {/* Logout Section */}
+        {/* Logout Section with functioning button */}
         <div className="p-6 mt-auto">
-          <button className="flex items-center text-[#FF3B3B] px-4 py-3 hover:bg-[#FFD3DB] rounded-lg transition-colors w-full">
+          <button 
+            onClick={handleLogout}
+            className="flex items-center text-[#FF3B3B] px-4 py-3 hover:bg-[#FFD3DB] rounded-lg transition-colors w-full"
+          >
             <LogOut className="mr-4 h-5 w-5" />
             <span className="text-sm font-medium">Log Out</span>
           </button>
