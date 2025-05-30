@@ -92,7 +92,7 @@ export default function SignUp() {
     setLoading(true)
     
     try {
-      // Start Google sign-in flow
+      // Update to match the protected route pattern from middleware
       await signIn('google', { callbackUrl: '/dashboard/profile' })
     } catch (error) {
       console.error("Error initiating Google sign-in:", error)

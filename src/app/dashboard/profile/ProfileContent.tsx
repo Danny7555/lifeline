@@ -1,6 +1,7 @@
 "use client";
 import { User, ChevronRight } from "lucide-react"
 import { useState, useEffect } from "react"
+import { useSession } from "next-auth/react";
 
 // Array of tips with categories
 const allTips = [
@@ -34,7 +35,8 @@ const allTips = [
   },
 ]
 
-export default function ProfilePage() {
+export default function ProfileContent() {
+  const { data: session } = useSession();
   const [currentTip, setCurrentTip] = useState(allTips[0])
   const [lastUpdated, setLastUpdated] = useState("")
 
@@ -91,7 +93,9 @@ export default function ProfilePage() {
           </div>
 
           <div className="flex-1">
-            <h2 className="text-xl font-bold text-black mb-4">LIFELINER</h2>
+            <h2 className="text-xl font-bold text-black mb-4">
+              {session?.user?.name || "LIFELINER"}
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-2">
               <div>
                 <p className="text-black text-base">Age: 45</p>

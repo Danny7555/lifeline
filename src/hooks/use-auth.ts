@@ -6,23 +6,22 @@ import { useEffect } from "react";
 
 export function useAuth({ required = false, redirectTo = "/auth/signIn" } = {}) {
   const { data: session, status } = useSession();
+  const isLoading = status === "loading";
+  const isAuthenticated = status === "authenticated";
   const router = useRouter();
-  const loading = status === "loading";
-  const authenticated = status === "authenticated";
 
   useEffect(() => {
-    if (loading) return;
-    
-    if (required && !authenticated) {
+    // If auth is required and user is not authenticated
+    if (required && !isLoading && !isAuthenticated) {
       router.push(redirectTo);
     }
-  }, [loading, authenticated, required, redirectTo, router]);
+  }, [isLoading, isAuthenticated, required, redirectTo, router]);
 
   return {
     session,
-    loading,
-    authenticated,
+    isLoading,
+    isAuthenticated,
     signIn,
-    signOut
+    signOut,
   };
 }
