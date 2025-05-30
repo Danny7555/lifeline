@@ -59,10 +59,14 @@ export default function SignUp() {
         })
       })
 
+      // Log detailed response information
+      console.log('Registration response status:', response.status);
+      
       const data = await response.json()
+      console.log('Registration response data:', data);
 
       if (!response.ok) {
-        throw new Error(data.error || "Registration failed")
+        throw new Error(data.error || `Registration failed with status ${response.status}`)
       }
 
       // Sign in the user after successful registration
@@ -73,11 +77,12 @@ export default function SignUp() {
       })
 
       if (result?.error) {
+        console.error('Sign-in error after registration:', result.error);
         throw new Error(result.error)
       }
 
-      // Redirect to profile page
-      router.push('/profile')
+      // Redirect to profile page - update to match Google sign-in path
+      router.push('/dashboard/profile')
     } catch (error) {
       console.error("Error during signup:", error)
       setError(error instanceof Error ? error.message : "An unexpected error occurred")
