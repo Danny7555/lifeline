@@ -1,8 +1,9 @@
 "use client";
 import { User, ChevronRight } from "lucide-react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useSession } from "next-auth/react";
 import Image from "next/image"
+import Link from "next/link";
 
 // Array of tips with categories
 const allTips = [
@@ -40,6 +41,13 @@ export default function ProfileContent() {
   const { data: session } = useSession();
   const [currentTip, setCurrentTip] = useState(allTips[0])
   const [lastUpdated, setLastUpdated] = useState("")
+  const [profileData, setProfileData] = useState({
+    age: "",
+    gender: "",
+    location: "",
+    medicalCondition: "",
+    phone: ""
+  });
 
   // Modified getDailyTip function to ensure it updates daily
   const getDailyTip = () => {
@@ -77,10 +85,35 @@ export default function ProfileContent() {
     setLastUpdated(`Today at ${formattedTime}`)
   }
 
+  // Fetch user profile data
+  const fetchUserProfile = useCallback(async () => {
+    if (session?.user?.id) {
+      try {
+        const response = await fetch(`/api/user/profile?userId=${session.user.id}`);
+        
+        if (response.ok) {
+          const data = await response.json();
+          setProfileData({
+            age: data.age || "",
+            gender: data.gender || "",
+            location: data.location || "",
+            medicalCondition: data.medicalCondition || "",
+            phone: data.phone || ""
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    }
+  }, [session]);
+
   // Set initial tip on component mount
   useEffect(() => {
     getDailyTip()
-  }, [])
+    if (session?.user?.id) {
+      fetchUserProfile();
+    }
+  }, [session, fetchUserProfile])
 
   return (
     <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
@@ -102,18 +135,26 @@ export default function ProfileContent() {
           </div>
 
           <div className="flex-1">
-            <h2 className="text-xl font-bold text-black mb-4">
-              {session?.user?.name || "LIFELINER"}
-            </h2>
+            <div className="flex justify-between items-start">
+              <h2 className="text-xl font-bold text-black mb-4">
+                {session?.user?.name || "LIFELINER"}
+              </h2>
+              <Link 
+                href="/dashboard/settings" 
+                className="text-sm text-red-500 hover:text-red-600"
+              >
+                Edit Profile
+              </Link>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-2">
               <div>
-                <p className="text-black text-base">Age: 45</p>
-                <p className="text-black text-base">Gender: Female</p>
-                <p className="text-black text-base">Location: Nowhere</p>
+                <p className="text-black text-base">Age: {profileData.age || "Not set"}</p>
+                <p className="text-black text-base">Gender: {profileData.gender || "Not set"}</p>
+                <p className="text-black text-base">Location: {profileData.location || "Not set"}</p>
               </div>
               <div>
-                <p className="text-black text-base">Medical Condition: Asthma</p>
-                <p className="text-black text-base">Emergency Contact: 0203430787</p>
+                <p className="text-black text-base">Medical Condition: {profileData.medicalCondition || "None"}</p>
+                <p className="text-black text-base">Emergency Contact: {profileData.phone || "Not set"}</p>
                 <p className="text-black text-base">Language: Frafra</p>
               </div>
             </div>
