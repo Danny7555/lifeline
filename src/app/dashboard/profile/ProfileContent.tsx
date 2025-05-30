@@ -46,7 +46,8 @@ export default function ProfileContent() {
     gender: "",
     location: "",
     medicalCondition: "",
-    phone: ""
+    phone: "",
+    language: "" // Add language field
   });
 
   // Modified getDailyTip function to ensure it updates daily
@@ -98,7 +99,8 @@ export default function ProfileContent() {
             gender: data.gender || "",
             location: data.location || "",
             medicalCondition: data.medicalCondition || "",
-            phone: data.phone || ""
+            phone: data.phone || "",
+            language: data.language || "" // Include language
           });
         }
       } catch (error) {
@@ -155,7 +157,7 @@ export default function ProfileContent() {
               <div>
                 <p className="text-black text-base">Medical Condition: {profileData.medicalCondition || "None"}</p>
                 <p className="text-black text-base">Emergency Contact: {profileData.phone || "Not set"}</p>
-                <p className="text-black text-base">Language: Frafra</p>
+                <p className="text-black text-base">Language: {profileData.language || "Not set"}</p>
               </div>
             </div>
           </div>

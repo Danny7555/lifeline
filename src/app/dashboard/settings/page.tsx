@@ -18,7 +18,8 @@ export default function SettingsPage() {
     gender: "",
     phone: "",
     location: "",
-    medicalCondition: ""
+    medicalCondition: "",
+    language: "" // Add language field
   })
 
   // Load user data from session and database when component mounts
@@ -38,7 +39,8 @@ export default function SettingsPage() {
               gender: data.gender || "",
               phone: data.phone || "",
               location: data.location || "",
-              medicalCondition: data.medicalCondition || ""
+              medicalCondition: data.medicalCondition || "",
+              language: data.language || "" // Include language
             })
           }
         } catch (error) {
@@ -262,6 +264,40 @@ export default function SettingsPage() {
                   className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border-2 border-gray-300 rounded-lg focus:border-[#F5A5A5] focus:outline-none text-gray-700 text-sm sm:text-base"
                 />
               </div>
+            </div>
+
+            {/* Fourth Row - Language */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+              {/* Language Field */}
+              <div>
+                <label htmlFor="language" className="block text-base sm:text-lg font-medium text-black mb-2 sm:mb-3">Language</label>
+                <div className="relative">
+                  <select 
+                    id="language"
+                    name="language"
+                    value={formData.language}
+                    onChange={handleChange}
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border-2 border-gray-300 rounded-lg focus:border-[#F5A5A5] focus:outline-none text-gray-700 appearance-none bg-white text-sm sm:text-base"
+                  >
+                    <option value="">Select Language</option>
+                    <option value="English">English</option>
+                    <option value="Frafra">Frafra</option>
+                    <option value="Twi">Twi</option>
+                    <option value="Ga">Ga</option>
+                    <option value="Ewe">Ewe</option>
+                    <option value="Hausa">Hausa</option>
+                    <option value="Dagbani">Dagbani</option>
+                    <option value="French">French</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="Arabic">Arabic</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400 pointer-events-none" />
+                </div>
+              </div>
+
+              {/* You can keep the right side empty or add another field */}
+              <div className="hidden md:block"></div>
             </div>
 
             {/* Save Button */}

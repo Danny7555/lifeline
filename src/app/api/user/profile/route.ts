@@ -57,7 +57,7 @@ export async function POST(request: Request) {
     
     // Get the request body
     const body = await request.json();
-    const { userId, name, age, gender, phone, location, medicalCondition } = body;
+    const { userId, name, age, gender, phone, location, medicalCondition, language } = body;
     
     if (!userId) {
       return NextResponse.json({ error: "User ID is required" }, { status: 400 });
@@ -84,6 +84,7 @@ export async function POST(request: Request) {
           phone,
           location,
           medicalCondition,
+          language, // Add language field
           updatedAt: new Date()
         },
         $setOnInsert: { createdAt: new Date() }
