@@ -48,8 +48,11 @@ export default function SignUp() {
     }
 
     try {
+      // Get the base URL - adapts between local and production
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || '';
+      
       // Register the user through our API
-      const response = await fetch('/api/register', {
+      const response = await fetch(`${baseUrl}/api/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -59,14 +62,20 @@ export default function SignUp() {
         })
       })
 
-      // Log detailed response information
+      // Enhanced error logging
       console.log('Registration response status:', response.status);
+      let data;
       
-      const data = await response.json()
-      console.log('Registration response data:', data);
+      try {
+        data = await response.json();
+        console.log('Registration response data:', data);
+      } catch (parseError) {
+        console.error('Error parsing response:', parseError);
+        throw new Error('Invalid response from server');
+      }
 
       if (!response.ok) {
-        throw new Error(data.error || `Registration failed with status ${response.status}`)
+        throw new Error(data?.error || `Registration failed with status ${response.status}`)
       }
 
       // Sign in the user after successful registration
