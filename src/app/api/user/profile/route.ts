@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth"; // Updated import path
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 // Get user profile
 export async function GET(request: Request) {
   try {
-    // Get the session
+    // Get the session - pass authOptions
     const session = await getServerSession(authOptions);
     
     if (!session || !session.user) {
@@ -48,16 +48,16 @@ export async function GET(request: Request) {
 // Update user profile
 export async function POST(request: Request) {
   try {
-    // Get the session
+    // Get the session - pass authOptions
     const session = await getServerSession(authOptions);
     
-    if (!session?.user?.id) {
+    if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     
     // Get the request body
     const body = await request.json();
-    const { userId, name, age, gender, phone, location, medicalCondition, language } = body;
+    const { userId, name, age, gender, phone, location, medicalCondition } = body;
     
     if (!userId) {
       return NextResponse.json({ error: "User ID is required" }, { status: 400 });
@@ -84,7 +84,6 @@ export async function POST(request: Request) {
           phone,
           location,
           medicalCondition,
-          language, // Add language field
           updatedAt: new Date()
         },
         $setOnInsert: { createdAt: new Date() }
@@ -94,15 +93,10 @@ export async function POST(request: Request) {
     
     // If the user changed their name, update it in the users collection too
     if (name) {
-      try {
-        await db.collection("users").updateOne(
-          { _id: new ObjectId(userId) },
-          { $set: { name } }
-        );
-      } catch (err) {
-        console.error("Error updating user name:", err);
-        // Continue execution - this is not a critical error
-      }
+      await db.collection("users").updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: { name } }
+      );
     }
     
     return NextResponse.json({ 
@@ -112,9 +106,6 @@ export async function POST(request: Request) {
     
   } catch (error) {
     console.error("Error updating user profile:", error);
-    return NextResponse.json({ 
-      error: "Internal server error", 
-      details: error instanceof Error ? error.message : "Unknown error" 
-    }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
+import { authOptions } from "@/lib/auth";
 
 // Paths that require authentication
 const protectedPaths = [

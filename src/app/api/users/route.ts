@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import clientPromise from '@/lib/mongodb'
 import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth' // Updated import path
 
 // Create new user
 export async function POST(request: Request) {
@@ -53,6 +53,7 @@ export async function POST(request: Request) {
 // Get user data (protected route)
 export async function GET(request: Request) {
   try {
+    // Update getServerSession to include authOptions
     const session = await getServerSession(authOptions)
     
     if (!session) {
