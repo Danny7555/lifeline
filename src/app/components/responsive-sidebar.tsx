@@ -1,5 +1,5 @@
 "use client"
-import { User, Clock, LifeBuoy, Settings, LogOut, Menu, X } from "lucide-react"
+import { User, Clock, LifeBuoy, Settings, LogOut, Menu, X, AlertTriangle } from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
@@ -8,9 +8,15 @@ import Image from "next/image"
 
 export function ResponsiveSidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [showLogoutModal, setShowLogoutModal] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
   const { data: session } = useSession()
+
+  // Handle logout modal open
+  const openLogoutModal = () => {
+    setShowLogoutModal(true)
+  }
 
   // Handle logout with NextAuth
   const handleLogout = async () => {
@@ -19,13 +25,15 @@ export function ResponsiveSidebar() {
       router.push('/auth/signIn') // Redirect to sign in page after logout
     } catch (error) {
       console.error("Logout failed:", error)
+    } finally {
+      setShowLogoutModal(false)
     }
   }
 
   const navigation = [
     { 
       name: "User Profile", 
-      href: "/dashboard/profile", // Updated to match protected route pattern
+      href: "/dashboard/profile", 
       icon: User 
     },
     { 
@@ -67,11 +75,13 @@ export function ResponsiveSidebar() {
       >
         {/* User Profile Section */}
         <div className="flex flex-col items-center pt-10 pb-8 px-6">
-          <div className="rounded-full bg-white border-2 border-black w-20 h-20 flex items-center justify-center mb-4">
+          <div className="rounded-full bg-white border-2 border-black w-20 h-20 flex items-center justify-center mb-4 overflow-hidden">
             {session?.user?.image ? (
               <Image
                 src={session.user.image} 
                 alt={session.user.name || "User"} 
+                width={80}
+                height={80}
                 className="rounded-full w-full h-full object-cover"
               />
             ) : (
@@ -113,10 +123,10 @@ export function ResponsiveSidebar() {
           </div>
         </nav>
 
-        {/* Logout Section with functioning button */}
+        {/* Logout Section with modal trigger button */}
         <div className="p-6 mt-auto">
           <button 
-            onClick={handleLogout}
+            onClick={openLogoutModal}
             className="flex items-center text-[#FF3B3B] px-4 py-3 hover:bg-[#FFD3DB] rounded-lg transition-colors w-full"
           >
             <LogOut className="mr-4 h-5 w-5" />
@@ -128,6 +138,52 @@ export function ResponsiveSidebar() {
       {/* Overlay for mobile */}
       {sidebarOpen && (
         <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30" onClick={() => setSidebarOpen(false)} />
+      )}
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutModal && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          {/* Modal Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black bg-opacity-50"
+            onClick={() => setShowLogoutModal(false)}
+          />
+          
+          {/* Modal Content */}
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 z-10 overflow-hidden transform transition-all animate-fadeIn">
+            {/* Modal Header with red gradient */}
+            <div className="bg-gradient-to-r from-red-300 to-red-500 p-6">
+              <div className="mx-auto w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4">
+                <AlertTriangle className="h-8 w-8 text-red-500" />
+              </div>
+              <h3 className="text-xl font-bold text-white text-center">Sign Out Confirmation</h3>
+            </div>
+            
+            {/* Modal Body */}
+            <div className="px-6 py-4">
+              <p className="text-gray-600 text-center mb-6">
+                Are you sure you want to sign out of your Lifeliner account?
+              </p>
+              
+              {/* Modal Actions */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <button
+                  onClick={() => setShowLogoutModal(false)}
+                  className="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg font-medium transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="flex-1 px-4 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </>
   )
