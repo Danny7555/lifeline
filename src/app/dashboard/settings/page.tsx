@@ -131,6 +131,8 @@ export default function SettingsPage() {
                   src={session.user.image}
                   alt={session.user.name || "User"}
                   className="w-full h-full object-cover"
+                  width={96}
+                  height={96}
                 />
               ) : (
                 <User className="text-white w-10 h-10 sm:w-12 sm:h-12" />

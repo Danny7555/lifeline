@@ -82,6 +82,13 @@ self.addEventListener('fetch', (event) => {
   
   const url = new URL(event.request.url);
   
+  // Skip handling authentication-related requests
+  if (url.pathname.includes('/api/auth/') || 
+      url.pathname.includes('/auth/signIn') || 
+      url.pathname.includes('/auth/signUp')) {
+    return; // Let the browser handle auth requests normally
+  }
+  
   // Skip handling certain types of requests
   if (url.pathname.includes('_next/data/')) {
     return;
