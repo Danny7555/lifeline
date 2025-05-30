@@ -82,10 +82,7 @@ export default function SignIn() {
         <div className="w-20">
           {/* Empty div for spacing */}
         </div>
-        <div className="flex items-center text-gray-400">
-          <Globe size={16} className="mr-1 " />
-          <span className="text-sm font-bold">English (UK)</span>
-        </div>
+        
       </div>
 
       <main className="flex-1 flex flex-col md:flex-row relative z-10">
