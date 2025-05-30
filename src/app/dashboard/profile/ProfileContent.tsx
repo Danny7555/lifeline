@@ -2,6 +2,7 @@
 import { User, ChevronRight } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react";
+import Image from "next/image"
 
 // Array of tips with categories
 const allTips = [
@@ -88,8 +89,16 @@ export default function ProfileContent() {
       {/* Profile Card - Centered with better spacing */}
       <div className="bg-white border border-gray-700 rounded-2xl p-6 mb-8 max-w-3xl mx-auto">
         <div className="flex items-start gap-6">
-          <div className="rounded-full bg-white border-2 border-black w-20 h-20 flex items-center justify-center shrink-0">
-            <User className="text-black w-10 h-10" />
+          <div className="rounded-full bg-white border-2 border-black w-20 h-20 flex items-center justify-center shrink-0 overflow-hidden">
+            {session?.user?.image ? (
+              <Image
+                src={session.user.image} 
+                alt={session.user.name || "User"} 
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <User className="text-black w-10 h-10" />
+            )}
           </div>
 
           <div className="flex-1">
