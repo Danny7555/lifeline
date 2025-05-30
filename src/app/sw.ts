@@ -84,6 +84,7 @@ self.addEventListener('fetch', (event) => {
   
   // Skip handling authentication-related requests
   if (url.pathname.includes('/api/auth/') || 
+      url.pathname.includes('/api/register') ||
       url.pathname.includes('/auth/signIn') || 
       url.pathname.includes('/auth/signUp')) {
     return; // Let the browser handle auth requests normally
