@@ -1,7 +1,7 @@
 "use client";
 import { Filter, X } from "lucide-react"
 import Image from "next/image"
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useMemo } from "react"
 
 export default function LifelineHistoryPage() {
   // State for filter dropdown
@@ -14,8 +14,8 @@ export default function LifelineHistoryPage() {
   })
   const filterRef = useRef<HTMLDivElement | null>(null)
   
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const medicalConditions = [
+  // Use useMemo to prevent recreation on every render
+  const medicalConditions = useMemo(() => [
     {
       title: "BURNS",
       icon: "/images/palm.png", 
@@ -61,7 +61,7 @@ export default function LifelineHistoryPage() {
       icon: "/images/nose.png",
       lastVisited: "02, May, 2025",
     },
-  ]
+  ], []); // Empty dependency array means this only runs once
 
   // Close filter dropdown when clicking outside
   useEffect(() => {
