@@ -1,0 +1,26 @@
+{
+  "auth": {
+    "title": "Crea il tuo account",
+    "welcome": "Benvenuto",
+    "name": "Nome",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Conferma password",
+    "rememberMe": "Ricordami",
+    "signUp": "Registrati",
+    "alreadyHaveAccount": "Hai già un account?",
+    "login": "Accedi",
+    "or": "OPPURE",
+    "continueWith": "Continua con Google",
+    "welcomeText": "Unisciti alla nostra comunità per un'assistenza sanitaria migliore"
+  },
+  "nav": {
+    "home": "/home"
+  },
+  "footer": {
+    "contactSupport": "Contatta il supporto",
+    "privacyPolicy": "Informativa sulla privacy",
+    "termsConditions": "Termini e condizioni",
+    "copyright": "Tutti i diritti riservati. Daniella Asiedu"
+  }
+}
