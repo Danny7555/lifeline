@@ -28,7 +28,7 @@ export default function LifelineHistoryPage() {
     },
     {
       title: "CUT",
-      icon: "/images/bleed.png",
+      icon: "/images/cut.png",
       lastVisited: "02, May, 2025",
     },
     {
@@ -268,8 +268,8 @@ export default function LifelineHistoryPage() {
                       <Image 
                         src={condition.icon}
                         alt={condition.title}
-                        width={60}  
-                        height={60}
+                        width={80}  
+                        height={80}
                         className="object-contain"
                       />
                     </div>
