@@ -1,6 +1,7 @@
 import { installSerwist } from '@serwist/sw';
-import { StaleWhileRevalidate, NetworkOnly } from 'workbox-strategies'; // Import strategies
+import { StaleWhileRevalidate, NetworkOnly } from '@serwist/strategies';
 
+// Add a cache version that you can increment with each significant deployment
 const CACHE_VERSION = '1';
 
 interface CustomServiceWorkerGlobalScope extends ServiceWorkerGlobalScope {
@@ -8,49 +9,81 @@ interface CustomServiceWorkerGlobalScope extends ServiceWorkerGlobalScope {
 }
 declare const self: CustomServiceWorkerGlobalScope;
 
-// Updated runtimeCaching with proper Workbox strategies
+// Define runtime caching rules - completely exclude auth routes
 const runtimeCaching = [
   // Static assets
   {
-    matcher: ({ url }: { url: URL }) => 
-      ['.js', '.css', '.png', '.jpg', '.svg', '.woff2'].some(ext => 
-        url.pathname.endsWith(ext)
-      ),
-    handler: new StaleWhileRevalidate({ // ✅ Use strategy object
+    matcher: ({ url }: { url: URL }) => {
+      const exts = ['.js', '.css', '.png', '.jpg', '.jpeg', '.svg', '.gif', '.ico', '.woff', '.woff2'];
+      return exts.some((ext) => url.pathname.endsWith(ext));
+    },
+    handler: new StaleWhileRevalidate(),
+    options: {
       cacheName: `static-assets-${CACHE_VERSION}`,
-    }),
+      expiration: { maxEntries: 100, maxAgeSeconds: 3600 },
+    },
   },
-  // API routes
+  // API - exclude auth routes completely
   {
-    matcher: ({ url }: { url: URL }) => url.pathname.startsWith('/api/'),
-    handler: new NetworkOnly(), // ✅ Force network
+    matcher: ({ url }: { url: URL }) => {
+      // Skip auth-related routes - make sure these are COMPLETELY excluded
+      if (url.pathname.includes('/api/auth/') || 
+          url.pathname.includes('/api/register') ||
+          url.pathname.includes('/auth/')) {
+        return false;
+      }
+      return url.pathname.startsWith('/api/');
+    },
+    handler: new NetworkOnly(),
+    options: {
+      cacheName: `api-cache-${CACHE_VERSION}`,
+      networkTimeoutSeconds: 5,
+    },
   },
 ];
 
+// Install service worker with Serwist
 installSerwist({
   precacheEntries: self.__SW_MANIFEST,
   skipWaiting: true,
   clientsClaim: true,
   navigationPreload: true,
-  runtimeCaching, // ✅ No more type errors
+  runtimeCaching,
 });
 
-// Minimal offline page cache (keep this)
+// Only cache the offline page
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open('offline-assets').then(cache => 
-      cache.add('/offline.html').catch(console.warn)
+    caches.open('offline-assets').then((cache) => 
+      cache.add('/offline.html').catch(err => 
+        console.warn('Failed to cache offline page', err)
+      )
     )
   );
 });
 
-// Cache cleanup (keep this)
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then(keys => 
-      Promise.all(keys.filter(k => k !== 'offline-assets').map(key => caches.delete(key)))
-    )
-  );
+// Message handler to clear caches
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  } else if (event.data && event.data.type === 'CLEAR_ALL_CACHES') {
+    event.waitUntil(
+      caches.keys().then(cacheNames => {
+        return Promise.all(
+          cacheNames.filter(name => name !== 'offline-assets').map(cacheName => {
+            return caches.delete(cacheName);
+          })
+        );
+      }).then(() => {
+        console.log('All caches cleared successfully');
+        self.clients.matchAll().then(clients => {
+          clients.forEach(client => {
+            client.postMessage({
+              type: 'CACHES_CLEARED'
+            });
+          });
+        });
+      })
+    );
+  }
 });
-
-// Remove your custom fetch handler entirely - Serwist handles it!
