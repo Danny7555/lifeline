@@ -292,10 +292,10 @@ export default function LifelineHistoryPage() {
             >
               {/* Position the action button in the top right with improved styling */}
               <div className="absolute top-4 right-4">
-                <button className="w-8 h-8 rounded-full border border-[#df8484] flex items-center justify-center group-hover:bg-[#FFD3DB] transition-colors">
-                  <svg width="14" height="18" viewBox="0 0 24 24" fill="none">
+                <button className="w-8 h-8 rounded-full border border-[#c97777] flex items-center justify-center group-hover:bg-[#FFD3DB] transition-colors">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                     <path
-                      d="M9 18L15 12L9 6"
+                      d="M7 17L17 7M17 7H9M17 7V15"
                       stroke="#FFAEBB"
                       strokeWidth="2"
                       strokeLinecap="round"
