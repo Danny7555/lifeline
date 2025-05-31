@@ -263,8 +263,8 @@ export default function LifelineHistoryPage() {
                   </div>
                   
                   <div className="flex flex-col relative pt-8">
-                    {/* Icon at top-left styled to extend above container */}
-                    <div className="absolute -top-6 left-0">
+                    {/* Icon at top-left styled to extend above and outside container */}
+                    <div className="absolute -top-16 -left-4">
                       <Image 
                         src={condition.icon}
                         alt={condition.title}
@@ -307,8 +307,8 @@ export default function LifelineHistoryPage() {
               </div>
               
               <div className="flex flex-col relative pt-8">
-                {/* Icon at top-left styled to extend above container */}
-                <div className="absolute -top-6 left-0">
+                {/* Icon at top-left styled to extend above and outside container */}
+                <div className="absolute -top-8 -left-4">
                   <Image 
                     src={condition.icon}
                     alt={condition.title}
