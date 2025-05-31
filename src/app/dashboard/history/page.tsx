@@ -237,7 +237,7 @@ export default function LifelineHistoryPage() {
       )}
 
       {/* Medical Conditions Grid with improved cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
         {/* Use either filteredConditions or medicalConditions, not both */}
         {(filters.searchTerm || filters.date || filters.sortBy !== "newest") 
           ? (filteredConditions.length > 0 
@@ -264,7 +264,7 @@ export default function LifelineHistoryPage() {
                   
                   <div className="flex flex-col relative pt-8">
                     {/* Icon at top-left styled to extend above and outside container */}
-                    <div className="absolute -top-16 -left-4">
+                    <div className="absolute -top-14 -left-8">
                       <Image 
                         src={condition.icon}
                         alt={condition.title}
@@ -308,12 +308,12 @@ export default function LifelineHistoryPage() {
               
               <div className="flex flex-col relative pt-8">
                 {/* Icon at top-left styled to extend above and outside container */}
-                <div className="absolute -top-8 -left-4">
+                <div className="absolute -top-14 -left-8">
                   <Image 
                     src={condition.icon}
                     alt={condition.title}
-                    width={60}
-                    height={60}
+                    width={80}
+                    height={80}
                     className="object-contain"
                   />
                 </div>
