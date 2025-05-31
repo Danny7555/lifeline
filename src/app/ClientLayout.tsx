@@ -12,8 +12,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           console.log('Unregistering service worker');
           registration.unregister();
         });
-        // Don't reload here as it will cause an infinite loop
-        // Only reload if you actually unregistered something
+    
         if (registrations.length > 0) {
           window.location.reload();
         }

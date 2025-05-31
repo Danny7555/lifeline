@@ -52,7 +52,7 @@ export default function SignUp() {
       const baseUrl = process.env.NEXT_PUBLIC_API_URL || '';
       
       // Register the user through our API
-      const response = await fetch(`${baseUrl}/api/register`, {
+      const response = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
