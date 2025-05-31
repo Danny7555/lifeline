@@ -262,25 +262,23 @@ export default function LifelineHistoryPage() {
                     </button>
                   </div>
                   
-                  <div className="flex flex-col items-center">
-                    {/* Icon with improved styling */}
-                    <div className="mb-5 bg-gray-50 p-3 rounded-full">
-                      <div className="w-16 h-16 flex items-center justify-center">
-                        <Image 
-                          src={condition.icon}
-                          alt={condition.title}
-                          width={64}
-                          height={64}
-                          className="object-contain"
-                        />
-                      </div>
+                  <div className="flex flex-col relative pt-8">
+                    {/* Icon at top-left styled to extend above container */}
+                    <div className="absolute -top-6 left-0">
+                      <Image 
+                        src={condition.icon}
+                        alt={condition.title}
+                        width={60}  
+                        height={60}
+                        className="object-contain"
+                      />
                     </div>
                     
-                    {/* Title with improved typography */}
-                    <h3 className="text-xl font-bold text-black mb-2 tracking-wide">{condition.title}</h3>
+                    {/* Title with left alignment */}
+                    <h3 className="text-lg font-bold text-black mb-2">{condition.title}</h3>
                     
-                    {/* Last Visited with improved styling */}
-                    <p className="text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded-full">
+                    {/* Last Visited with left alignment */}
+                    <p className="text-sm text-gray-500">
                       Last Visited: {condition.lastVisited}
                     </p>
                   </div>
@@ -308,25 +306,23 @@ export default function LifelineHistoryPage() {
                 </button>
               </div>
               
-              <div className="flex flex-col items-center">
-                {/* Icon with improved styling */}
-                <div className="mb-5 bg-gray-50 p-3 rounded-full">
-                  <div className="w-16 h-16 flex items-center justify-center">
-                    <Image 
-                      src={condition.icon}
-                      alt={condition.title}
-                      width={64}
-                      height={64}
-                      className="object-contain"
-                    />
-                  </div>
+              <div className="flex flex-col relative pt-8">
+                {/* Icon at top-left styled to extend above container */}
+                <div className="absolute -top-6 left-0">
+                  <Image 
+                    src={condition.icon}
+                    alt={condition.title}
+                    width={60}
+                    height={60}
+                    className="object-contain"
+                  />
                 </div>
                 
-                {/* Title with improved typography */}
-                <h3 className="text-xl font-bold text-black mb-2 tracking-wide">{condition.title}</h3>
+                {/* Title with left alignment */}
+                <h3 className="text-lg font-bold text-black mb-2">{condition.title}</h3>
                 
-                {/* Last Visited with improved styling */}
-                <p className="text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded-full">
+                {/* Last Visited with left alignment */}
+                <p className="text-sm text-gray-500">
                   Last Visited: {condition.lastVisited}
                 </p>
               </div>
