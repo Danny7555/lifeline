@@ -69,27 +69,76 @@ export default function SettingsPage() {
     setLoading(true)
     setMessage({ type: "", text: "" })
 
+    // Add specific console logging for language field
+    console.log("Submitting language:", formData.language);
+
     try {
+      // Create a special version of the data that ensures language is properly included
+      const dataToSubmit = {
+        userId: session?.user?.id,
+        name: formData.name,
+        age: formData.age,
+        gender: formData.gender,
+        phone: formData.phone,
+        location: formData.location,
+        medicalCondition: formData.medicalCondition,
+        language: formData.language, // Explicitly include language
+      };
+
       const response = await fetch("/api/user/profile", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache, no-store, must-revalidate"
         },
-        body: JSON.stringify({
-          userId: session?.user?.id,
-          ...formData
-        })
-      })
+        body: JSON.stringify(dataToSubmit),
+        cache: 'no-store'
+      });
 
       if (response.ok) {
+        // Log successful response
+        const responseData = await response.json();
+        console.log("Profile update response:", responseData);
+
         setMessage({ 
           type: "success", 
           text: "Profile updated successfully!" 
         })
         
+        // Enhanced notification system for updates
+        if (typeof window !== 'undefined') {
+          // 1. Custom event with specific language data
+          const updateEvent = new CustomEvent('profileUpdated', {
+            detail: { language: formData.language }
+          });
+          window.dispatchEvent(updateEvent);
+          
+          // 2. Store specific language info in localStorage
+          localStorage.setItem('profileLanguage', formData.language);
+          localStorage.setItem('profileUpdatedAt', new Date().toISOString());
+          
+          // 3. Clear any session storage that might be caching profile data
+          sessionStorage.removeItem('profileData');
+        }
+        
+        // 4. Make direct API call to update any server-side cache
+        await fetch('/api/clear-cache', { 
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ 
+            userId: session?.user?.id,
+            field: 'language',
+            value: formData.language
+          })
+        }).catch(console.error);
+        
+        // 5. Hard navigation to force complete refresh
         setTimeout(() => {
-          router.refresh()
-        }, 1000)
+          // Use hard navigation for complete refresh
+          window.location.href = '/dashboard/profile';
+        }, 1500);
       } else {
         const error = await response.json()
         throw new Error(error.message || "Failed to update profile")
@@ -106,12 +155,6 @@ export default function SettingsPage() {
       })
     } finally {
       setLoading(false)
-      
-      if (message.type === "success") {
-        setTimeout(() => {
-          setMessage({ type: "", text: "" })
-        }, 3000)
-      }
     }
   }
 

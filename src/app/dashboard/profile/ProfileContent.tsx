@@ -105,6 +105,7 @@ export default function ProfileContent() {
   const [currentTip, setCurrentTip] = useState(allTips[0])
   const [lastUpdated, setLastUpdated] = useState("")
   const [profileData, setProfileData] = useState({
+    name: "", // Add name field
     age: "",
     gender: "",
     location: "",
@@ -153,11 +154,16 @@ export default function ProfileContent() {
   const fetchUserProfile = useCallback(async () => {
     if (session?.user?.id) {
       try {
-        const response = await fetch(`/api/user/profile?userId=${session.user.id}`);
-        
+        const response = await fetch(`/api/user/profile?userId=${session.user.id}`, {
+          cache: 'no-store', // Prevent caching
+          headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate'
+          }
+        });
         if (response.ok) {
           const data = await response.json();
           setProfileData({
+            name: data.name || session?.user?.name || "", // Include name in the update
             age: data.age || "",
             gender: data.gender || "",
             location: data.location || "",
@@ -178,7 +184,33 @@ export default function ProfileContent() {
     if (session?.user?.id) {
       fetchUserProfile();
     }
+    
+    // Listen for profile updates
+    const handleProfileUpdate = () => {
+      fetchUserProfile();
+    };
+    
+    window.addEventListener('profileUpdated', handleProfileUpdate);
+    
+    return () => {
+      window.removeEventListener('profileUpdated', handleProfileUpdate);
+    };
   }, [session, fetchUserProfile])
+
+  // Also add useEffect to refetch when component becomes visible
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden && session?.user?.id) {
+        fetchUserProfile();
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [session, fetchUserProfile]);
 
   return (
     <div className="flex-1 p-3 sm:p-6 lg:p-8 overflow-auto">
@@ -204,7 +236,7 @@ export default function ProfileContent() {
           <div className="flex-1 w-full">
             <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start">
               <h2 className="text-lg sm:text-xl font-bold text-black mb-2 sm:mb-4 text-center sm:text-left">
-                {session?.user?.name || "LIFELINER"}
+                {profileData.name || session?.user?.name || "LIFELINER"}
               </h2>
               <Link 
                 href="/dashboard/settings" 
