@@ -22,7 +22,7 @@ export function ResponsiveSidebar() {
   const handleLogout = async () => {
     try {
       await signOut({ redirect: false })
-      router.push('/auth/signIn') // Redirect to sign in page after logout
+      router.push('/') // Redirect to sign in page after logout
     } catch (error) {
       console.error("Logout failed:", error)
     } finally {
