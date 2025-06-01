@@ -29,7 +29,7 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(self.clients.claim());
 });
 
-// Critical: Bypass ALL auth-related fetch events
+// Handle fetch events with specific Google auth bypass
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   
@@ -37,10 +37,19 @@ self.addEventListener('fetch', (event) => {
   if (url.pathname.includes('/api/auth') || 
       url.pathname.includes('/auth/') ||
       url.search.includes('callback') ||
-      url.search.includes('error=')) {
-    return; // Let the browser handle these requests
+      url.search.includes('error=') ||
+      // Google-specific auth endpoints
+      url.hostname.includes('accounts.google.com') ||
+      url.pathname.includes('/oauth2/') ||
+      url.pathname.includes('/signin/') ||
+      url.search.includes('oauth') ||
+      // Common Google Auth endpoints
+      url.hostname.includes('apis.google.com') ||
+      url.hostname.includes('oauth2.googleapis.com')) {
+    return; // Let the browser handle these requests directly
   }
   
-  // For all other requests
-  return;
+  // For all other requests, use NetworkOnly strategy
+  // to prevent caching that might interfere with auth
+  event.respondWith(new NetworkOnly().handle(event));
 });
