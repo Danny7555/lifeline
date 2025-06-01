@@ -38,6 +38,7 @@ self.addEventListener('fetch', (event) => {
       url.pathname.includes('/auth/') ||
       url.search.includes('callback') ||
       url.search.includes('error=') ||
+      url.search.includes('callbackUrl') ||
       // Google-specific auth endpoints
       url.hostname.includes('accounts.google.com') ||
       url.pathname.includes('/oauth2/') ||
@@ -45,7 +46,9 @@ self.addEventListener('fetch', (event) => {
       url.search.includes('oauth') ||
       // Common Google Auth endpoints
       url.hostname.includes('apis.google.com') ||
-      url.hostname.includes('oauth2.googleapis.com')) {
+      url.hostname.includes('oauth2.googleapis.com') ||
+      // Completely bypass NextAuth.js paths
+      url.pathname.startsWith('/auth')) {
     return; // Let the browser handle these requests directly
   }
   
