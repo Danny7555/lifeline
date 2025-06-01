@@ -95,54 +95,60 @@ export default function SettingsPage() {
         cache: 'no-store'
       });
 
-      if (response.ok) {
-        // Log successful response
-        const responseData = await response.json();
-        console.log("Profile update response:", responseData);
+      // Log successful response
+      const responseData = await response.json();
+      console.log("Profile update response:", responseData);
 
-        setMessage({ 
-          type: "success", 
-          text: "Profile updated successfully!" 
-        })
+      setMessage({ 
+        type: "success", 
+        text: "Profile updated successfully!" 
+      })
+      
+      // Enhanced notification system for updates
+      if (typeof window !== 'undefined') {
+        // 1. Custom event with updated profile data
+        const updateEvent = new CustomEvent('profileUpdated', {
+          detail: { 
+            name: formData.name,
+            language: formData.language,
+            location: formData.location
+          }
+        });
+        window.dispatchEvent(updateEvent);
         
-        // Enhanced notification system for updates
-        if (typeof window !== 'undefined') {
-          // 1. Custom event with specific language data
-          const updateEvent = new CustomEvent('profileUpdated', {
-            detail: { language: formData.language }
-          });
-          window.dispatchEvent(updateEvent);
-          
-          // 2. Store specific language info in localStorage
-          localStorage.setItem('profileLanguage', formData.language);
-          localStorage.setItem('profileUpdatedAt', new Date().toISOString());
-          
-          // 3. Clear any session storage that might be caching profile data
-          sessionStorage.removeItem('profileData');
-        }
+        // 2. Store ALL profile info in localStorage
+        localStorage.setItem('profileName', formData.name);
+        localStorage.setItem('profileLanguage', formData.language);
+        localStorage.setItem('profileLocation', formData.location);
+        localStorage.setItem('profileUpdatedAt', new Date().toISOString());
         
-        // 4. Make direct API call to update any server-side cache
-        await fetch('/api/clear-cache', { 
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ 
-            userId: session?.user?.id,
-            field: 'language',
-            value: formData.language
-          })
-        }).catch(console.error);
-        
-        // 5. Hard navigation to force complete refresh
-        setTimeout(() => {
-          // Use hard navigation for complete refresh
-          window.location.href = '/dashboard/profile';
-        }, 1500);
-      } else {
-        const error = await response.json()
-        throw new Error(error.message || "Failed to update profile")
+        // 3. Clear any session storage that might be caching profile data
+        sessionStorage.removeItem('profileData');
       }
+      
+      // 4. Update session
+      if (session && session.user) {
+        session.user.name = formData.name;
+      }
+      
+      // 5. Make direct API call to update any server-side cache
+      await fetch('/api/clear-cache', { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          userId: session?.user?.id,
+          field: 'name',
+          value: formData.name
+        })
+      }).catch(console.error);
+      
+      // 6. Hard navigation to force complete refresh
+      setTimeout(() => {
+        // Use hard navigation for complete refresh
+        window.location.href = '/dashboard/profile';
+      }, 1500);
     } catch (error) {
       console.error("Error updating profile:", error)
       const errorMessage = error instanceof Error 
@@ -180,7 +186,7 @@ export default function SettingsPage() {
             </div>
             <div className="text-center sm:text-left">
               <h1 className="text-xl sm:text-2xl font-bold text-black mb-1">
-                {session?.user?.name || formData.name || "LIFELINER"}
+                {formData.name || session?.user?.name || "LIFELINER"}
               </h1>
               <p className="text-gray-600 flex items-center justify-center sm:justify-start gap-1 mb-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
