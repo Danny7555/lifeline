@@ -1,6 +1,6 @@
 "use client"
 import { User, Clock, LifeBuoy, Settings, LogOut, Menu, X, AlertTriangle } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react" // Add useEffect and useCallback
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { signOut, useSession } from "next-auth/react"
@@ -12,6 +12,49 @@ export function ResponsiveSidebar() {
   const pathname = usePathname()
   const router = useRouter()
   const { data: session } = useSession()
+  const [userName, setUserName] = useState("") // Add state for user name
+
+  // Fetch user profile data
+  const fetchUserProfile = useCallback(async () => {
+    if (session?.user?.id) {
+      try {
+        const response = await fetch(`/api/user/profile?userId=${session.user.id}`, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate'
+          }
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setUserName(data.name || session?.user?.name || "");
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+        // Fallback to session name if fetch fails
+        setUserName(session?.user?.name || "");
+      }
+    }
+  }, [session]);
+
+  // Fetch profile on mount and when session changes
+  useEffect(() => {
+    if (session?.user?.id) {
+      fetchUserProfile();
+    } else {
+      setUserName(session?.user?.name || "");
+    }
+    
+    // Listen for profile updates
+    const handleProfileUpdate = () => {
+      fetchUserProfile();
+    };
+    
+    window.addEventListener('profileUpdated', handleProfileUpdate);
+    
+    return () => {
+      window.removeEventListener('profileUpdated', handleProfileUpdate);
+    };
+  }, [session, fetchUserProfile]);
 
   // Handle logout modal open
   const openLogoutModal = () => {
@@ -84,7 +127,7 @@ export function ResponsiveSidebar() {
             {session?.user?.image ? (
               <Image
                 src={session.user.image} 
-                alt={session.user.name || "User"} 
+                alt={userName || "User"} 
                 width={80}
                 height={80}
                 className="rounded-full w-full h-full object-cover"
@@ -96,7 +139,7 @@ export function ResponsiveSidebar() {
           <p className="text-center text-black text-sm leading-tight">
             Welcome,<br />
             <span className="font-bold text-base">
-              {session?.user?.name || "LIFELINER"}
+              {userName || "LIFELINER"}
             </span>
           </p>
         </div>
