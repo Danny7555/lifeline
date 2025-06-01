@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-import { authOptions } from "@/lib/auth";
 
 // Paths that require authentication
 const protectedPaths = [
@@ -19,6 +18,16 @@ const authPaths = [
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
+  // Allow OAuth callback routes - CRITICAL for OAuth to work
+  if (pathname.startsWith('/api/auth/')) {
+    return NextResponse.next();
+  }
+  
+  // Allow root path
+  if (pathname === '/') {
+    return NextResponse.next();
+  }
+  
   // Check if the path is protected (needs authentication)
   const isPathProtected = protectedPaths.some((path) => 
     pathname.startsWith(path)
@@ -29,25 +38,34 @@ export async function middleware(request: NextRequest) {
     pathname === path
   );
 
-  // Get the session token
-  const token = await getToken({ 
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET 
-  });
-  
-  const isAuthenticated = !!token;
-  
-  // Redirect logic
-  if (isPathProtected && !isAuthenticated) {
-    // Redirect to sign-in if trying to access protected path while not authenticated
-    const url = new URL('/auth/signIn', request.url);
-    url.searchParams.set('callbackUrl', pathname);
-    return NextResponse.redirect(url);
-  }
-  
-  if (isAuthPath && isAuthenticated) {
-    // Redirect to dashboard if already authenticated but trying to access auth pages
-    return NextResponse.redirect(new URL('/dashboard/profile', request.url));
+  try {
+    // Get the session token
+    const token = await getToken({ 
+      req: request,
+      secret: process.env.NEXTAUTH_SECRET 
+    });
+    
+    const isAuthenticated = !!token;
+    
+    // Redirect logic
+    if (isPathProtected && !isAuthenticated) {
+      const url = new URL('/auth/signIn', request.url);
+      url.searchParams.set('callbackUrl', pathname);
+      return NextResponse.redirect(url);
+    }
+    
+    if (isAuthPath && isAuthenticated) {
+      return NextResponse.redirect(new URL('/dashboard/profile', request.url));
+    }
+    
+  } catch (error) {
+    console.error('Middleware error:', error);
+    // If there's an error and it's a protected path, redirect to sign-in
+    if (isPathProtected) {
+      const url = new URL('/auth/signIn', request.url);
+      url.searchParams.set('callbackUrl', pathname);
+      return NextResponse.redirect(url);
+    }
   }
   
   // Allow the request to proceed
@@ -56,11 +74,15 @@ export async function middleware(request: NextRequest) {
 
 // Configure which routes the middleware applies to
 export const config = {
-  // Match all request paths except for the ones starting with:
-  // - api (API routes)
-  // - _next/static (static assets)
-  // - _next/image (optimized images)
-  // - favicon.ico, manifest.json (browser files)
-  // - images/ (public images folder)
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|manifest.json|images).*)'],
+  // IMPORTANT: Exclude all API routes to prevent OAuth interference
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes - CRITICAL for OAuth)
+     * - _next/static (static files)
+     * - _next/image (image optimization)
+     * - favicon.ico, etc.
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico|manifest.json|images|robots.txt).*)',
+  ],
 };
