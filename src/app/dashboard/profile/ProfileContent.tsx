@@ -310,9 +310,9 @@ export default function ProfileContent() {
               </svg>
               Lifeline History
             </h2>
-            <button className="bg-[#FFAEBB] text-black px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm hover:bg-[#FFD3DB] transition-colors">
+            <Link href="/dashboard/history" className="bg-[#FFAEBB] text-black px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm hover:bg-[#FFD3DB] transition-colors inline-block">
               View All
-            </button>
+            </Link>
           </div>
 
           {/* Timeline - Responsive adjustments */}
@@ -337,15 +337,18 @@ export default function ProfileContent() {
                         </div>
                       }
                     </div>
-                    <div className="ml-8 sm:ml-12 flex-1 bg-white border border-gray-700 rounded-lg p-3 sm:p-4 flex justify-between items-center">
+                    <Link 
+                      href={`/dashboard/history/${item.title.toLowerCase()}`}
+                      className="ml-8 sm:ml-12 flex-1 bg-white border border-gray-700 rounded-lg p-3 sm:p-4 flex justify-between items-center hover:bg-gray-50 transition-colors"
+                    >
                       <div>
                         <h4 className="font-medium text-black text-sm sm:text-base">{item.title}</h4>
                         <p className="text-gray-600 text-xs sm:text-sm">Last Visited: {item.date}</p>
                       </div>
-                      <button className="text-[#FFAEBB] rounded-full border border-[#FFAEBB] w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#FFD3DB] transition-colors">
+                      <div className="text-[#FFAEBB] rounded-full border border-[#FFAEBB] w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center hover:bg-[#FFD3DB] transition-colors">
                         <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
-                      </button>
-                    </div>
+                      </div>
+                    </Link>
                   </div>
                 ))}
               </div>
