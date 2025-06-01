@@ -95,6 +95,19 @@ export const authOptions = {
       }
       return session;
     },
+    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
+      // Handle production vs development URLs
+      const productionUrl = process.env.NEXTAUTH_URL || baseUrl;
+
+      // If it's a relative URL, prepend the base URL
+      if (url.startsWith("/")) return `${productionUrl}${url}`;
+
+      // If it's the same origin, allow it
+      if (new URL(url).origin === productionUrl) return url;
+
+      // Default to base URL
+      return productionUrl;
+    },
   },
   pages: {
     signIn: '/auth/signIn',
