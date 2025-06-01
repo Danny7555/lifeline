@@ -29,10 +29,18 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(self.clients.claim());
 });
 
-// Critical: Bypass ALL fetch events
-// This prevents the service worker from intercepting any requests
+// Critical: Bypass ALL auth-related fetch events
 self.addEventListener('fetch', (event) => {
-  // Do not call event.respondWith()
-  // This allows the browser to handle all requests normally
+  const url = new URL(event.request.url);
+  
+  // Don't intercept ANY auth-related requests
+  if (url.pathname.includes('/api/auth') || 
+      url.pathname.includes('/auth/') ||
+      url.search.includes('callback') ||
+      url.search.includes('error=')) {
+    return; // Let the browser handle these requests
+  }
+  
+  // For all other requests
   return;
 });
