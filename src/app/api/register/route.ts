@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   try {
     const { name, email, password } = await request.json();
 
-    // Validate input
+  
     if (!name || !email || !password) {
       return NextResponse.json(
         { error: "All fields are required" },
@@ -14,12 +14,12 @@ export async function POST(request: Request) {
       );
     }
     
-    // Connect to MongoDB
+
     const client = await clientPromise;
     const db = client.db("lifeline");
     const users = db.collection("users");
     
-    // Check if user already exists
+
     const existingUser = await users.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
@@ -28,10 +28,10 @@ export async function POST(request: Request) {
       );
     }
     
-    // Hash password
+  
     const hashedPassword = await hash(password, 12);
     
-    // Create new user
+  
     const result = await users.insertOne({
       name,
       email,

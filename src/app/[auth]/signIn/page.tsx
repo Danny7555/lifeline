@@ -16,7 +16,6 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  // Handle form input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target
     setFormData(prev => ({
@@ -25,13 +24,13 @@ export default function SignIn() {
     }))
   }
 
-  // Handle email/password signin
+
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError("")
     setLoading(true)
 
-    // Validate form
+
     if (!formData.email || !formData.password) {
       setError("Email and password are required")
       setLoading(false)
@@ -49,7 +48,7 @@ export default function SignIn() {
         throw new Error(result.error)
       }
 
-      // Redirect to dashboard/profile
+      
       router.push('/dashboard/profile')
     } catch (error) {
       console.error("Error during sign in:", error)
@@ -59,11 +58,11 @@ export default function SignIn() {
     }
   }
 
-  // Handle Google sign-in
+
   const handleGoogleSignIn = async () => {
     setError("")
     setLoading(true)
-    // Use NextAuth's signIn function for Google OAuth
+
     try {
       await signIn('google', { 
         callbackUrl: '/dashboard/profile'

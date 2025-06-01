@@ -15,8 +15,7 @@ export default function DashboardLayout({
   useEffect(() => {
     if (status !== 'loading') {
       setIsLoading(false);
-      
-      // Redirect if not authenticated
+     
       if (status === 'unauthenticated') {
         redirect('/auth/signIn');
       }
@@ -31,7 +30,6 @@ export default function DashboardLayout({
     );
   }
 
-  // Only render the dashboard layout when the user is authenticated
   if (status === 'authenticated') {
     return (
       <div className="flex h-screen bg-gray-50">
@@ -46,6 +44,5 @@ export default function DashboardLayout({
     );
   }
 
-  // This should never be reached due to the redirect above
   return null;
 }

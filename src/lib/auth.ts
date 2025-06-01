@@ -7,10 +7,10 @@ import { JWT } from "next-auth/jwt";
 import clientPromise from "@/lib/mongodb";
 
 export const authOptions = {
-  // Fix: Specify the database name explicitly to avoid case issues
   adapter: MongoDBAdapter(clientPromise, { 
-    databaseName: "lifeline" // Explicitly set lowercase database name
+    databaseName: "lifeline" 
   }),
+
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -23,6 +23,7 @@ export const authOptions = {
         },
       },
     }),
+
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -38,7 +39,6 @@ export const authOptions = {
           }
 
           const client = await clientPromise;
-          // Ensure consistent database name usage
           const users = client.db("lifeline").collection("users");
           const user = await users.findOne({ email });
 
@@ -46,7 +46,6 @@ export const authOptions = {
             throw new Error("Invalid email or password");
           }
 
-          // Only check password for users who registered with credentials
           if (!user.password) {
             throw new Error("Please sign in with the method you used to create your account");
           }
@@ -69,17 +68,16 @@ export const authOptions = {
       },
     }),
   ],
+
   callbacks: {
     async signIn({ user, account, profile }: { user: User; account: Account | null; profile?: Profile }) {
       try {
         console.log(`Sign-in attempt with provider: ${account?.provider}`);
         
-        // Allow all OAuth sign-ins (Google, etc.)
         if (account?.provider !== "credentials") {
           return true;
         }
 
-        // For credentials, the authorize function already handled validation
         return true;
       } catch (error) {
         console.error("SignIn callback error:", error);
@@ -87,7 +85,6 @@ export const authOptions = {
       }
     },
     async jwt({ token, user, account }: { token: JWT; user?: User; account?: Account | null }) {
-      // Initial sign in
       if (user) {
         token.id = user.id;
         token.provider = account?.provider;
@@ -103,16 +100,11 @@ export const authOptions = {
     },
     async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
       try {
-        // Handle production vs development URLs
         const productionUrl = process.env.NEXTAUTH_URL || baseUrl;
 
-        // If it's a relative URL, prepend the base URL
         if (url.startsWith("/")) return `${productionUrl}${url}`;
 
-        // If it's the same origin, allow it
         if (new URL(url).origin === productionUrl) return url;
-
-        // Default to base URL
         return productionUrl;
       } catch (error) {
         console.error("Redirect callback error:", error);
@@ -126,7 +118,7 @@ export const authOptions = {
   },
   session: {
     strategy: "jwt" as SessionStrategy,
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 30 * 24 * 60 * 60, 
   },
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === 'development',

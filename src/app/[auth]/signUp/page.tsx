@@ -24,29 +24,27 @@ export default function SignUp() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  // Check password strength - only validate when typing in password field
+
   const checkPasswordStrength = (password: string) => {
-    // Only validate if we're doing credentials signup
     if (!password) {
       return { score: 0, label: "", color: "" }
     }
     
     let score = 0
     
-    // Length check
     if (password.length > 8) score += 1
     if (password.length > 12) score += 1
     
-    // Character variety checks
-    if (/[a-z]/.test(password)) score += 1 // lowercase
-    if (/[A-Z]/.test(password)) score += 1 // uppercase
-    if (/[0-9]/.test(password)) score += 1 // numbers
-    if (/[^a-zA-Z0-9]/.test(password)) score += 1 // special characters
+
+    if (/[a-z]/.test(password)) score += 1 
+    if (/[A-Z]/.test(password)) score += 1 
+    if (/[0-9]/.test(password)) score += 1 
+    if (/[^a-zA-Z0-9]/.test(password)) score += 1 
     
-    // Common patterns check
+
     if (/^(password|123456|qwerty)/i.test(password)) score = 1
     
-    // Determine label and color based on score
+
     let label, color
     if (score <= 2) {
       label = "Low"
@@ -62,7 +60,7 @@ export default function SignUp() {
     return { score, label, color }
   }
 
-  // Handle form input changes
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target
     setFormData(prev => ({
@@ -70,13 +68,13 @@ export default function SignUp() {
       [id]: value
     }))
     
-    // Check password strength when password field changes
+ 
     if (id === 'password') {
       setPasswordStrength(checkPasswordStrength(value))
     }
   }
 
-  // Handle email/password signup
+
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError("")
@@ -96,10 +94,8 @@ export default function SignUp() {
     }
 
     try {
-      // Get the base URL - adapts between local and production
       const baseUrl = process.env.NEXT_PUBLIC_API_URL || '';
       
-      // Register the user through our API
       const response = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -110,7 +106,6 @@ export default function SignUp() {
         })
       })
 
-      // Enhanced error logging
       console.log('Registration response status:', response.status);
       let data;
       
@@ -126,7 +121,6 @@ export default function SignUp() {
         throw new Error(data?.error || `Registration failed with status ${response.status}`)
       }
 
-      // Sign in the user after successful registration
       const result = await signIn('credentials', {
         redirect: false,
         email: formData.email,
@@ -138,7 +132,6 @@ export default function SignUp() {
         throw new Error(result.error)
       }
 
-      // Redirect to profile page - update to match Google sign-in path
       router.push('/dashboard/profile')
     } catch (error) {
       console.error("Error during signup:", error)
@@ -148,7 +141,6 @@ export default function SignUp() {
     }
   }
 
-  // Handle Google sign-in - separate from credentials validation
   const handleGoogleSignIn = async () => {
     setError("")
     setLoading(true)

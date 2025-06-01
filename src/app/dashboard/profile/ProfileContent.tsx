@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 import Image from "next/image"
 import Link from "next/link";
 
-// Array of tips with categories
 const allTips = [
   {
     category: "CUT",
@@ -80,7 +79,7 @@ const allTips = [
   },
 ]
 
-// Define medical condition icons mapping
+
 const medicalIcons = {
   "Fracture": (
     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -105,7 +104,7 @@ export default function ProfileContent() {
   const [currentTip, setCurrentTip] = useState(allTips[0])
   const [lastUpdated, setLastUpdated] = useState("")
   const [profileData, setProfileData] = useState({
-    name: "", // Add name field
+    name: "", 
     age: "",
     gender: "",
     location: "",
@@ -114,13 +113,12 @@ export default function ProfileContent() {
     language: "" 
   });
 
-  // Modified getDailyTip function to ensure it updates daily
   const getDailyTip = () => {
     const today = new Date()
     const lastChecked = localStorage.getItem('lastTipDate')
     const currentDate = today.toDateString()
 
-    // Check if we need to update the tip (new day or no previous tip)
+    
     if (!lastChecked || lastChecked !== currentDate) {
       const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (24 * 60 * 60 * 1000))
       const tipIndex = dayOfYear % allTips.length
@@ -136,12 +134,10 @@ export default function ProfileContent() {
     }
   }
 
-  // Get a new tip when user clicks refresh
   const getRandomTip = () => {
     const randomIndex = Math.floor(Math.random() * allTips.length)
     setCurrentTip(allTips[randomIndex])
 
-    // Update the last updated timestamp
     const now = new Date()
     const formattedTime = now.toLocaleTimeString("en-US", {
       hour: "2-digit",
@@ -150,12 +146,11 @@ export default function ProfileContent() {
     setLastUpdated(`Today at ${formattedTime}`)
   }
 
-  // Fetch user profile data
   const fetchUserProfile = useCallback(async () => {
     if (session?.user?.id) {
       try {
         const response = await fetch(`/api/user/profile?userId=${session.user.id}`, {
-          cache: 'no-store', // Prevent caching
+          cache: 'no-store',
           headers: {
             'Cache-Control': 'no-cache, no-store, must-revalidate'
           }
@@ -178,14 +173,14 @@ export default function ProfileContent() {
     }
   }, [session]);
 
-  // Set initial tip on component mount
+  
   useEffect(() => {
     getDailyTip()
     if (session?.user?.id) {
       fetchUserProfile();
     }
     
-    // Listen for profile updates
+
     const handleProfileUpdate = () => {
       fetchUserProfile();
     };
@@ -197,7 +192,7 @@ export default function ProfileContent() {
     };
   }, [session, fetchUserProfile])
 
-  // Also add useEffect to refetch when component becomes visible
+ 
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (!document.hidden && session?.user?.id) {

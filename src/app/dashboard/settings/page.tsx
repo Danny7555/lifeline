@@ -11,7 +11,6 @@ export default function SettingsPage() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState({ type: "", text: "" })
   
-  // Create profile form state
   const [formData, setFormData] = useState({
     name: "",
     age: "",
@@ -22,7 +21,6 @@ export default function SettingsPage() {
     language: ""
   })
 
-  // Load user data from session and database when component mounts
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (session?.user?.id) {
@@ -32,7 +30,7 @@ export default function SettingsPage() {
           if (response.ok) {
             const data = await response.json()
             
-            // Populate form with existing data
+            
             setFormData({
               name: data.name || session?.user?.name || "",
               age: data.age || "",
@@ -54,7 +52,6 @@ export default function SettingsPage() {
     }
   }, [session, status])
 
-  // Handle form input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({
@@ -63,17 +60,17 @@ export default function SettingsPage() {
     }))
   }
 
-  // Handle form submission
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
     setMessage({ type: "", text: "" })
 
-    // Add specific console logging for language field
+ 
     console.log("Submitting language:", formData.language);
 
     try {
-      // Create a special version of the data that ensures language is properly included
+      
       const dataToSubmit = {
         userId: session?.user?.id,
         name: formData.name,
@@ -82,7 +79,7 @@ export default function SettingsPage() {
         phone: formData.phone,
         location: formData.location,
         medicalCondition: formData.medicalCondition,
-        language: formData.language, // Explicitly include language
+        language: formData.language, 
       };
 
       const response = await fetch("/api/user/profile", {
@@ -95,7 +92,7 @@ export default function SettingsPage() {
         cache: 'no-store'
       });
 
-      // Log successful response
+   
       const responseData = await response.json();
       console.log("Profile update response:", responseData);
 
@@ -104,7 +101,7 @@ export default function SettingsPage() {
         text: "Profile updated successfully!" 
       })
       
-      // Enhanced notification system for updates
+   
       if (typeof window !== 'undefined') {
         // 1. Custom event with updated profile data
         const updateEvent = new CustomEvent('profileUpdated', {
@@ -116,22 +113,21 @@ export default function SettingsPage() {
         });
         window.dispatchEvent(updateEvent);
         
-        // 2. Store ALL profile info in localStorage
+     
         localStorage.setItem('profileName', formData.name);
         localStorage.setItem('profileLanguage', formData.language);
         localStorage.setItem('profileLocation', formData.location);
         localStorage.setItem('profileUpdatedAt', new Date().toISOString());
         
-        // 3. Clear any session storage that might be caching profile data
         sessionStorage.removeItem('profileData');
       }
       
-      // 4. Update session
+    
       if (session && session.user) {
         session.user.name = formData.name;
       }
       
-      // 5. Make direct API call to update any server-side cache
+     
       await fetch('/api/clear-cache', { 
         method: 'POST',
         headers: {
@@ -144,9 +140,8 @@ export default function SettingsPage() {
         })
       }).catch(console.error);
       
-      // 6. Hard navigation to force complete refresh
+    
       setTimeout(() => {
-        // Use hard navigation for complete refresh
         window.location.href = '/dashboard/profile';
       }, 1500);
     } catch (error) {

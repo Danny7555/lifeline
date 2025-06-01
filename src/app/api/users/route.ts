@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
 import clientPromise from '@/lib/mongodb'
 import { getServerSession } from 'next-auth/next'
-import { authOptions } from '@/lib/auth' // Updated import path
+import { authOptions } from '@/lib/auth' 
 
-// Create new user
+
 export async function POST(request: Request) {
   try {
     const data = await request.json()
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     const client = await clientPromise
     const db = client.db()
     
-    // Check if user already exists
+   
     const existingUser = await db.collection('users').findOne({ email })
     if (existingUser) {
       return NextResponse.json(
@@ -27,8 +27,7 @@ export async function POST(request: Request) {
         { status: 400 }
       )
     }
-    
-    // Create new user
+
     const result = await db.collection('users').insertOne({
       id,
       name: name || email.split('@')[0],
@@ -50,12 +49,11 @@ export async function POST(request: Request) {
   }
 }
 
-// Get user data (protected route)
+
 export async function GET(request: Request) {
   try {
-    // Update getServerSession to include authOptions
     const session = await getServerSession(authOptions)
-    
+
     if (!session) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -73,10 +71,9 @@ export async function GET(request: Request) {
         { status: 404 }
       )
     }
-    
-    // Remove sensitive data
+
     const { password, ...userData } = user
-    
+
     return NextResponse.json(userData)
   } catch (error) {
     console.error('Error fetching user:', error)

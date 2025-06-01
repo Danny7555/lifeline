@@ -2,14 +2,12 @@ import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
-// Paths that require authentication
 const protectedPaths = [
   '/dashboard',
   '/profile',
   '/settings',
 ];
 
-// Paths that are accessible only to non-authenticated users
 const authPaths = [
   '/auth/signIn', 
   '/auth/signUp',
@@ -18,28 +16,23 @@ const authPaths = [
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Allow OAuth callback routes - CRITICAL for OAuth to work
   if (pathname.startsWith('/api/auth/')) {
     return NextResponse.next();
   }
   
-  // Allow root path
   if (pathname === '/') {
     return NextResponse.next();
   }
   
-  // Check if the path is protected (needs authentication)
   const isPathProtected = protectedPaths.some((path) => 
     pathname.startsWith(path)
   );
   
-  // Check if the path is an auth path (sign in/up)
   const isAuthPath = authPaths.some((path) => 
     pathname === path
   );
 
   try {
-    // Get the session token
     const token = await getToken({ 
       req: request,
       secret: process.env.NEXTAUTH_SECRET 
@@ -60,7 +53,6 @@ export async function middleware(request: NextRequest) {
     
   } catch (error) {
     console.error('Middleware error:', error);
-    // If there's an error and it's a protected path, redirect to sign-in
     if (isPathProtected) {
       const url = new URL('/auth/signIn', request.url);
       url.searchParams.set('callbackUrl', pathname);
@@ -68,11 +60,10 @@ export async function middleware(request: NextRequest) {
     }
   }
   
-  // Allow the request to proceed
   return NextResponse.next();
 }
 
-// Configure which routes the middleware applies to
+
 export const config = {
   // IMPORTANT: Exclude all API routes to prevent OAuth interference
   matcher: [

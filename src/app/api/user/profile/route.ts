@@ -4,17 +4,14 @@ import { authOptions } from "@/lib/auth"; // Updated import path
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
-// Get user profile
 export async function GET(request: Request) {
   try {
-    // Get the session - pass authOptions
     const session = await getServerSession(authOptions);
     
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     
-    // Get userId from query params
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get("userId");
     
@@ -22,21 +19,18 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "User ID is required" }, { status: 400 });
     }
     
-    // Connect to MongoDB
+
     const client = await clientPromise;
     const db = client.db("lifeline");
-    
-    // Find user profile in the userProfiles collection
-    const userProfile = await db.collection("userProfiles").findOne({ 
+
+    const userProfile = await db.collection("userProfiles").findOne({
       userId: userId
     });
-    
+
     if (!userProfile) {
-      // If no profile exists yet, return empty object (not an error)
       return NextResponse.json({});
     }
     
-    // Return the user profile
     return NextResponse.json(userProfile);
     
   } catch (error) {
@@ -45,17 +39,17 @@ export async function GET(request: Request) {
   }
 }
 
-// Update user profile
+
 export async function POST(request: Request) {
   try {
-    // Get the session - pass authOptions
+ 
     const session = await getServerSession(authOptions);
     
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     
-    // Get the request body
+
     const body = await request.json();
     const { userId, name, age, gender, phone, location, medicalCondition, language } = body;
     
@@ -63,16 +57,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "User ID is required" }, { status: 400 });
     }
     
-    // Ensure the user is updating their own profile
+
     if (session.user.id !== userId) {
       return NextResponse.json({ error: "Cannot update another user's profile" }, { status: 403 });
     }
     
-    // Connect to MongoDB
+
     const client = await clientPromise;
     const db = client.db("lifeline");
-    
-    // Update the user profile (upsert: create if doesn't exist)
+ 
     const result = await db.collection("userProfiles").updateOne(
       { userId: userId },
       { 
@@ -84,7 +77,7 @@ export async function POST(request: Request) {
           phone,
           location,
           medicalCondition,
-          language, // Add language field
+          language, 
           updatedAt: new Date()
         },
         $setOnInsert: { createdAt: new Date() }
@@ -92,7 +85,6 @@ export async function POST(request: Request) {
       { upsert: true }
     );
     
-    // If the user changed their name, update it in the users collection too
     if (name) {
       await db.collection("users").updateOne(
         { _id: new ObjectId(userId) },

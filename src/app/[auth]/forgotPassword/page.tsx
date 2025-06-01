@@ -12,19 +12,17 @@ export default function ForgotPassword() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  // Handle form input change
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
   }
 
-  // Handle password reset request
   const handleResetRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError("")
     setSuccess("")
     setLoading(true)
 
-    // Validate email
     if (!email) {
       setError("Email is required")
       setLoading(false)
@@ -32,14 +30,13 @@ export default function ForgotPassword() {
     }
 
     try {
-      // Send password reset request to the API
       const response = await fetch('/api/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
       })
 
-      // Enhanced error logging
+    
       console.log('Reset password response status:', response.status);
       
       const data = await response.json();
@@ -49,11 +46,11 @@ export default function ForgotPassword() {
         throw new Error(data?.error || `Request failed with status ${response.status}`)
       }
 
-      // Show success message
+ 
       setSuccess("Password reset link has been sent to your email")
       setEmail("")
       
-      // Automatically redirect after a delay
+      
       setTimeout(() => {
         router.push('/auth/signIn')
       }, 5000)
