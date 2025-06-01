@@ -9,6 +9,11 @@ import { signIn } from "next-auth/react"
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [passwordStrength, setPasswordStrength] = useState({
+    score: 0,
+    label: "",
+    color: ""
+  })
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,6 +24,44 @@ export default function SignUp() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
+  // Check password strength
+  const checkPasswordStrength = (password: string) => {
+    // Empty password
+    if (!password) {
+      return { score: 0, label: "", color: "" }
+    }
+    
+    let score = 0
+    
+    // Length check
+    if (password.length > 8) score += 1
+    if (password.length > 12) score += 1
+    
+    // Character variety checks
+    if (/[a-z]/.test(password)) score += 1 // lowercase
+    if (/[A-Z]/.test(password)) score += 1 // uppercase
+    if (/[0-9]/.test(password)) score += 1 // numbers
+    if (/[^a-zA-Z0-9]/.test(password)) score += 1 // special characters
+    
+    // Common patterns check (reduce score for common patterns)
+    if (/^(password|123456|qwerty)/i.test(password)) score = 1
+    
+    // Determine label and color based on score
+    let label, color
+    if (score <= 2) {
+      label = "Low"
+      color = "bg-red-500"
+    } else if (score <= 4) {
+      label = "Medium"
+      color = "bg-yellow-500"
+    } else {
+      label = "High" 
+      color = "bg-green-500"
+    }
+    
+    return { score, label, color }
+  }
+
   // Handle form input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target
@@ -26,6 +69,11 @@ export default function SignUp() {
       ...prev,
       [id]: value
     }))
+    
+    // Check password strength when password field changes
+    if (id === 'password') {
+      setPasswordStrength(checkPasswordStrength(value))
+    }
   }
 
   // Handle email/password signup
@@ -246,6 +294,31 @@ export default function SignUp() {
                         {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                       </button>
                     </div>
+                    
+                    {formData.password && (
+                      <div className="mt-1">
+                        <div className="flex items-center justify-between mb-1">
+                          <div className="flex items-center space-x-1">
+                            <div className={`h-2 w-2 rounded-full ${passwordStrength.score > 0 ? passwordStrength.color : 'bg-gray-300'}`}></div>
+                            <div className={`h-2 w-2 rounded-full ${passwordStrength.score > 2 ? passwordStrength.color : 'bg-gray-300'}`}></div>
+                            <div className={`h-2 w-2 rounded-full ${passwordStrength.score > 4 ? passwordStrength.color : 'bg-gray-300'}`}></div>
+                          </div>
+                          <span className={`text-xs font-medium ${
+                            passwordStrength.label === "Low" ? "text-red-600" : 
+                            passwordStrength.label === "Medium" ? "text-yellow-600" : 
+                            "text-green-600"
+                          }`}>
+                            {passwordStrength.label && `Strength: ${passwordStrength.label}`}
+                          </span>
+                        </div>
+                        
+                        <div className="text-xs text-gray-500">
+                          {passwordStrength.score <= 2 && "Try adding uppercase letters, numbers, and special characters"}
+                          {passwordStrength.score > 2 && passwordStrength.score <= 4 && "Good! Consider making it longer for better security"}
+                          {passwordStrength.score > 4 && "Excellent password!"}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <div className="space-y-2">
