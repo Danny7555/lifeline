@@ -58,9 +58,9 @@ export function ResponsiveSidebar() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 bg-[#FA9D9D] p-2 rounded-lg shadow-lg"
+        className="lg:hidden fixed top-1 left-1 z-50 bg-[#FA9D9D] p-2 rounded-lg shadow-lg"
       >
-        {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-4 h-4" />}
       </button>
 
       {/* Sidebar with increased width on desktop */}
