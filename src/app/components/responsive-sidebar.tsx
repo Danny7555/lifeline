@@ -1,6 +1,6 @@
 "use client"
 import { User, Clock, LifeBuoy, Settings, LogOut, Menu, X, AlertTriangle } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react" // Add useEffect
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { signOut, useSession } from "next-auth/react"
@@ -9,9 +9,38 @@ import Image from "next/image"
 export function ResponsiveSidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [showLogoutModal, setShowLogoutModal] = useState(false)
+  const [profileName, setProfileName] = useState("") // Add state for profile name
   const pathname = usePathname()
   const router = useRouter()
   const { data: session } = useSession()
+
+  // Check for updated profile name in localStorage
+  useEffect(() => {
+    // Initial check for stored profile name
+    if (typeof window !== 'undefined') {
+      const storedName = localStorage.getItem('profileName')
+      if (storedName) {
+        setProfileName(storedName)
+      } else if (session?.user?.name) {
+        setProfileName(session.user.name)
+      }
+    }
+
+    // Listen for profile updates
+    const handleProfileUpdate = (event: CustomEvent) => {
+      if (event.detail?.name) {
+        setProfileName(event.detail.name)
+      }
+    }
+
+    // Add event listener for profile updates
+    window.addEventListener('profileUpdated', handleProfileUpdate as EventListener)
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('profileUpdated', handleProfileUpdate as EventListener)
+    }
+  }, [session])
 
   // Handle logout modal open
   const openLogoutModal = () => {
@@ -79,7 +108,7 @@ export function ResponsiveSidebar() {
             {session?.user?.image ? (
               <Image
                 src={session.user.image} 
-                alt={session.user.name || "User"} 
+                alt={profileName || session?.user?.name || "User"} 
                 width={80}
                 height={80}
                 className="rounded-full w-full h-full object-cover"
@@ -91,7 +120,7 @@ export function ResponsiveSidebar() {
           <p className="text-center text-black text-sm leading-tight">
             Welcome,<br />
             <span className="font-bold text-base">
-              {session?.user?.name || "LIFELINER"}
+              {profileName || session?.user?.name || "LIFELINER"}
             </span>
           </p>
         </div>
