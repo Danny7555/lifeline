@@ -63,9 +63,11 @@ export default function SignIn() {
   const handleGoogleSignIn = async () => {
     setError("")
     setLoading(true)
-    
+    // Use NextAuth's signIn function for Google OAuth
     try {
-      await signIn('google', { callbackUrl: '/dashboard/profile' })
+      await signIn('google', { 
+        callbackUrl: '/dashboard/profile'
+      })
     } catch (error) {
       console.error("Error initiating Google sign-in:", error)
       setError(error instanceof Error ? error.message : "An unexpected error occurred")

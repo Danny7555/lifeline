@@ -154,22 +154,12 @@ export default function SignUp() {
     setLoading(true)
     
     try {
-      const result = await signIn('google', { 
-        callbackUrl: '/dashboard/profile',
-        redirect: false 
+      await signIn('google', { 
+        callbackUrl: '/dashboard/profile'
       })
-      
-      if (result?.error) {
-        throw new Error(result.error)
-      }
-      
-      if (result?.url) {
-        router.push(result.url)
-      }
     } catch (error) {
       console.error("Google sign-in error:", error)
       setError("Failed to sign in with Google. Please try again.")
-    } finally {
       setLoading(false)
     }
   }
