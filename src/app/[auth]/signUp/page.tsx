@@ -24,9 +24,9 @@ export default function SignUp() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  // Check password strength
+  // Check password strength - only validate when typing in password field
   const checkPasswordStrength = (password: string) => {
-    // Empty password
+    // Only validate if we're doing credentials signup
     if (!password) {
       return { score: 0, label: "", color: "" }
     }
@@ -43,7 +43,7 @@ export default function SignUp() {
     if (/[0-9]/.test(password)) score += 1 // numbers
     if (/[^a-zA-Z0-9]/.test(password)) score += 1 // special characters
     
-    // Common patterns check (reduce score for common patterns)
+    // Common patterns check
     if (/^(password|123456|qwerty)/i.test(password)) score = 1
     
     // Determine label and color based on score
@@ -148,17 +148,28 @@ export default function SignUp() {
     }
   }
 
-  // Handle Google sign-in
+  // Handle Google sign-in - separate from credentials validation
   const handleGoogleSignIn = async () => {
     setError("")
     setLoading(true)
     
     try {
-      // Update to match the protected route pattern from middleware
-      await signIn('google', { callbackUrl: '/dashboard/profile' })
+      const result = await signIn('google', { 
+        callbackUrl: '/dashboard/profile',
+        redirect: false 
+      })
+      
+      if (result?.error) {
+        throw new Error(result.error)
+      }
+      
+      if (result?.url) {
+        router.push(result.url)
+      }
     } catch (error) {
-      console.error("Error initiating Google sign-in:", error)
-      setError(error instanceof Error ? error.message : "An unexpected error occurred")
+      console.error("Google sign-in error:", error)
+      setError("Failed to sign in with Google. Please try again.")
+    } finally {
       setLoading(false)
     }
   }

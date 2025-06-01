@@ -21,10 +21,15 @@ export function ResponsiveSidebar() {
   // Handle logout with NextAuth
   const handleLogout = async () => {
     try {
-      await signOut({ redirect: false })
-      router.push('/') // Redirect to sign in page after logout
+      // Use signOut with callbackUrl to redirect to landing page
+      await signOut({ 
+        callbackUrl: '/',
+        redirect: true 
+      })
     } catch (error) {
       console.error("Logout failed:", error)
+      // Fallback redirect if signOut fails
+      window.location.href = '/'
     } finally {
       setShowLogoutModal(false)
     }

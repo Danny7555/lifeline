@@ -1,6 +1,6 @@
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import { compare } from "bcryptjs";
-import { type SessionStrategy, User, Account } from "next-auth";
+import { type SessionStrategy, User, Account, Profile } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
@@ -12,6 +12,13 @@ export const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -20,41 +27,59 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const { email, password } = credentials || {};
-        if (!email || !password) {
-          throw new Error("Email and password are required");
-        }
+        try {
+          const { email, password } = credentials || {};
 
-        const client = await clientPromise;
-        const users = client.db("lifeline").collection("users");
-        const user = await users.findOne({ email });
+          if (!email || !password) {
+            throw new Error("Email and password are required");
+          }
 
-        if (!user) {
-          // Instead of revealing user doesn't exist (security best practice)
-          throw new Error("Invalid email or password");
-        }
+          const client = await clientPromise;
+          const users = client.db("lifeline").collection("users");
+          const user = await users.findOne({ email });
 
-        // For users who registered with credentials
-        if (user.password) {
+          if (!user) {
+            throw new Error("Invalid email or password");
+          }
+
+          // Only check password for users who registered with credentials
+          if (!user.password) {
+            throw new Error("Please sign in with the method you used to create your account");
+          }
+
           const isValid = await compare(password, user.password);
           if (!isValid) {
             throw new Error("Invalid email or password");
           }
-        } else {
-          // User registered with OAuth, no password to compare
-          throw new Error("Please sign in with the method you used to create your account");
-        }
 
-        return {
-          id: user._id.toString(),
-          email: user.email,
-          name: user.name,
-          image: user.image,
-        };
+          return {
+            id: user._id.toString(),
+            email: user.email,
+            name: user.name,
+            image: user.image,
+          };
+        } catch (error) {
+          console.error("Credentials authorization error:", error);
+          throw error;
+        }
       },
     }),
   ],
   callbacks: {
+    async signIn({ user, account, profile }: { user: User; account: Account | null; profile?: Profile }) {
+      try {
+        // Allow all OAuth sign-ins (Google, etc.)
+        if (account?.provider !== "credentials") {
+          return true;
+        }
+
+        // For credentials, the authorize function already handled validation
+        return true;
+      } catch (error) {
+        console.error("SignIn callback error:", error);
+        return false;
+      }
+    },
     async jwt({ token, user, account }: { token: JWT; user?: User; account?: Account | null }) {
       // Initial sign in
       if (user) {
@@ -80,4 +105,5 @@ export const authOptions = {
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NODE_ENV === 'development',
 };
