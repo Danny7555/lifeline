@@ -16,7 +16,6 @@ export default function Page() {
     return () => clearTimeout(timer);
   }, []);
   
-  // Show loader on navigation
   useEffect(() => {
     const handleRouteChange = () => {
       setIsLoading(true);
