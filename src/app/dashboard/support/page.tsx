@@ -17,7 +17,7 @@ export default function SupportHelpPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
-  const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!newMessage.trim()) return
 
@@ -28,22 +28,53 @@ export default function SupportHelpPage() {
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
     
-    setMessages([...messages, userMessage])
+    // Store the current message before clearing the input
+    const currentMessage = newMessage;
+    
+    setMessages(prev => [...prev, userMessage])
     setNewMessage("")
     
     // Show typing indicator
     setIsTyping(true)
     
-    // Simulate response (in a real app, this would connect to a backend)
-    setTimeout(() => {
+    try {
+      // Call the API route
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: currentMessage }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get response');
+      }
+
+      const data = await response.json();
+      
+      // Hide typing indicator
       setIsTyping(false)
+      
+      // Add AI response to chat
       const responseMessage = { 
-        text: "Thanks for your message. Our support team will get back to you shortly.", 
+        text: data.reply, 
         isUser: false,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }
       setMessages(prev => [...prev, responseMessage])
-    }, 2000)
+    } catch (error) {
+      console.error('Error in chat:', error);
+      setIsTyping(false)
+      
+      // Add error message
+      const errorMessage = { 
+        text: "Sorry, I'm having trouble connecting right now. Please try again later.", 
+        isUser: false,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }
+      setMessages(prev => [...prev, errorMessage])
+    }
   }
 
   const toggleChat = () => {
