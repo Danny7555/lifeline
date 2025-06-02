@@ -17,7 +17,7 @@ export default function SupportHelpPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
-  const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!newMessage.trim()) return
 
@@ -28,22 +28,53 @@ export default function SupportHelpPage() {
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
     
-    setMessages([...messages, userMessage])
+    // Store the current message before clearing the input
+    const currentMessage = newMessage;
+    
+    setMessages(prev => [...prev, userMessage])
     setNewMessage("")
     
     // Show typing indicator
     setIsTyping(true)
     
-    // Simulate response (in a real app, this would connect to a backend)
-    setTimeout(() => {
+    try {
+      // Call the API route
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: currentMessage }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get response');
+      }
+
+      const data = await response.json();
+      
+      // Hide typing indicator
       setIsTyping(false)
+      
+      // Add AI response to chat
       const responseMessage = { 
-        text: "Thanks for your message. Our support team will get back to you shortly.", 
+        text: data.reply, 
         isUser: false,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }
       setMessages(prev => [...prev, responseMessage])
-    }, 2000)
+    } catch (error) {
+      console.error('Error in chat:', error);
+      setIsTyping(false)
+      
+      // Add error message
+      const errorMessage = { 
+        text: "Sorry, I'm having trouble connecting right now. Please try again later.", 
+        isUser: false,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }
+      setMessages(prev => [...prev, errorMessage])
+    }
   }
 
   const toggleChat = () => {
@@ -177,14 +208,14 @@ export default function SupportHelpPage() {
           
           {/* Live Chat Interface */}
           {isChatOpen && !isMinimized && (
-            <div className="fixed bottom-6 right-6 w-full max-w-sm bg-white rounded-lg shadow-xl border border-[#FFAEBB] overflow-hidden z-50">
+            <div className="fixed bottom-6 right-6 w-[95%] sm:w-[400px] max-w-sm bg-white rounded-lg shadow-xl border border-[#FFAEBB] overflow-hidden z-50">
               {/* Chat Header */}
-              <div className="bg-[#FA9D9D] px-4 py-3 flex justify-between items-center">
+              <div className="bg-[#FA9D9D] px-3 sm:px-4 py-3 flex justify-between items-center">
                 <div className="flex items-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
                     <path d="M16 8c0 3.866-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7z"/>
                   </svg>
-                  <h3 className="font-medium text-black">Live Support Chat</h3>
+                  <h3 className="font-medium text-black text-sm sm:text-base">Live Support Chat</h3>
                 </div>
                 <div className="flex items-center gap-2">
                   <button 
@@ -207,35 +238,40 @@ export default function SupportHelpPage() {
               </div>
               
               {/* Chat Messages */}
-              <div className="h-80 overflow-y-auto p-4 bg-[#FFF5F7]">
+              <div className="h-[60vh] sm:h-80 overflow-y-auto p-3 sm:p-4 bg-[#FFF5F7]">
                 {messages.map((message, index) => (
                   <div 
                     key={index} 
-                    className={`mb-3 max-w-[80%] ${message.isUser ? 'ml-auto' : 'mr-auto'}`}
+                    className={`mb-3 max-w-[85%] sm:max-w-[80%] ${message.isUser ? 'ml-auto' : 'mr-auto'}`}
                   >
-                    <div className="flex items-start gap-2">
+                    <div className="flex items-start gap-1 sm:gap-2">
                       {!message.isUser && (
-                        <div className="w-8 h-8 rounded-full bg-[#FA9D9D] flex items-center justify-center flex-shrink-0">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#FA9D9D] flex items-center justify-center flex-shrink-0">
+                          <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            className="w-3 h-3 sm:w-4 sm:h-4" 
+                            fill="currentColor" 
+                            viewBox="0 0 16 16"
+                          >
                             <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                           </svg>
                         </div>
                       )}
-                      <div>
-                        <div className={`p-3 rounded-lg ${
+                      <div className="flex-1">
+                        <div className={`p-2 sm:p-3 rounded-lg text-sm sm:text-base ${
                           message.isUser 
                             ? 'bg-[#FA9D9D] text-black rounded-tr-none' 
                             : 'bg-white border border-[#FFAEBB] text-gray-800 rounded-tl-none'
                         }`}>
                           {message.text}
                         </div>
-                        <div className={`text-xs text-gray-500 mt-1 ${message.isUser ? 'text-right' : 'text-left'}`}>
+                        <div className={`text-[10px] sm:text-xs text-gray-500 mt-1 ${message.isUser ? 'text-right' : 'text-left'}`}>
                           {message.time}
                         </div>
                       </div>
                       {message.isUser && (
-                        <div className="w-8 h-8 rounded-full bg-[#FFAEBB] flex items-center justify-center flex-shrink-0">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#FFAEBB] flex items-center justify-center flex-shrink-0">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 16 16">
                             <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                           </svg>
                         </div>
@@ -243,42 +279,47 @@ export default function SupportHelpPage() {
                     </div>
                   </div>
                 ))}
-                
-                {/* Typing indicator */}
+
+                {/* Typing indicator - make it responsive */}
                 {isTyping && (
-                  <div className="flex items-center gap-2 mb-3 max-w-[80%] mr-auto">
-                    <div className="w-8 h-8 rounded-full bg-[#FA9D9D] flex items-center justify-center flex-shrink-0">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                  <div className="flex items-center gap-1 sm:gap-2 mb-3 max-w-[85%] sm:max-w-[80%] mr-auto">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#FA9D9D] flex items-center justify-center flex-shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                       </svg>
                     </div>
-                    <div className="bg-white border border-[#FFAEBB] text-gray-800 p-3 rounded-lg rounded-tl-none">
+                    <div className="bg-white border border-[#FFAEBB] text-gray-800 p-2 sm:p-3 rounded-lg rounded-tl-none">
                       <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '600ms' }}></div>
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '600ms' }}></div>
                       </div>
                     </div>
                   </div>
                 )}
-                
+
                 <div ref={messagesEndRef} />
               </div>
               
-              {/* Chat Input */}
-              <form onSubmit={handleSendMessage} className="border-t border-gray-200 p-3 flex">
+              {/* Chat Input - make it responsive */}
+              <form onSubmit={handleSendMessage} className="border-t border-gray-200 p-2 sm:p-3 flex gap-2">
                 <input
                   type="text"
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Type your message..."
-                  className="flex-1 border border-gray-300 rounded-l-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#FA9D9D]"
+                  className="flex-1 border border-gray-300 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-sm sm:text-base focus:outline-none focus:ring-1 focus:ring-[#FA9D9D]"
                 />
                 <button 
                   type="submit"
-                  className="bg-[#FA9D9D] text-black px-4 py-2 rounded-r-md hover:bg-[#FFAEBB] transition-colors flex items-center justify-center"
+                  aria-label="Send message"
+                  className="bg-[#FA9D9D] text-black px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-[#FFAEBB] transition-colors flex items-center justify-center"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                  <svg 
+                    viewBox="0 0 16 16" 
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4" 
+                    fill="currentColor"
+                  >
                     <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
                   </svg>
                 </button>
