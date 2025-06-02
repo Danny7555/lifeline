@@ -3,7 +3,8 @@ import EmergencySection from './emergencySection';
 import ContactForm from './contactForm';
 import Navbar from '../components/landingPage/navBar';
 import Footer from '../components/landingPage/footer';
-
+import FirstAidCheck from './firstAidCheck';
+import FeedbackButton from '../components/landingPage/feedback-button';
 export default function ContactPage() {
   return (
     <>
@@ -16,6 +17,8 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
+      <FirstAidCheck />
+      <FeedbackButton />
       <Footer />
     </>
   );
