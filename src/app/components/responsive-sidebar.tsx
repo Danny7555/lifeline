@@ -1,10 +1,11 @@
 "use client"
 import { User, Clock, LifeBuoy, Settings, LogOut, Menu, X, AlertTriangle } from "lucide-react"
-import { useState, useEffect, useCallback } from "react" // Add useEffect and useCallback
+import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { signOut, useSession } from "next-auth/react"
 import Image from "next/image"
+import { useTranslation } from "@/context/TranslationContext" // Add this import
 
 export function ResponsiveSidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -12,7 +13,8 @@ export function ResponsiveSidebar() {
   const pathname = usePathname()
   const router = useRouter()
   const { data: session } = useSession()
-  const [userName, setUserName] = useState("") // Add state for user name
+  const [userName, setUserName] = useState("")
+  const { t } = useTranslation() // Add translation hook
 
   // Fetch user profile data
   const fetchUserProfile = useCallback(async () => {
@@ -80,22 +82,22 @@ export function ResponsiveSidebar() {
 
   const navigation = [
     { 
-      name: "User Profile", 
+      name: t("sidebar.userProfile"), 
       href: "/dashboard/profile", 
       icon: User 
     },
     { 
-      name: "Lifeline History", 
+      name: t("sidebar.lifelineHistory"), 
       href: "/dashboard/history", 
       icon: Clock 
     },
     { 
-      name: "Support/Help", 
+      name: t("sidebar.supportHelp"), 
       href: "/dashboard/support", 
       icon: LifeBuoy 
     },
     { 
-      name: "Settings", 
+      name: t("sidebar.settings"), 
       href: "/dashboard/settings", 
       icon: Settings 
     },
@@ -137,14 +139,14 @@ export function ResponsiveSidebar() {
             )}
           </div>
           <p className="text-center text-black text-sm leading-tight">
-            Welcome,<br />
+            {t("sidebar.welcome")}<br />
             <span className="font-bold text-base">
-              {userName || "LIFELINER"}
+              {userName || t("sidebar.lifeliner")}
             </span>
           </p>
         </div>
 
-        {/* Navigation Menu - Remove right padding from nav */}
+        {/* Navigation Menu */}
         <nav className="flex-1 pl-6">
           <div className="space-y-6">
             {navigation.map((item) => {
@@ -178,7 +180,7 @@ export function ResponsiveSidebar() {
             className="flex items-center text-[#FF3B3B] px-4 py-3 hover:bg-[#FFD3DB] rounded-lg transition-colors w-full"
           >
             <LogOut className="mr-4 h-5 w-5" />
-            <span className="text-sm font-medium">Log Out</span>
+            <span className="text-sm font-medium">{t("sidebar.logout")}</span>
           </button>
         </div>
       </div>
@@ -204,13 +206,13 @@ export function ResponsiveSidebar() {
               <div className="mx-auto w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4">
                 <AlertTriangle className="h-8 w-8 text-red-500" />
               </div>
-              <h3 className="text-xl font-bold text-white text-center">Sign Out Confirmation</h3>
+              <h3 className="text-xl font-bold text-white text-center">{t("sidebar.signOutConfirmation")}</h3>
             </div>
             
             {/* Modal Body */}
             <div className="px-6 py-4">
               <p className="text-gray-600 text-center mb-6">
-                Are you sure you want to sign out of your Lifeliner account?
+                {t("sidebar.signOutConfirmationMessage")}
               </p>
               
               {/* Modal Actions */}
@@ -219,14 +221,14 @@ export function ResponsiveSidebar() {
                   onClick={() => setShowLogoutModal(false)}
                   className="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg font-medium transition-colors"
                 >
-                  Cancel
+                  {t("sidebar.cancel")}
                 </button>
                 <button
                   onClick={handleLogout}
                   className="flex-1 px-4 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center"
                 >
                   <LogOut className="w-4 h-4 mr-2" />
-                  Sign Out
+                  {t("sidebar.signOut")}
                 </button>
               </div>
             </div>

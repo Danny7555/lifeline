@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ResponsiveSidebar } from "../components/responsive-sidebar";
+import LanguageIndicator from "@/components/LanguageIndicator";
 
 export default function DashboardLayout({
   children,
@@ -39,6 +40,7 @@ export default function DashboardLayout({
         {/* Main Content */}
         <div className="flex-1 overflow-auto">
           {children}
+          <LanguageIndicator />
         </div>
       </div>
     );
