@@ -4,12 +4,14 @@ import { useSession } from "next-auth/react"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
+import { useTranslation } from "@/context/TranslationContext" // Add this import
 
 export default function SettingsPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState({ type: "", text: "" })
+  const { t, setLanguage } = useTranslation() // Add this line
   
   const [formData, setFormData] = useState({
     name: "",
@@ -66,7 +68,6 @@ export default function SettingsPage() {
     setLoading(true)
     setMessage({ type: "", text: "" })
 
- 
     console.log("Submitting language:", formData.language);
 
     try {
@@ -96,9 +97,12 @@ export default function SettingsPage() {
       const responseData = await response.json();
       console.log("Profile update response:", responseData);
 
+      // Add this - update language in the translation context immediately
+      setLanguage(formData.language)
+      
       setMessage({ 
         type: "success", 
-        text: "Profile updated successfully!" 
+        text: t("settings.profileUpdated") // Use translation here
       })
       
    
@@ -222,7 +226,7 @@ export default function SettingsPage() {
                 <path d="M12 20h9"></path>
                 <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
               </svg>
-              Edit Profile Information
+              {t("settings.editProfile")} {/* Use translation here */}
             </h2>
             
             <form className="space-y-6 sm:space-y-8" onSubmit={handleSubmit}>
@@ -235,7 +239,7 @@ export default function SettingsPage() {
                       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                       <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                    Name
+                    {t("settings.name")} {/* Use translation here */}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -263,7 +267,7 @@ export default function SettingsPage() {
                       <circle cx="12" cy="12" r="10"></circle>
                       <polyline points="12 6 12 12 16 14"></polyline>
                     </svg>
-                    Age
+                    {t("settings.age")}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -281,7 +285,7 @@ export default function SettingsPage() {
                       onChange={handleChange}
                       className="w-full pl-10 pr-10 py-3 border-2 border-gray-300 rounded-lg focus:border-[#F5A5A5] focus:outline-none text-gray-700 appearance-none bg-white text-sm sm:text-base"
                     >
-                      <option value="">Select Age</option>
+                      <option value="">{t("settings.selectAge")}</option>
                       <option value="18-25">18-25</option>
                       <option value="26-35">26-35</option>
                       <option value="36-45">36-45</option>
@@ -305,7 +309,7 @@ export default function SettingsPage() {
                       <path d="M12 10v8"></path>
                       <path d="M9 7h6"></path>
                     </svg>
-                    Gender
+                    {t("settings.gender")}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -322,7 +326,7 @@ export default function SettingsPage() {
                       onChange={handleChange}
                       className="w-full pl-10 pr-10 py-3 border-2 border-gray-300 rounded-lg focus:border-[#F5A5A5] focus:outline-none text-gray-700 appearance-none bg-white text-sm sm:text-base"
                     >
-                      <option value="">Select Gender</option>
+                      <option value="">{t("settings.selectGender")}</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
                       <option value="other">Other</option>
@@ -338,7 +342,7 @@ export default function SettingsPage() {
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                     </svg>
-                    Phone Number
+                    {t("settings.phone")}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -368,7 +372,7 @@ export default function SettingsPage() {
                       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                       <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    Location
+                    {t("settings.location")}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -395,7 +399,7 @@ export default function SettingsPage() {
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"></path>
                     </svg>
-                    Medical Condition
+                    {t("settings.medicalCondition")}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -425,7 +429,7 @@ export default function SettingsPage() {
                       <path d="M2 12h20"></path>
                       <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
                     </svg>
-                    Language
+                    {t("settings.language")}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -440,7 +444,6 @@ export default function SettingsPage() {
                       onChange={handleChange}
                       className="w-full pl-10 pr-10 py-3 border-2 border-gray-300 rounded-lg focus:border-[#F5A5A5] focus:outline-none text-gray-700 appearance-none bg-white text-sm sm:text-base"
                     >
-                      <option value="">Select Language</option>
                       <option value="English">English</option>
                       <option value="Frafra">Frafra</option>
                       <option value="Twi">Twi</option>
@@ -478,7 +481,7 @@ export default function SettingsPage() {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
-                      Saving...
+                      {t("settings.saving")} {/* Use translation here */}
                     </>
                   ) : (
                     <>
@@ -487,7 +490,7 @@ export default function SettingsPage() {
                         <polyline points="17 21 17 13 7 13 7 21"></polyline>
                         <polyline points="7 3 7 8 15 8"></polyline>
                       </svg>
-                      Save Changes
+                      {t("settings.saveChanges")} {/* Use translation here */}
                     </>
                   )}
                 </button>

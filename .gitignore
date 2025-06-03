@@ -42,3 +42,5 @@ next-env.d.ts
 **/public/workbox-*.js
 **/public/fallback-*.js
 
+
+/src/generated/prisma

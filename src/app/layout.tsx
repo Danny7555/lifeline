@@ -2,6 +2,7 @@ import { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
+import { TranslationProvider } from "@/context/TranslationContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -43,7 +44,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className="h-full">
       <body className={`${inter.className} h-full`}>
-        <ClientLayout>{children}</ClientLayout>
+          <TranslationProvider>
+            <ClientLayout>{children}</ClientLayout>
+          </TranslationProvider>
       </body>
     </html>
   );
