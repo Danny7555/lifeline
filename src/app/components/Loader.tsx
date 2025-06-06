@@ -21,7 +21,6 @@ const Loader: React.FC<LoaderProps> = ({ isLoading }) => {
           className={styles.logoImage}
           priority
         />
-        <div className={styles.spinner}></div>
       </div>
     </div>
   );

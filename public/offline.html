@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Assistant Bot - Offline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #FC7A7A;
+      --primary-light: #FFEBEE;
+      --primary-dark: #C62828;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      --red-500: #0fa421;
+      --white: #ffffff;
+      --success: #22c55e;
+      --success-light: #dcfce7;
+      --error: #ef4444;
+      --error-light: #fee2e2;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--gray-50);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+      color: var(--gray-800);
+    }
+
+    .chat-container {
+      width: 100%;
+      max-width: 480px;
+      height: 90vh;
+      max-height: 800px;
+      min-height: 500px;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      display: flex;
+      align-items: center;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--gray-100);
+      min-height: 72px;
+    }
+
+    .bot-avatar {
+      background: var(--primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .bot-avatar svg {
+      width: 24px;
+      height: 24px;
+      color: var(--white);
+    }
+
+    .bot-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .bot-name {
+      font-weight: 600;
+      color: var(--gray-900);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .bot-status {
+      font-size: 0.75rem;
+      color: var(--red-500);
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .status-indicator {
+      width: 8px;
+      height: 8px;
+      background: var(--red-500);
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      animation: pulse 2s infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .messages-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+      background: var(--gray-50);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .message {
+      max-width: 85%;
+      padding: 0.75rem 1rem;
+      border-radius: 16px;
+      animation: fadeIn 0.3s ease-out;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .bot-message {
+      align-self: flex-start;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .user-message {
+      align-self: flex-end;
+      background: var(--primary);
+      color: var(--white);
+      border-bottom-right-radius: 4px;
+    }
+
+    .system-message {
+      align-self: center;
+      background: var(--gray-100);
+      color: var(--gray-600);
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8125rem;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 95%;
+    }
+
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .suggestion-chip {
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 0.4rem 0.8rem;
+      border-radius: 9999px;
+      font-size: 0.8125rem;
+      cursor: pointer;
+      font-weight: 500;
+      background: transparent;
+      transition: background 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .suggestion-chip:hover {
+      background: var(--primary-light);
+    }
+
+    .check-connection-btn {
+      align-self: center;
+      margin-top: 1rem;
+      background: var(--primary);
+      color: var(--white);
+      padding: 0.6rem 1.25rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.9375rem;
+      box-shadow: 0 2px 5px rgba(79, 70, 229, 0.3);
+      transition: transform 0.2s ease;
+      width: auto;
+      min-width: 180px;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .check-connection-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .check-connection-btn.connected {
+      background: var(--success);
+      cursor: default;
+    }
+
+    .check-connection-btn.checking {
+      background: var(--gray-500);
+      cursor: wait;
+    }
+
+    .check-connection-btn.error {
+      background: var(--error);
+    }
+
+    .check-connection-btn::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 4px;
+    }
+
+    .check-connection-btn.connected::before {
+      background: var(--success-light);
+    }
+
+    .check-connection-btn.error::before {
+      background: var(--error-light);
+    }
+
+    .check-connection-btn.checking::before {
+      background: var(--gray-200);
+      animation: pulse 1s infinite;
+    }
+
+    .chat-input {
+      padding: 1rem;
+      display: flex;
+      border-top: 1px solid var(--gray-100);
+      background: var(--white);
+      min-height: 80px;
+    }
+
+    .message-input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid var(--gray-200);
+      background: var(--gray-50);
+      font-size: 0.9375rem;
+      color: var(--gray-800);
+      min-width: 0;
+    }
+
+    .send-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-left: 0.75rem;
+      background: var(--gray-200);
+      color: var(--gray-500);
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: not-allowed;
+      flex-shrink: 0;
+    }
+
+    svg {
+      display: block; /* Ensures consistent rendering */
+      width: 24px;
+      height: 24px;
+      pointer-events: none; /* Prevents unwanted hover effects */
+      -webkit-transform: translateZ(0); /* Fixes Safari rendering */
+      transform: translateZ(0);
+    }
+
+    .send-button svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Fix for Safari specific issues */
+    @supports (-webkit-touch-callout: none) {
+      svg {
+        /* Ensures proper rendering in Safari */
+        shape-rendering: geometricPrecision;
+      }
+    }
+
+    footer {
+      padding: 0.5rem;
+      background: var(--white);
+      border-top: 1px solid var(--gray-100);
+    }
+
+    footer div {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--gray-500);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      body {
+        padding: 0;
+        height: 100vh;
+      }
+      
+      .chat-container {
+        max-width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+      }
+      
+      .messages-container {
+        padding: 1rem;
+      }
+      
+      .message {
+        max-width: 90%;
+      }
+      
+      .suggestions {
+        gap: 0.4rem;
+      }
+      
+      .suggestion-chip {
+        padding: 0.35rem 0.7rem;
+        font-size: 0.75rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .chat-header {
+        padding: 0.75rem 1rem;
+      }
+      
+      .bot-avatar {
+        width: 36px;
+        height: 36px;
+        margin-right: 0.5rem;
+      }
+      
+      .message {
+        padding: 0.6rem 0.9rem;
+        font-size: 0.9rem;
+      }
+      
+      .system-message {
+        font-size: 0.75rem;
+      }
+      
+      .check-connection-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        min-width: 160px;
+      }
+      
+      .chat-input {
+        padding: 0.75rem;
+      }
+      
+      .message-input {
+        font-size: 0.875rem;
+        padding: 0.6rem 0.9rem;
+      }
+    }
+
+    /* Landscape orientation adjustments */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .chat-container {
+        height: 100vh;
+        max-height: 100vh;
+      }
+      
+      .messages-container {
+        padding: 0.75rem;
+      }
+      
+      .message {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+      }
+      
+      .suggestion-chip {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <div class="bot-avatar">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+        </svg>
+      </div>
+      <div class="bot-info">
+        <div class="bot-name">LifeLine Bot</div>
+        <div class="bot-status">
+          <div class="status-indicator"></div>
+          Online
+        </div>
+      </div>
+    </div>
+
+    <div class="messages-container" id="messages-container">
+      <div class="message bot-message">
+        <strong>Hi LifeLiner!</strong> It looks like you're currently offline😞. I can't connect to our servers right now.
+      </div>
+      <div class="message system-message">Connection lost at <span id="disconnect-time"></span></div>
+      <div class="message bot-message">
+        I got you, Here are a few things you can try:
+        <div class="suggestions">
+          <button class="suggestion-chip">Check WiFi</button>
+          <button class="suggestion-chip">Restart router</button>
+          <button class="suggestion-chip">Mobile data</button>
+          <button class="suggestion-chip">Disable VPN</button>
+        </div>
+      </div>
+      <button class="check-connection-btn" id="check-connection-btn">Tap to reconnect</button>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" class="message-input" placeholder="Type a message..." disabled>
+      <button class="send-button" disabled>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+        </svg>
+      </button>
+    </div>
+    <footer>
+      <div>
+        &copy;LifeLine. Built by Aristocratjnr.
+      </div>
+    </footer>
+  </div>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+    // Cache DOM elements
+    const messagesContainer = document.getElementById("messages-container");
+    const checkBtn = document.getElementById("check-connection-btn");
+    const statusIndicator = document.querySelector(".status-indicator");
+    const botStatus = document.querySelector(".bot-status");
+    const messageInput = document.querySelector(".message-input");
+    const sendButton = document.querySelector(".send-button");
+    const disconnectTime = document.getElementById("disconnect-time");
+
+    // Initialize connection monitoring
+    let isOnline = navigator.onLine;
+    let connectionCheckInterval;
+
+    // Update initial disconnect time
+    function updateDisconnectTime() {
+        const now = new Date();
+        const options = {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        };
+        disconnectTime.textContent = now.toLocaleString('en-US', options);
+    }
+
+    // Handle online/offline status changes
+    function updateOnlineStatus(online) {
+        isOnline = online;
+        botStatus.innerHTML = `
+            <div class="status-indicator"></div>
+            ${online ? 'Online' : 'Offline'}
+        `;
+        statusIndicator.style.background = online ? 'var(--success)' : 'var(--error)';
+        messageInput.disabled = !online;
+        sendButton.disabled = !online;
+        
+        if (online) {
+            addSystemMessage("Connection restored! 🎉");
+            checkBtn.textContent = "Connected";
+            checkBtn.className = "check-connection-btn connected";
+            checkBtn.disabled = true;
+        } else {
+            addSystemMessage("Connection lost 📡");
+            checkBtn.textContent = "Check Connection";
+            checkBtn.className = "check-connection-btn error";
+            checkBtn.disabled = false;
+            updateDisconnectTime();
+        }
+    }
+
+    // Add message to chat
+    function addMessage(content, type) {
+        const message = document.createElement("div");
+        message.className = `message ${type}-message`;
+        message.innerHTML = content;
+        messagesContainer.appendChild(message);
+        scrollToBottom();
+    }
+
+    // Add system message
+    function addSystemMessage(content) {
+        const message = document.createElement("div");
+        message.className = "message system-message";
+        message.textContent = content;
+        messagesContainer.appendChild(message);
+        scrollToBottom();
+    }
+
+    // Smooth scroll to bottom
+    function scrollToBottom() {
+        messagesContainer.scrollTo({
+            top: messagesContainer.scrollHeight,
+            behavior: 'smooth'
+        });
+    }
+
+    // Check connection status with retry limit
+    async function checkConnection(retryCount = 0) {
+        try {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Checking connection...";
+            checkBtn.className = "check-connection-btn checking";
+            
+            const result = await Promise.race([
+                fetch('https://www.google.com/favicon.ico'),
+                new Promise((_, reject) => 
+                    setTimeout(() => reject(new Error('Timeout')), 5000)
+                )
+            ]);
+
+            if (result.ok) {
+                updateOnlineStatus(true);
+                checkBtn.textContent = "Connected";
+                checkBtn.className = "check-connection-btn connected";
+                
+                // Reset retry count on successful connection
+                if (retryCount > 0) {
+                    console.log('Connection restored after retries');
+                }
+            } else {
+                throw new Error('Connection failed');
+            }
+        } catch (error) {
+            updateOnlineStatus(false);
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Connection failed - Retry";
+            checkBtn.className = "check-connection-btn error";
+            
+            // Log retry attempts
+            if (retryCount > 0) {
+                console.log(`Connection check failed. Attempt ${retryCount}`);
+            }
+        }
+    }
+
+    // Initialize connection monitoring with better control
+    function startConnectionMonitoring() {
+        // Clear any existing intervals
+        if (connectionCheckInterval) {
+            clearInterval(connectionCheckInterval);
+        }
+
+        // Check connection every 60 seconds (1 minute)
+        connectionCheckInterval = setInterval(() => {
+            // Only check if currently offline
+            if (!isOnline) {
+                checkConnection();
+            }
+        }, 60000); // 60000ms = 1 minute
+
+        // Initial check
+        checkConnection();
+    }
+
+    // Handle suggestion chips
+    document.querySelectorAll(".suggestion-chip").forEach((chip) => {
+        chip.addEventListener("click", () => {
+            addMessage(chip.textContent, "user");
+
+            const responses = {
+                "Check WiFi": "Make sure your WiFi is on and connected. Try forgetting the network and reconnecting.",
+                "Restart router": "1. Power off your router\n2. Wait 30 seconds\n3. Power it back on\n4. Wait 2-3 minutes for full restart",
+                "Mobile data": "If WiFi is unavailable, try switching to mobile data. Make sure you have an active data plan.",
+                "Disable VPN": "Some VPNs can cause connection issues. Try temporarily disabling your VPN service."
+            };
+
+            setTimeout(() => {
+                addMessage(responses[chip.textContent] || "Let me know if that helped!", "bot");
+            }, 500);
+        });
+    });
+
+    // Event Listeners
+    window.addEventListener('online', () => updateOnlineStatus(true));
+    window.addEventListener('offline', () => updateOnlineStatus(false));
+    checkBtn.addEventListener("click", checkConnection);
+
+    // Handle viewport height on mobile
+    function adjustHeight() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+
+    // Initialize
+    updateOnlineStatus(navigator.onLine);
+    updateDisconnectTime();
+    window.addEventListener('resize', adjustHeight);
+    adjustHeight();
+
+    // Start monitoring with better control
+    startConnectionMonitoring();
+
+    // Enhanced cleanup
+    window.addEventListener('unload', () => {
+        if (connectionCheckInterval) {
+            clearInterval(connectionCheckInterval);
+        }
+    });
+});
+  </script>
+</body>
+</html>

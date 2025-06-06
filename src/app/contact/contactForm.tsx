@@ -10,6 +10,7 @@ const ContactForm: React.FC = () => {
     message: '',
   });
   const [showModal, setShowModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -19,10 +20,35 @@ const ContactForm: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    setShowModal(true);
+    
+    try {
+      // Show loading state (optional)
+      setIsSubmitting(true);
+      
+      // Send form data to API route
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
+      
+      // Show success modal
+      setShowModal(true);
+      
+    } catch (error) {
+      console.error('Error sending email:', error);
+      alert('Failed to send email. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const closeModal = () => {
@@ -80,8 +106,9 @@ const ContactForm: React.FC = () => {
               <button 
                 type="submit" 
                 className="w-full py-3 bg-red-100 text-gray-900 font-semibold rounded-xl border-t border-2 border-gray-900 hover:bg-red-200 transition-colors mt-3"
+                disabled={isSubmitting}
               >
-                SEND
+                {isSubmitting ? 'Sending...' : 'SEND'}
               </button>
             </form>
           </div>

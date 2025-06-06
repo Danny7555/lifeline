@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-// Feature Cards Component
 const FeatureCards = () => {
   return (
     <div className="relative border-t border-gray-900 bg-white bg-opacity-90">

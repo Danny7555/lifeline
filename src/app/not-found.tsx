@@ -9,7 +9,6 @@ export default function NotFound() {
   const [countdown, setCountdown] = useState<number | null>(null);
 
   useEffect(() => {
-    // Only run on client
     if (typeof window === 'undefined') return;
     setCountdown(10);
   }, []);
