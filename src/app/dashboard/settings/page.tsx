@@ -285,7 +285,7 @@ export default function SettingsPage() {
                       onChange={handleChange}
                       className="w-full pl-10 pr-10 py-3 border-2 border-gray-300 rounded-lg focus:border-[#F5A5A5] focus:outline-none text-gray-700 appearance-none bg-white text-sm sm:text-base"
                     >
-                      <option value="">{t("settings.selectAge")}</option>
+                     
                       <option value="18-25">18-25</option>
                       <option value="26-35">26-35</option>
                       <option value="36-45">36-45</option>
@@ -326,7 +326,6 @@ export default function SettingsPage() {
                       onChange={handleChange}
                       className="w-full pl-10 pr-10 py-3 border-2 border-gray-300 rounded-lg focus:border-[#F5A5A5] focus:outline-none text-gray-700 appearance-none bg-white text-sm sm:text-base"
                     >
-                      <option value="">{t("settings.selectGender")}</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
                       <option value="other">Other</option>

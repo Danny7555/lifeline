@@ -29,11 +29,32 @@ const spanishTranslations = {
     lifelineHistory: "Historial Médico",
     supportHelp: "Soporte/Ayuda",
     settings: "Configuración",
+    account: "Cuenta",
     logout: "Cerrar Sesión",
     signOutConfirmation: "Confirmación de Cierre de Sesión",
     signOutConfirmationMessage: "¿Está seguro de que desea cerrar sesión en su cuenta de Lifeliner?",
     cancel: "Cancelar",
     signOut: "Cerrar Sesión"
+  },
+  account: {
+    title: "Gestión de Cuenta",
+    manageAccount: "Administrar Tu Cuenta",
+    manageAccountDescription: "Controla la configuración de tu cuenta, incluidas las opciones de desactivación y eliminación.",
+    deactivateAccount: "Desactivar Cuenta",
+    deactivateAccountDescription: "Deshabilita temporalmente tu cuenta. Puedes reactivarla iniciando sesión nuevamente.",
+    deleteAccount: "Eliminar Cuenta",
+    deleteAccountDescription: "Eliminar permanentemente tu cuenta y todos los datos asociados.",
+    deleteAccountWarning: "Esta acción no se puede deshacer. Todos tus datos se eliminarán permanentemente.",
+    deactivateConfirmation: "¿Desactivar Cuenta?",
+    deactivateConfirmationMessage: "Tu cuenta se deshabilitará temporalmente. Puedes reactivarla iniciando sesión nuevamente.",
+    deleteConfirmation: "¿Eliminar Cuenta?",
+    deleteConfirmationMessage: "Esta acción no se puede deshacer. Todos tus datos se eliminarán permanentemente.",
+    deactivate: "Desactivar",
+    delete: "Eliminar"
+  },
+  common: {
+    cancel: "Cancelar",
+    processing: "Procesando..."
   }
   // Add other sections as needed
 };
