@@ -1,0 +1,31 @@
+{
+  "home": "Home",
+  "welcome": "Benvenuto",
+  "lifeliner": "Lifeliner!",
+  "createAccount": "Crea il tuo account",
+  "alreadyHaveAccount": "Hai già un account?",
+  "login": "Accedi",
+  "name": "Nome",
+  "email": "Email",
+  "password": "Password",
+  "confirmPassword": "Conferma password",
+  "fullNamePlaceholder": "Il tuo nome completo",
+  "createStrongPassword": "Crea una password forte",
+  "confirmYourPassword": "Conferma la tua password",
+  "rememberMe": "Ricordami",
+  "signUp": "Registrati",
+  "processing": "Elaborazione in corso...",
+  "or": "OPPURE",
+  "continueWithGoogle": "Continua con Google",
+  "joinCommunity": "Unisciti alla nostra comunità per una migliore assistenza sanitaria",
+  "medicalIllustration": "Illustrazione medica",
+  "contactSupport": "Contatta l'assistenza",
+  "privacyPolicy": "Informativa sulla privacy",
+  "termsConditions": "Termini e condizioni",
+  "allRightsReserved": "Tutti i diritti riservati.",
+  "passwordStrengthTips": {
+    "low": "Prova ad aggiungere lettere maiuscole, numeri e caratteri speciali",
+    "medium": "Buono! Considera di renderla più lunga per una maggiore sicurezza",
+    "high": "Password eccellente!"
+  }
+}
