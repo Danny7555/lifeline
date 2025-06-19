@@ -13,8 +13,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    
-    // Connect to MongoDB
+   
     const client = await clientPromise;
     const db = client.db("lifeline");
     const users = db.collection("users");
@@ -22,7 +21,6 @@ export async function POST(request: Request) {
     // Check if user exists
     const user = await users.findOne({ email });
     if (!user) {
-      // For security reasons, don't reveal whether the email exists
       return NextResponse.json(
         { success: true, message: "If your email exists in our system, you will receive a password reset link" },
         { status: 200 }
@@ -44,8 +42,6 @@ export async function POST(request: Request) {
       }
     );
     
-    // In a real application, you would send an email with the reset link
-    // For now, we'll just simulate success
     console.log(`Reset token for ${email}: ${resetToken}`);
     
     return NextResponse.json(

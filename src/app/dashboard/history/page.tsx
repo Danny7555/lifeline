@@ -271,7 +271,7 @@ export default function LifelineHistoryPage() {
                         width={80}  
                         height={80}
                         className="object-contain"
-                      />
+                      />913
                     </div>
                     
                     {/* Title with left alignment */}
