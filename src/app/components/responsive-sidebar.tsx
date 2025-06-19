@@ -1,11 +1,11 @@
 "use client"
-import { User, Clock, LifeBuoy, Settings, LogOut, Menu, X, AlertTriangle } from "lucide-react"
+import { User, Clock, LifeBuoy, Settings, LogOut, Menu, X, AlertTriangle, Shield } from "lucide-react"
 import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { signOut, useSession } from "next-auth/react"
 import Image from "next/image"
-import { useTranslation } from "@/context/TranslationContext" // Add this import
+import { useTranslation } from "@/context/TranslationContext" 
 
 export function ResponsiveSidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -101,6 +101,11 @@ export function ResponsiveSidebar() {
       href: "/dashboard/settings", 
       icon: Settings 
     },
+    { 
+      name: t("sidebar.account"), 
+      href: "/dashboard/account", 
+      icon: Shield 
+    },
   ]
 
   return (
@@ -190,47 +195,42 @@ export function ResponsiveSidebar() {
         <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30" onClick={() => setSidebarOpen(false)} />
       )}
 
-      {/* Logout Confirmation Modal */}
+      {/* Logout Confirmation Modal - Dashboard Style */}
       {showLogoutModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-          {/* Modal Backdrop */}
           <div 
-            className="absolute inset-0 bg-black bg-opacity-50"
+            className="absolute inset-0 bg-black bg-opacity-40"
             onClick={() => setShowLogoutModal(false)}
           />
           
-          {/* Modal Content */}
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 z-10 overflow-hidden transform transition-all animate-fadeIn">
-            {/* Modal Header with red gradient */}
-            <div className="bg-gradient-to-r from-red-300 to-red-500 p-6">
-              <div className="mx-auto w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4">
-                <AlertTriangle className="h-8 w-8 text-red-500" />
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-md mx-4 z-10">
+            <div className="px-6 py-4 border-b">
+              <div className="flex items-center">
+                <AlertTriangle className="h-5 w-5 text-red-500 mr-3" />
+                <h3 className="text-lg font-medium text-gray-900">{t("sidebar.signOutConfirmation")}</h3>
               </div>
-              <h3 className="text-xl font-bold text-white text-center">{t("sidebar.signOutConfirmation")}</h3>
             </div>
             
-            {/* Modal Body */}
             <div className="px-6 py-4">
-              <p className="text-gray-600 text-center mb-6">
+              <p className="text-gray-600 mb-6">
                 {t("sidebar.signOutConfirmationMessage")}
               </p>
-              
-              {/* Modal Actions */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <button
-                  onClick={() => setShowLogoutModal(false)}
-                  className="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg font-medium transition-colors"
-                >
-                  {t("sidebar.cancel")}
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="flex-1 px-4 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  {t("sidebar.signOut")}
-                </button>
-              </div>
+            </div>
+            
+            <div className="px-6 py-3 bg-gray-50 flex justify-end space-x-3 rounded-b-lg">
+              <button
+                onClick={() => setShowLogoutModal(false)}
+                className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded hover:bg-gray-50 transition-colors"
+              >
+                {t("sidebar.cancel")}
+              </button>
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded transition-colors flex items-center"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                {t("sidebar.signOut")}
+              </button>
             </div>
           </div>
         </div>
