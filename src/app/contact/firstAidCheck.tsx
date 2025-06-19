@@ -366,7 +366,7 @@ const FirstAidQuickSupport: React.FC = () => {
                   }}
                   className="w-full bg-[#e47f7f] text-white py-3 px-4 rounded-lg font-semibold flex items-center justify-center hover:bg-[#d66666] transition"
                 >
-                  <FiPhone className="mr-2 font-poppins font-bold" /> Call Now (913)
+                  <FiPhone className="mr-2 font-poppins font-bold" /> Call Now (193)
                 </button>
                 
                 <button

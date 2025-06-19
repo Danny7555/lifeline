@@ -208,7 +208,7 @@ export default function SupportHelpPage() {
           
           {/* Live Chat Interface */}
           {isChatOpen && !isMinimized && (
-            <div className="fixed bottom-6 right-6 w-[95%] sm:w-[400px] max-w-sm bg-white rounded-lg shadow-xl border border-[#FFAEBB] overflow-hidden z-50">
+            <div className="fixed bottom-6 right-6 w-[100%] sm:w-[400px] max-w-sm bg-white rounded-lg shadow-xl border border-[#FFAEBB] overflow-hidden z-50">
               {/* Chat Header */}
               <div className="bg-[#FA9D9D] px-3 sm:px-4 py-3 flex justify-between items-center">
                 <div className="flex items-center gap-2">

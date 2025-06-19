@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth"; // Updated import path
+import { authOptions } from "@/lib/auth"; 
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
@@ -38,7 +38,6 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
-
 
 export async function POST(request: Request) {
   try {
