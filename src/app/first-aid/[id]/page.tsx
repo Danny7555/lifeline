@@ -4,6 +4,36 @@ import FirstAidGuideClient, { FirstAidGuide } from './FirstAidGuideClient';
 // Data
 // -----------------
 const firstAidGuides: Record<string, FirstAidGuide> = {
+  bleeding: {
+    id: 'bleeding',
+    title: 'Severe Bleeding',
+    description: 'How to control severe bleeding and prevent blood loss.',
+    icon: '🩸',
+    steps: [
+      'Apply direct pressure to the wound with a clean cloth or bandage',
+      'Maintain pressure until bleeding stops',
+      'If blood soaks through, do not remove the cloth - add more layers on top',
+      'If possible, elevate the injured area above heart level',
+      'Apply a pressure bandage to hold the dressing in place',
+    ],
+    do: [
+      'Wear gloves if available',
+      'Wash your hands before and after providing care',
+      'Use a clean barrier between your hand and the wound',
+      'Keep the injured person calm and still',
+    ],
+    dont: [
+      'Do not remove any embedded objects',
+      'Do not use a tourniquet unless bleeding cannot be controlled',
+      'Do not apply pressure to eye injuries or embedded objects',
+    ],
+    whenToSeekHelp: [
+      'If bleeding cannot be controlled after 10 minutes of direct pressure',
+      'If the wound is deep, large, or caused by a serious injury',
+      'If there is an object embedded in the wound',
+      'If signs of shock develop (pale, cold, sweaty skin, rapid breathing)',
+    ],
+  },
   cpr: {
     id: 'cpr',
     title: 'CPR (Cardiopulmonary Resuscitation)',
