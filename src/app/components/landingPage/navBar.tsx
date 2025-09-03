@@ -79,15 +79,21 @@ export default function NavBar() {
           </Link>
           <Link 
             href="/symptom-checker" 
-            className={`text-black font-medium text-sm lg:text-base ${pathname === '/symptom-checker' ? 'border-b-2 border-black pb-1' : 'hover:text-gray-800 transition-colors group'}`}
+            className={`text-black font-medium text-sm lg:text-base ${pathname.startsWith('/symptom-checker') ? 'border-b-2 border-black pb-1' : 'hover:text-gray-800 transition-colors group'}`}
           >
-            <span className={pathname !== '/symptom-checker' ? "group-hover:border-b-2 group-hover:border-black group-hover:pb-1" : ""}>SYMPTOM CHECKER</span>
+            <span className={!pathname.startsWith('/symptom-checker') ? "group-hover:border-b-2 group-hover:border-black group-hover:pb-1" : ""}>SYMPTOM CHECKER</span>
           </Link>
           <Link 
-            href="/first-aid-guide" 
-            className={`text-black font-medium text-sm lg:text-base ${pathname === '/first-aid-guide' ? 'border-b-2 border-black pb-1' : 'hover:text-gray-800 transition-colors group'}`}
+            href="/first-aid" 
+            className={`text-black font-medium text-sm lg:text-base ${pathname.startsWith('/first-aid') ? 'border-b-2 border-black pb-1' : 'hover:text-gray-800 transition-colors group'}`}
           >
-            <span className={pathname !== '/first-aid-guide' ? "group-hover:border-b-2 group-hover:border-black group-hover:pb-1" : ""}>FIRST AID GUIDE</span>
+            <span className={!pathname.startsWith('/first-aid') ? "group-hover:border-b-2 group-hover:border-black group-hover:pb-1" : ""}>FIRST AID GUIDES</span>
+          </Link>
+          <Link 
+            href="/donate" 
+            className={`text-black font-medium text-sm lg:text-base ${pathname.startsWith('/donate') ? 'border-b-2 border-black pb-1' : 'hover:text-gray-800 transition-colors group'}`}
+          >
+            <span className={!pathname.startsWith('/donate') ? "group-hover:border-b-2 group-hover:border-black group-hover:pb-1" : ""}>DONATE</span>
           </Link>
           <Link 
             href="/contact" 
@@ -153,8 +159,9 @@ export default function NavBar() {
         <div className="bg-[#FA9D9D] rounded-lg shadow-lg border border-[#FF9A9A]">
           <div className="py-2">
             <Link href="/" className={`block font-medium py-3 px-4 transition-colors ${pathname === '/' ? 'bg-[#FFB5B5] text-black font-semibold' : 'text-black hover:bg-[#FFB5B5]'}`}>HOME</Link>
-            <Link href="/symptom-checker" className={`block font-medium py-3 px-4 transition-colors ${pathname === '/symptom-checker' ? 'bg-[#FFB5B5] text-black font-semibold' : 'text-black hover:bg-[#FFB5B5]'}`}>SYMPTOM CHECKER</Link>
-            <Link href="/first-aid-guide" className={`block font-medium py-3 px-4 transition-colors ${pathname === '/first-aid-guide' ? 'bg-[#FFB5B5] text-black font-semibold' : 'text-black hover:bg-[#FFB5B5]'}`}>FIRST AID GUIDE</Link>
+            <Link href="/symptom-checker" className={`block font-medium py-3 px-4 transition-colors ${pathname.startsWith('/symptom-checker') ? 'bg-[#FFB5B5] text-black font-semibold' : 'text-black hover:bg-[#FFB5B5]'}`}>SYMPTOM CHECKER</Link>
+            <Link href="/first-aid" className={`block font-medium py-3 px-4 transition-colors ${pathname.startsWith('/first-aid') ? 'bg-[#FFB5B5] text-black font-semibold' : 'text-black hover:bg-[#FFB5B5]'}`}>FIRST AID GUIDES</Link>
+            <Link href="/donate" className={`block font-medium py-3 px-4 transition-colors ${pathname.startsWith('/donate') ? 'bg-[#FFB5B5] text-black font-semibold' : 'text-black hover:bg-[#FFB5B5]'}`}>DONATE</Link>
             <Link href="/contact" className={`block font-medium py-3 px-4 transition-colors ${pathname === '/contact' ? 'bg-[#FFB5B5] text-black font-semibold' : 'text-black hover:bg-[#FFB5B5]'}`}>CONTACT US</Link>
             
             <div className="px-4 py-3 mt-1 border-t border-[#FF9A9A]">
