@@ -128,7 +128,7 @@ const categories = [
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-2xl font-bold text-gray-900">Test Your Knowledge</h2>
               <p className="mt-2 text-gray-600 max-w-2xl mx-auto">
-                Take our interactive quiz to see how much you've learned and identify areas for improvement.
+                Take our interactive quiz to see how much you&apos;ve learned and identify areas for improvement.
               </p>
               <Link 
                 href="/quiz"

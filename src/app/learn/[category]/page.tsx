@@ -173,7 +173,7 @@ export default function LearnCategoryPage() {
 
           <div className="mt-12 bg-gradient-to-r from-blue-50 to-cyan-50 border border-gray-200 rounded-2xl p-8 text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Ready to test your knowledge?</h2>
-            <p className="text-gray-600 mb-6">Take our quiz to see how much you've learned about {content.title.toLowerCase()}.</p>
+            <p className="text-gray-600 mb-6">Take our quiz to see how much you&apos;ve learned about {content.title.toLowerCase()}.</p>
             <Link 
               href="/quiz"
               className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-[#FF7A7A] hover:bg-[#ff5e5e] shadow-sm transition-colors duration-200"

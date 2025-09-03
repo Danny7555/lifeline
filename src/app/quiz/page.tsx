@@ -238,7 +238,7 @@ export default function QuizPage() {
           </div>
           
           <div className="text-center text-sm text-gray-500">
-            <p>Select an answer to continue. You'll see the correct answer after each question.</p>
+            <p>Select an answer to continue. You&apos;ll see the correct answer after each question.</p>
           </div>
         </div>
       </main>
