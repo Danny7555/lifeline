@@ -159,7 +159,7 @@ const DonatePage = () => {
               <h3 className="text-xl font-bold text-gray-900 mb-6 text-center">Complete Your Donation of ₵{donationAmount}</h3>
               <p className="text-center text-gray-700 mb-8">
                 Please use one of the payment methods below to complete your donation of ₵{donationAmount}.
-                After payment, you'll receive a confirmation email with your donation receipt.
+                After payment, you&apos;ll receive a confirmation email with your donation receipt.
               </p>
             </>
           )}
