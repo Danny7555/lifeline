@@ -150,7 +150,7 @@ const DonatePage = () => {
             </div>
           </form>
         </div>
-
+      {/* Payment Details */}
         <div className="mt-12">
           {!showPaymentDetails ? (
             <h3 className="text-xl font-bold text-gray-900 mb-6 text-center">Other Payment Methods</h3>
