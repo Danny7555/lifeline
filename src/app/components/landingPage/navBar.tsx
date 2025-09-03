@@ -89,12 +89,7 @@ export default function NavBar() {
           >
             <span className={!pathname.startsWith('/first-aid') ? "group-hover:border-b-2 group-hover:border-black group-hover:pb-1" : ""}>FIRST AID GUIDES</span>
           </Link>
-          <Link 
-            href="/donate" 
-            className={`text-black font-medium text-sm lg:text-base ${pathname.startsWith('/donate') ? 'border-b-2 border-black pb-1' : 'hover:text-gray-800 transition-colors group'}`}
-          >
-            <span className={!pathname.startsWith('/donate') ? "group-hover:border-b-2 group-hover:border-black group-hover:pb-1" : ""}>DONATE</span>
-          </Link>
+          
           <Link 
             href="/contact" 
             className={`text-black font-medium text-sm lg:text-base ${pathname === '/contact' ? 'border-b-2 border-black pb-1' : 'hover:text-gray-800 transition-colors group'}`}
