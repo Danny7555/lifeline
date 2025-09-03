@@ -35,11 +35,17 @@ const FirstAidPage = () => {
       description: 'Recognizing and treating severe allergic reactions (anaphylaxis).',
       icon: '⚠️',
     },
+    {
+      id: 'heat-stroke',
+      title: 'Heat Stroke',
+      description: 'Emergency response for heat-related illnesses and heat stroke.',
+      icon: '🌡️',
+    },
   ];
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+      <div className="max-w-7xl mx-auto bg-white rounded-2xl border border-black shadow-sm p-6 sm:p-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
             First Aid Guides
@@ -56,7 +62,7 @@ const FirstAidPage = () => {
               key={guide.id}
               className="block"
             >
-              <div className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300 flex flex-col h-full hover:border-[#FF7A7A]">
+              <div className="bg-white border border-black rounded-2xl p-6 hover:shadow-md transition-all duration-300 flex flex-col h-full hover:border-[#FF7A7A]">
                 <div className="text-4xl mb-4">{guide.icon}</div>
                 <h2 className="text-xl font-bold text-gray-900 mb-2">{guide.title}</h2>
                 <p className="text-gray-600 flex-grow">{guide.description}</p>
@@ -73,7 +79,7 @@ const FirstAidPage = () => {
           ))}
         </div>
 
-        <div className="mt-16 bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-200 rounded-2xl p-8 shadow-sm">
+        <div className="mt-16 bg-gradient-to-r from-red-50 to-pink-50 border border-black rounded-2xl p-8 shadow-sm">
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-between">
               <div className="text-center md:text-left mb-6 md:mb-0">
@@ -97,7 +103,7 @@ const FirstAidPage = () => {
                 </Link>
               </div>
             </div>
-            <div className="mt-6 pt-6 border-t-2 border-red-200">
+            <div className="mt-6 pt-6 border-t border-black">
               <div className="text-center">
                 <h3 className="text-lg font-medium text-gray-900 mb-4">Looking for in-person training?</h3>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -108,7 +114,7 @@ const FirstAidPage = () => {
                     Find a Course Near You
                   </Link>
                   <Link 
-                    href="/learn-more"
+                    href="/learn"
                     className="bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 px-6 py-3 rounded-full text-center text-sm font-bold transition-all shadow-sm hover:shadow"
                   >
                     Learn More

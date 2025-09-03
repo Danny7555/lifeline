@@ -3,6 +3,13 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
+// Type for component props
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
 // Type for first aid guide
 type FirstAidGuide = {
   id: string;
@@ -66,11 +73,105 @@ const firstAidGuides: Record<string, FirstAidGuide> = {
       'If person is unconscious',
       'If object is not dislodged'
     ]
+  },
+  'allergic-reaction': {
+    id: 'allergic-reaction',
+    title: 'Allergic Reactions',
+    description: 'Recognizing and treating severe allergic reactions (anaphylaxis).',
+    icon: '⚠️',
+    steps: [
+      'Look for signs of severe allergic reaction',
+      'Administer epinephrine auto-injector if available',
+      'Call emergency services',
+      'Help person into comfortable position',
+      'Monitor breathing'
+    ],
+    do: [
+      'Use EpiPen if prescribed',
+      'Stay with the person',
+      'Loosen tight clothing',
+      'Cover with blanket if shock is suspected'
+    ],
+    dont: [
+      'Don\'t wait to see if symptoms improve',
+      'Don\'t give oral medications if having trouble breathing',
+      'Don\'t let the person stand or walk'
+    ],
+    whenToSeekHelp: [
+      'Immediately if signs of anaphylaxis',
+      'Even if symptoms improve after epinephrine',
+      'If person has history of severe reactions'
+    ]
+  },
+  'fractures': {
+    id: 'fractures',
+    title: 'Fractures & Sprains',
+    description: 'How to immobilize injuries and when to seek medical attention.',
+    icon: '🦴',
+    steps: [
+      'Keep the injured area still and support it with padding',
+      'Apply ice wrapped in cloth to reduce swelling',
+      'Elevate the injured limb if possible',
+      'Use a splint to immobilize the area',
+      'Seek medical attention for proper treatment'
+    ],
+    do: [
+      'Keep the injured area still',
+      'Apply ice for 15-20 minutes every 2-3 hours',
+      'Use compression with an elastic bandage',
+      'Elevate the injured area'
+    ],
+    dont: [
+      'Try to realign the bone',
+      'Move the injured area unnecessarily',
+      'Apply heat in the first 48 hours',
+      'Massage the injured area'
+    ],
+    whenToSeekHelp: [
+      'If bone is visible through skin',
+      'If limb appears deformed',
+      'If numbness or discoloration occurs',
+      'If pain is severe'
+    ]
+  },
+  'heat-stroke': {
+    id: 'heat-stroke',
+    title: 'Heat Stroke',
+    description: 'Emergency response for heat-related illnesses and heat stroke.',
+    icon: '🌡️',
+    steps: [
+      'Move the person to a cooler place immediately',
+      'Remove excess clothing',
+      'Cool the person with whatever means available (wet cloth, fan, cool bath)',
+      'Apply ice packs to armpits, neck, and groin',
+      'Monitor body temperature and continue cooling efforts',
+      'Seek emergency medical help immediately'
+    ],
+    do: [
+      'Act quickly to cool the person down',
+      'Give cool water if the person is conscious',
+      'Loosen tight clothing',
+      'Stay with the person until help arrives'
+    ],
+    dont: [
+      'Give the person anything to drink if they are unconscious',
+      'Give alcohol or caffeinated beverages',
+      'Leave the person alone',
+      'Apply ice directly to the skin'
+    ],
+    whenToSeekHelp: [
+      'If body temperature is above 40°C (104°F)',
+      'If the person is unconscious',
+      'If symptoms don\'t improve with cooling measures',
+      'If the person has a seizure'
+    ]
   }
 };
 
-export default function FirstAidGuidePage({ params }: { params: { id: string } }) {
-  const guide = firstAidGuides[params.id as keyof typeof firstAidGuides];
+export default function FirstAidGuidePage({ params }: PageProps) {
+  // In Next.js 13+, params is already unwrapped when it reaches the component
+  const guideId = params.id;
+  const guide = firstAidGuides[guideId as keyof typeof firstAidGuides];
   const router = useRouter();
 
   if (!guide) {
