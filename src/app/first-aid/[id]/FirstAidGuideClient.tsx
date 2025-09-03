@@ -42,6 +42,25 @@ export default function FirstAidGuideClient({ guide }: Props) {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Navbar */}
+      <nav className="bg-white border-b border-gray-200">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+          <button
+            onClick={() => router.push('/')}
+            className="flex items-center gap-2 text-gray-900 font-semibold hover:opacity-80"
+          >
+            <span className="text-[#FF7A7A]">Lifeline</span>
+          </button>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => router.push('/first-aid')}
+              className="text-sm text-gray-700 hover:text-gray-900"
+            >
+              All Guides
+            </button>
+          </div>
+        </div>
+      </nav>
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -120,6 +139,16 @@ export default function FirstAidGuideClient({ guide }: Props) {
           </div>
         </div>
       </div>
+      {/* Footer */}
+      <footer className="bg-gray-50 border-t border-gray-200">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-sm text-gray-600 flex items-center justify-between">
+          <span>© {new Date().getFullYear()} Lifeline. All rights reserved.</span>
+          <div className="flex items-center gap-4">
+            <a href="/about" className="hover:text-gray-900">About</a>
+            <a href="/contact" className="hover:text-gray-900">Contact</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
